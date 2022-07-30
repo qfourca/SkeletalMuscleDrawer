@@ -1,0 +1,5 @@
+node_modules
+.idea
+.prettierrc
+package-lock.json
+.DS_Store
