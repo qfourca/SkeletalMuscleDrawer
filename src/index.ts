@@ -1,41 +1,43 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as Core from './core'
 export default class App {
-    private scene:THREE.Scene
-    private camera:THREE.PerspectiveCamera
-    private renderer:THREE.WebGLRenderer
+    private scene:Core.Scene
+    private camera:Core.Camera
+    private renderer:Core.Renderer
+
+    private control:OrbitControls
     constructor(width: number, height: number) {
+        this.scene = new Core.Scene()
+        this.camera = new Core.Camera(95, width / height)
+        this.renderer = new Core.Renderer(window.innerWidth, window.innerHeight, document.body)
 
-        this.scene = new THREE.Scene()
-        this.camera = new THREE.PerspectiveCamera(95, width / height, 0.1, 1000)
-        this.camera.position.z = 2
-        this.renderer = new THREE.WebGLRenderer()
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
-        document.body.appendChild(this.renderer.domElement)
+        const light = new THREE.AmbientLight(0xffffff, 1)
+        this.scene.add(light)
 
-
-        const controls = new OrbitControls(this.camera, this.renderer.domElement)
-        const geometry = new THREE.BoxGeometry()
-        const material = new THREE.MeshBasicMaterial({
-            color: 0x00ff00,
-            wireframe: true,
-        })
-        const cube = new THREE.Mesh(geometry, material)
-        this.scene.add(cube)
-        const animate = () => {
-            requestAnimationFrame(animate)
-
-            cube.rotation.x += 0.01
-            cube.rotation.y += 0.01
-
-            controls.update()
-            this.render()
-        }
-
-        animate()
+        const loader = new GLTFLoader();
+        loader.load(
+            './human.gltf',
+             ( gltf ) => {
+                this.scene.add( gltf.scene );
+                 gltf.scene.scale.set(10, 10, 10)
+                console.log(gltf.scene)
+            },
+            ( xhr ) => {
+                // console.log( Math.round(xhr.loaded / 4783071 * 100) + '%');
+            },
+            ( error ) => {
+                console.log("Error occur on loading:" + error);
+            }
+        );
+        this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        this.update()
     }
     update() {
-
+        requestAnimationFrame(this.update.bind(this))
+        this.control.update()
+        this.render()
     }
     public resize(width: number, height: number) {
         this.camera.aspect = width / height
