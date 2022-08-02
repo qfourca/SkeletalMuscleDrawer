@@ -15,7 +15,11 @@ export default class App {
 
         const light = new THREE.DirectionalLight(0xffffff, 1)
         this.scene.add(light)
-        this.human = new Human('./human.gltf', this.scene)
+        this.human 
+            = new Human(
+                './human.gltf', 
+                'standing',
+                this.scene)
         // const loader = new GLTFLoader();
         // loader.load(
         //     './anime.gltf',
