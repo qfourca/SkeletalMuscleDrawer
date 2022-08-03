@@ -8,23 +8,23 @@ export default class App {
     private camera:Core.Camera
     private renderer:Core.Renderer
     private control:OrbitControls
+    private parent:HTMLElement
     private human:Human
-    // private isdev:boolean = false
+
     public moveBone:(name: string, move: THREE.Vector3, taken: number, reservation?: number) => void
     constructor(
-        width: number, 
-        height: number,
+        domElement: HTMLElement,
         file: string
     ) {
+        this.parent = domElement
         this.scene = new Core.Scene()
-        this.camera = new Core.Camera(95, width / height)
-        this.renderer = new Core.Renderer(window.innerWidth, window.innerHeight, document.body)
-
-        const light = new THREE.DirectionalLight(0xffffff, 1)
-        this.scene.add(light)
+        this.camera = new Core.Camera(95, this.parent.clientWidth / this.parent.clientHeight)
+        this.renderer = new Core.Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
+        this.scene.add(new THREE.DirectionalLight(0xffffff, 1))
         this.control = new OrbitControls(this.camera, this.renderer.domElement)
         this.human = new Human(file, this.scene)
         this.moveBone = this.human.moveBone.bind(this.human)
+        window.addEventListener('resize', this.resize.bind(this), false)
         this.update()
     }
     update() {
@@ -33,10 +33,10 @@ export default class App {
         this.human.update()
         this.render()
     }
-    public resize(width: number, height: number) {
-        this.camera.aspect = width / height
+    public resize(e:any) {
+        this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
         this.camera.updateProjectionMatrix()
-        this.renderer.setSize(width, height)
+        this.renderer.setSize(this.parent.clientWidth, this.parent.clientHeight)
         this.render()
     }
 
