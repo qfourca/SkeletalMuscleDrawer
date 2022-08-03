@@ -1,6 +1,3 @@
-<img src="이미지주소.png" width="200" height="400"/>
-
-
 * all-body : 모든 몸
 * spine1 : 1번 척추
 * spine2 : 2번 척추

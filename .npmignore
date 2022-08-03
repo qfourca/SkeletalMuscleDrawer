@@ -1,0 +1,11 @@
+node_modules
+.idea
+.DS_Store
+.github
+*.blend
+
+webpack.common.js
+webpack.dev.js
+webpack.prod.js
+
+tsconfig.json

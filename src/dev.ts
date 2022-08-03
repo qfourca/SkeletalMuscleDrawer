@@ -1,12 +1,19 @@
-import App from './app'
-import BoneName from './bonename'
-import { Vector3 } from 'three'
-const app = new App(window.innerWidth, window.innerHeight)
+import { App, BoneName, Vector3 } from "./index"
 
-window.addEventListener('resize', () => {
-    app.resize(window.innerWidth, window.innerHeight)
-}, false)
+const app = new App(
+    window.innerWidth, 
+    window.innerHeight,
+    './human.gltf'
+)
 
+// window.addEventListener('resize', () => {
+//     app.resize(window.innerWidth, window.innerHeight)
+// }, false)
+// app.moveBone(
+//     BoneName.spine1,
+//     new Vector3(1.5, 0, 0),
+//     1500
+// )
 
 // app.moveBone(
 //     BoneName.right_bottom_arm, 

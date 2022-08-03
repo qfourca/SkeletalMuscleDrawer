@@ -1,10 +1,10 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import Posture from "../posture";
-import axios from 'axios'
+
 export default class Human {
     private scene:THREE.Scene
-    private posture:string
+    private posture:Array<Posture> = new Array()
     private bones:Map<string, THREE.Bone> = new Map()
     private boneMoves:Array<BoneMove> = new Array()    
     private currentTime:number = -1
@@ -12,11 +12,11 @@ export default class Human {
     // private temp:Array<Posture> = new Array() // 자세 저장 개발용 변수
     constructor(
         file: string,
-        posture: string,
-        scene: THREE.Scene
+        scene: THREE.Scene,
+        posture?: Array<Posture>,
     ) {
         this.scene = scene
-        this.posture = posture
+        if(posture != undefined) this.posture = posture
         const loader = new GLTFLoader();
         loader.load(
             file,
@@ -28,7 +28,7 @@ export default class Human {
     private async onLoad (gltf:any) {
         gltf.scene.scale.set(10, 10, 10)
         this.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
-        await this.setPosture(this.posture)
+        await this.setPosture()
         this.scene.add(gltf.scene);
         this.currentTime = performance.now()
     }
@@ -79,10 +79,9 @@ export default class Human {
             // console.log(element.name)
         });
     }
-    private async setPosture(file:string) {
-        const posture = await import(`../posture/${file}.json`)
-        for(let i = 0; i < posture.length; i++) {
-            const element:Posture = posture[i]
+    private async setPosture() {
+        for(let i = 0; i < this.posture.length; i++) {
+            const element:Posture = this.posture[i]
             const bone:THREE.Bone = this.bones.get(element.name)!
             bone.rotation.set(bone.rotation.x, bone.rotation.y, bone.rotation.z, bone.rotation.order)
         }

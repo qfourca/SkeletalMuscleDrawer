@@ -1,13 +1,23 @@
 const path = require('path');
 
 module.exports = {
+    target: "web",
     module: {
         rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: ['babel-loader'],
+              },
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.gltf$/,
+                use: 'file-loader'
+            }
         ],
     },
     resolve: {
@@ -18,6 +28,8 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
+        library: "skeletalmuscledrawer",
+        libraryTarget: "umd",
         path: path.resolve(__dirname, './dist'),
     }
 };
