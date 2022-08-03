@@ -6,6 +6,7 @@ export default class Renderer extends THREE.WebGLRenderer{
 			antialias: true
 		})
 		this.setSize(width, height)
+		this.domElement.style.position = "absolute"
 		domElement.appendChild(this.domElement);
 	}
 }
