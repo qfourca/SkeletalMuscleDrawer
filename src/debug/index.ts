@@ -1,41 +1,35 @@
-export default class UI {
-    private parent:HTMLElement
-    private buttons:Array<HTMLDivElement> = new Array()
+import Raycast from "./raycast";
+import UI from "./ui";
+import App from "../app";
+import Bone from "./bone";
+
+export default class Debug {
+    private parent: HTMLElement
+    private app: App
+    private debugUI: UI
+    private debugRaycast: Raycast
+    private debugBone?: Bone
     constructor(
-        domElement: HTMLElement, 
-        buttons: Array<FunctionAndExpression>
+        app: App
     ) {
-        this.parent = domElement
-        const buttonContainer = document.createElement('div')
-        buttonContainer.style.height = '100px'
-        buttonContainer.style.width = '50%'
-        buttonContainer.style.display = "flex"
-        buttonContainer.style.gap = '10px'
-        buttonContainer.style.position = "absolute"
-
-        buttons.forEach((element:FunctionAndExpression) => {
-            const button = this.button(element)
-            this.buttons.push(button)
-            buttonContainer.appendChild(button)
-        })
-        this.parent.appendChild(buttonContainer)
+        this.parent = app.parent
+        this.app = app
+        this.debugUI = new UI(this.parent, 
+            [
+                { func: () => { console.log(JSON.stringify(this.app.human.posture)) }, expression: "posture" } 
+            ])
+        this.debugRaycast = new Raycast(app.camera, app.human)
+        this.app.parent.addEventListener('mousemove', this.debugRaycast.mouseMove.bind(this.debugRaycast))
+        let timer = setInterval(() => {
+            if(!this.app.human.isLoading()) {
+                this.debugBone = new Bone(this.app.scene, this.app.human.bones)
+                this.debugUI.setBoneSelector(this.debugBone.selectBone.bind(this.debugBone))
+                clearInterval(timer)
+            }
+        }, 10)
     }
-    private button(arg:FunctionAndExpression): HTMLDivElement {
-        const button = document.createElement('div')
-        button.onclick = arg.func
-        button.innerText = arg.expression
-        button.style.fontSize = "24px"
-        button.style.textAlign = 'center'
-        button.style.lineHeight = '100px'
-        button.style.width = '20%'
-        button.style.height = '100px'
-        button.style.backgroundColor = "green"
-        button.style.cursor = 'pointer'
-        return button
-    }
+    update() {
 
-}
-export interface FunctionAndExpression {
-    func: any
-    expression: string
+    }
+    
 }

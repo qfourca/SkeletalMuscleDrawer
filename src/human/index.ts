@@ -5,11 +5,12 @@ import Posture from "../posture";
 export default class Human {
     private scene:THREE.Scene
     public posture?:Array<Posture>
-    private bones:Map<string, THREE.Bone> = new Map()
+    public body: any
+    public bones:Map<string, THREE.Bone> = new Map()
+    private loading:boolean = true
     private boneMoves:Array<BoneMove> = new Array()    
     private currentTime:number = -1
 
-    // private temp:Array<Posture> = new Array() // 자세 저장 개발용 변수
     constructor(
         file: string,
         scene: THREE.Scene,
@@ -27,12 +28,13 @@ export default class Human {
             this.onError.bind(this)
         );
     }
-    private async onLoad (gltf:any) {
-        gltf.scene.scale.set(10, 10, 10)
+    private onLoad (gltf:any) {
+        this.body = gltf.scene
         this.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
         this.setPosture()
         this.scene.add(gltf.scene);
         this.currentTime = performance.now()
+        this.loading = false
     }
     private onProgress (xhr:any) {
         // console.log( Math.round(xhr.loaded / 4783071 * 100) + '%');
@@ -41,7 +43,7 @@ export default class Human {
         console.log("Error occur on loading:" + error);
     }
     public update() {
-        if(this.currentTime != -1) {
+        if(!this.loading) {
             const now = performance.now() - this.currentTime
             this.currentTime = performance.now()
             this.executeBoneMovement(now)
@@ -100,6 +102,17 @@ export default class Human {
                 bone.rotateZ(element.move.z * delta)
             }
         })
+    }
+
+    public getBones(): Array<THREE.Bone> {
+        let result = new Array()
+        this.bones.forEach((val: THREE.Bone) => {
+            result.push(val)
+        })
+        return result
+    }
+    public isLoading(): boolean {
+        return this.loading
     }
 
 }

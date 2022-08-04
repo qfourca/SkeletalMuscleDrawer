@@ -2,16 +2,17 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Human, { Option } from "./human";
 import * as Core from './core'
-import UI, { FunctionAndExpression } from './debug'
+import DEBUG from './debug'
 export default class App {
-    private scene:Core.Scene
-    private camera:Core.Camera
+    public scene:Core.Scene
+    public camera:Core.Camera
     private renderer:Core.Renderer
     private control:OrbitControls
-    private parent:HTMLElement
-    private human:Human
+    public parent:HTMLElement
+    public human:Human
     private option:Option
-    private debugUI?:UI
+
+    private debug?: DEBUG
 
     public moveBone:(name: string, move: THREE.Vector3, taken: number, reservation?: number) => void
     constructor(
@@ -34,10 +35,7 @@ export default class App {
         window.addEventListener('resize', this.resize.bind(this), false)
         
         if(this.option.devMode === true) {
-            this.debugUI = new UI(this.parent, 
-                [
-                    { func: () => { console.log(JSON.stringify(this.human.posture)) }, expression: "posture" } 
-                ])
+            this.debug = new DEBUG(this)
         }
     }
 
@@ -45,6 +43,7 @@ export default class App {
         requestAnimationFrame(this.update.bind(this))
         this.control.update()
         this.human.update()
+        if(this.debug != undefined) this.debug.update()
         this.render()
     }
     public resize(e:any) {
@@ -57,3 +56,4 @@ export default class App {
         this.renderer.render(this.scene, this.camera)
     }
 }
+
