@@ -1,4 +1,3 @@
-import Raycast from "./raycast";
 import UI from "./ui";
 import App from "../app";
 import Bone from "./bone";
@@ -7,7 +6,6 @@ export default class Debug {
     private parent: HTMLElement
     private app: App
     private debugUI: UI
-    private debugRaycast: Raycast
     private debugBone?: Bone
     constructor(
         app: App
@@ -18,8 +16,6 @@ export default class Debug {
             [
                 { func: () => { console.log(JSON.stringify(this.app.human.posture)) }, expression: "posture" } 
             ])
-        this.debugRaycast = new Raycast(app.camera, app.human)
-        this.app.parent.addEventListener('mousemove', this.debugRaycast.mouseMove.bind(this.debugRaycast))
         let timer = setInterval(() => {
             if(!this.app.human.isLoading()) {
                 this.debugBone = new Bone(this.app.scene, this.app.human.bones)

@@ -1,4 +1,4 @@
-import Bone from "./bone"
+import BoneRotate from './boneRotate'
 import * as THREE from 'three'
 export default class UI {
     private parent:HTMLElement
@@ -77,85 +77,6 @@ export default class UI {
         container.appendChild(boneInfo)
         container.appendChild(this.boneRotater.UI)
         return container
-    }
-}
-class BoneRotate {
-    private static XYZ = ['x', 'y', 'z']
-    private rotation: THREE.Euler
-    public UI: HTMLDivElement
-    private bone: THREE.Bone = new THREE.Bone()
-    private valueGetter: Array<HTMLInputElement> = new Array()
-    private valueSetter: Array<HTMLInputElement> = new Array()
-    private isClick: boolean = false
-    constructor(rotation: THREE.Euler) {
-        this.rotation = rotation
-        this.UI = this.makeUI()
-        this.setRotation(this.rotation)
-        window.addEventListener("mouseup", () => {
-            this.isClick = false;
-        }, false);
-    }
-    private makeUI(): HTMLDivElement {
-        const container = document.createElement('div')
-        container.style.width = '80%'
-        container.style.display = 'flex'
-        container.style.flexDirection = 'column'
-        container.style.alignItems = 'center'
-        container.style.gap = '15px'
-
-        BoneRotate.XYZ.forEach((element: string) => {
-            const tempGetter = document.createElement('input')
-            this.valueGetter.push(tempGetter)
-            const tempSetter = document.createElement('input')
-            this.valueSetter.push(tempSetter)
-            tempSetter.type = 'range'
-            tempSetter.min = String(-Math.PI * 2)
-            tempSetter.max = String(Math.PI * 2)
-            tempSetter.step = '0.001'
-            tempSetter.addEventListener("mousedown", (e) => {
-                this.isClick = true;
-            });
-            tempSetter.addEventListener("mousemove", (e) => {
-                if (this.isClick) {
-                    this.reload()
-                }
-            });
-            tempSetter.addEventListener('change', () => {
-                this.reload()
-            })
-            container.appendChild(tempSetter)
-            container.appendChild(tempGetter)
-        })
-        return container
-    }
-    public setBone(bone:THREE.Bone) {
-        this.bone = bone
-    }
-    
-    public setRotation(rotation: THREE.Euler) {
-        this.rotation = rotation
-        this.bone.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
-        this.rotation.x = Math.round(this.rotation.x * 1000) / 1000
-        this.rotation.y = Math.round(this.rotation.y * 1000) / 1000
-        this.rotation.z = Math.round(this.rotation.z * 1000) / 1000
-        const arr = [
-            String(this.rotation.x),
-            String(this.rotation.y),
-            String(this.rotation.z)
-        ]
-        arr.forEach((element, idx) => {
-            this.valueGetter[idx].value = element
-            this.valueSetter[idx].value = element
-        })
-    }
-    private reload() {
-        const x = Number.parseFloat(this.valueSetter[0].value)
-        const y = Number.parseFloat(this.valueSetter[1].value)
-        const z = Number.parseFloat(this.valueSetter[2].value)
-        const euler = new THREE.Euler(
-            x, y, z
-        )
-        this.setRotation(euler)
     }
 }
 export interface FunctionAndExpression {
