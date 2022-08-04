@@ -1,12 +1,10 @@
 import UI from "./ui";
 import App from "../app";
-import Bone from "./bone";
 
 export default class Debug {
     private parent: HTMLElement
     private app: App
     private debugUI: UI
-    private debugBone?: Bone
     constructor(
         app: App
     ) {
@@ -15,14 +13,17 @@ export default class Debug {
         this.debugUI = new UI(this.parent, 
             [
                 { func: () => { console.log(JSON.stringify(this.app.human.posture)) }, expression: "posture" } 
-            ])
-        let timer = setInterval(() => {
+            ]
+        )
+        const timer = setInterval(() => {
             if(!this.app.human.isLoading()) {
-                this.debugBone = new Bone(this.app.scene, this.app.human.bones)
-                this.debugUI.setBoneSelector(this.debugBone.selectBone.bind(this.debugBone))
+                this.debugUI.setBoneSelector(this.app.human.selectBone.bind(this.app.human))
+                this.debugUI.setOptions(this.app.human.getBones())
                 clearInterval(timer)
             }
         }, 10)
+        
+        
     }
     update() {
 

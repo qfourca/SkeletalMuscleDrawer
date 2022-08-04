@@ -103,11 +103,13 @@ export default class Human {
             }
         })
     }
-
-    public getBones(): Array<THREE.Bone> {
+    public selectBone(name: string): THREE.Bone | undefined {
+        return this.bones.get(name)
+    }
+    public getBones(): Array<string> {
         let result = new Array()
-        this.bones.forEach((val: THREE.Bone) => {
-            result.push(val)
+        this.bones.forEach((val: THREE.Bone, key: string) => {
+            result.push(key)
         })
         return result
     }
