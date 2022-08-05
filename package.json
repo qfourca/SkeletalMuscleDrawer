@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack serve --config webpack.dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sean Bradley",
   "license": "ISC",
@@ -33,6 +32,8 @@
     "!dist/favicon.ico"
   ],
   "dependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/lodash-es": "^4.17.4",
     "three": "^0.140.2"
   },
   "repository": {

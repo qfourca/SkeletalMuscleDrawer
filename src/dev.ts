@@ -6,11 +6,7 @@ const app = new App(
     { devMode: true }
 )
 
-app.moveBone(
-    BoneName.spine1,
-    new Vector3(1.5, 0, 0),
-    1500
-)
+// 
 // app.moveBone(
 //     BoneName.right_bottom_arm, 
 //     new Vector3(0, 0, -1.5), 

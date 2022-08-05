@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Human, { Option } from "./human";
 import * as Core from './core'
-import DEBUG from './debug'
+import DEBUG from './animator'
 export default class App {
     public scene:Core.Scene
     public camera:Core.Camera
