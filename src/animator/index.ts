@@ -19,7 +19,7 @@ export default class Debug {
             [
                 { func: () => { console.log(this.timeLine) }, expression: "print" },
                 { func: () => { this.timeLine.push(this.app.human.posture!) }, expression: "timeline" },
-                { func: () => { console.log(this.timeLine) }, expression: "download" }
+                { func: () => { this.timeLine.download() }, expression: "download" }
             ]
         )
         const timer = setInterval(() => {

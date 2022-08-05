@@ -4,7 +4,6 @@ export default class BoneRotate {
     private rotation: THREE.Euler
     public UI: HTMLDivElement
     private bone: THREE.Bone = new THREE.Bone()
-    // private valueGetter: Array<HTMLInputElement> = new Array()
     private valueSetter: Array<HTMLInputElement> = new Array()
     private isClick: boolean = false
     constructor(rotation: THREE.Euler) {
