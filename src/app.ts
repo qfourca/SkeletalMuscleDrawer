@@ -14,7 +14,6 @@ export default class App {
 
     private debug?: DEBUG
 
-    public moveBone:(name: string, move: THREE.Vector3, taken: number, reservation?: number) => void
     constructor(
         domElement: HTMLElement,
         file: string,
@@ -26,11 +25,10 @@ export default class App {
         this.renderer = new Core.Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
         this.scene.add(new THREE.DirectionalLight(0xffffff, 1))
         this.control = new OrbitControls(this.camera, this.renderer.domElement)
-        this.human = new Human(file, this.scene, option?.posture)
+        this.human = new Human(file, this.scene)
         this.option = option == undefined ? {
             devMode: false
         } : option
-        this.moveBone = this.human.moveBone.bind(this.human)
         this.update()
         window.addEventListener('resize', this.resize.bind(this), false)
         
@@ -46,11 +44,14 @@ export default class App {
         if(this.debug != undefined) this.debug.update()
         this.render()
     }
-    public resize(e:any) {
+    public resize() {
         this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(this.parent.clientWidth, this.parent.clientHeight)
         this.render()
+    }
+    public isloading() {
+        return this.human.isLoading()
     }
     private render() {
         this.renderer.render(this.scene, this.camera)

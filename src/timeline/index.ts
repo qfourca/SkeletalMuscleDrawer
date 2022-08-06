@@ -26,15 +26,27 @@ export default class TimeLine {
         element.click()
         document.body.removeChild(element)
     }
-    private getRootPosture(name: string) {
-        for(let i = this.timeLine.length - 1; i >= 0; i--) {
+    public getTimeLine() {
+        return this.timeLine
+    }
+    public movements(idx: number):Array<Posture> {
+        const result = new Array()
+        this.timeLine[idx].forEach(element => {
+            const root = this.getRootPosture(element.name, idx - 1)            
+            result.push(new Posture(element.name, new THREE.Euler(
+                element.rotation.x - root.rotation.x,
+                element.rotation.y - root.rotation.y,
+                element.rotation.z - root.rotation.z
+            )))
+        })
+        return result
+    }
+    private getRootPosture(name: string, idx?: number): Posture {
+        for(let i = idx == undefined ? this.timeLine.length - 1 : idx; i >= 0; i--) {
             const res = this.timeLine[i].find((element) => element.name === name)
             if(res != undefined) return res
         }
-        return  {
-            name: 'unExist',
-            rotation: new THREE.Euler()
-        }
+        return new Posture('unExist', new THREE.Euler())
     }
     
 }

@@ -1,4 +1,4 @@
-import { App, BoneName, Vector3 } from "./index"
+import { App, TimeLine, BoneName, Vector3, Euler } from "./index"
 
 const app = new App(
     document.getElementById('app')!,
@@ -6,19 +6,22 @@ const app = new App(
     { devMode: true }
 )
 
-// 
-// app.moveBone(
-//     BoneName.right_bottom_arm, 
-//     new Vector3(0, 0, -1.5), 
-//     1000
-// )
-// app.moveBone(
-//     BoneName.right_shoulder, 
-//     new Vector3(0, -0.5, -0.5), 
-//     1000
-// )
-// app.moveBone(
-//     BoneName.right_wrist, 
-//     new Vector3(-0.5, -1, -1), 
-//     1000
-// )
+// axios.get('./animation.json')
+// .then((result) => {
+//     let timeLine:Array<Array<Posture>> = new Array()
+//     result.data.timeLine.forEach((line: Array<any>, i: number) => {
+//         let one:Array<Posture> = new Array()
+//         line.forEach((element ,j) => {
+//             one.push(
+//                 new Posture(element.name,
+//                      new Euler(element.rotation._x, 
+//                                element.rotation._y, 
+//                                element.rotation._z, 
+//                                element.rotation._order)))
+//         })
+//         timeLine.push(one)
+//         one = new Array()
+//     })
+//     app.human.executeOnLoad(app.human.animate.bind(app.human), new TimeLine(timeLine))
+// })
+// .catch(console.error)

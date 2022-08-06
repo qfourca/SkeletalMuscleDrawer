@@ -4,10 +4,11 @@ export default class Posture {
     rotation: THREE.Euler
     constructor(
         name: string,
-        rotation: THREE.Euler
+        rotation?: THREE.Euler
     ) {
         this.name = name
-        this.rotation = rotation
+        if(rotation == undefined) this.rotation = new Euler()
+        else this.rotation = rotation
     }
     public static compare(posture1: Posture, posture2: Posture): boolean {
         // console.log(posture1.rotation.x, posture2.rotation.x)

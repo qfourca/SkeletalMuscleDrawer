@@ -1,12 +1,14 @@
 import App from './app'
 import BoneName from './bonename'
-import { Vector3 } from 'three'
+import TimeLine from './timeline'
+import { Vector3, Euler } from 'three'
 
 export default App
 
 export {
     App as App,
     BoneName as BoneName,
-    Vector3 as Vector3
+    TimeLine as TimeLine,
+    Vector3 as Vector3,
+    Euler as Euler
 }
-// export default () => {console.log("test")}

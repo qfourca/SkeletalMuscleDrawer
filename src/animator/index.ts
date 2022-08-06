@@ -18,17 +18,14 @@ export default class Debug {
         this.debugUI = new UI(this.parent, 
             [
                 { func: () => { console.log(this.timeLine) }, expression: "print" },
-                { func: () => { this.timeLine.push(this.app.human.posture!) }, expression: "timeline" },
+                { func: () => { this.timeLine.push(this.app.human.getPosture()) }, expression: "timeline" },
                 { func: () => { this.timeLine.download() }, expression: "download" }
             ]
         )
-        const timer = setInterval(() => {
-            if(!this.app.human.isLoading()) {
-                this.debugUI.setBoneSelector(this.app.human.selectBone.bind(this.app.human))
-                this.debugUI.setOptions(this.app.human.getBones())
-                clearInterval(timer)
-            }
-        }, 10)
+        this.app.human.executeOnLoad(() => {
+            this.debugUI.setBoneSelector(this.app.human.selectBone.bind(this.app.human))
+            this.debugUI.setOptions(this.app.human.getBones())
+        })
     }
 
     public update() {

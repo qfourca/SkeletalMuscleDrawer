@@ -6,9 +6,7 @@ export default class UI {
     private boneRotater = new BoneRotate(new THREE.Euler(0, 0, 0))
     private optionContainer: HTMLSelectElement = document.createElement('select')
     private boneSelector: (name:string) => THREE.Bone | undefined = (name: string) => {return undefined}
-    public setBoneSelector(func: (name:string) => THREE.Bone | undefined) {
-        this.boneSelector = func
-    }
+    public setBoneSelector(func: (name:string) => THREE.Bone | undefined) { this.boneSelector = func }
 
     constructor(
         domElement: HTMLElement, 
