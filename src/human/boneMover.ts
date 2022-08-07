@@ -19,17 +19,17 @@ export default class BoneMover {
         this.setPosture()
     }
     public animate(timeLine: TimeLine) {
-        // console.log(this.bones)
         timeLine.getTimeLine()[0].forEach((element: Posture) => {
-            // console.log(this.bones.get(element.name)?.rotation, element.rotation)
+            console.log(element)
             this.bones.get(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z, element.rotation.order)
         })
-        for(let i = 1 ; i < timeLine.getTimeLine().length; i++) {
+        const length = timeLine.getTimeLine().length
+        for(let i = 1 ; i < length; i++) {
             timeLine.movements(i).forEach((element: Posture) => {
                 this.moveBone(
                     element.name,
                     element.rotation,
-                    i * 2000,
+                    (i) * 2000,
                     (i - 1) * 2000
                 )
             })
@@ -40,26 +40,32 @@ export default class BoneMover {
         this.currentTime = performance.now()
         this.executeBoneMovement(now)
     }
+    private test: number = 0
     private executeBoneMovement(now: number) {
         this.boneMoves.forEach((element:BoneMove, idx:number) => {
             let delta = now
             if(element.reservation > 0) {
                 element.reservation -= delta
                 if(element.reservation < 0) {
-                    delta += element.reservation * -1
+                    delta = element.reservation * -1
                     element.reservation = 0
                 }
             }
             if(element.reservation <= 0) {
-                element.taken -= now
+                element.taken -= delta
                 if(element.taken < 0)  { 
                     this.boneMoves.splice(idx, 1)
                     delta += element.taken
                 }
                 const bone:THREE.Bone = this.bones.get(element.name)!
-                bone.rotateX(element.move.x * delta)
-                bone.rotateY(element.move.y * delta)
-                bone.rotateZ(element.move.z * delta)
+                bone.rotation.set(
+                    bone.rotation.x + element.move.x * delta,
+                    bone.rotation.y + element.move.y * delta,
+                    bone.rotation.z + element.move.z * delta
+                )
+                // bone.rotateX(element.move.x * delta)
+                // bone.rotateY(element.move.y * delta)
+                // bone.rotateZ(element.move.z * delta)
             }
         })
     }

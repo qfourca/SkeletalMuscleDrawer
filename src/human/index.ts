@@ -42,7 +42,9 @@ export default class Human {
         }
     }
     public executeOnLoad(func: (arg?:any) => any) {
-        this.onLoadFunctions.push(func)
+        if(this.loading) this.onLoadFunctions.push(func)
+        else func()
+        
     }
     public animate(timeLine: TimeLine) {
         this.boneMover.animate(timeLine)

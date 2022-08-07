@@ -6,8 +6,27 @@ export default class TimeLine {
     constructor(
         startValue?: Array<Array<Posture>>
     ) {
-        if(startValue != undefined) this.timeLine = startValue
-        else this.timeLine = new Array()
+        if(startValue == undefined) this.timeLine = new Array()
+        else if(startValue[0][0].rotation.x == undefined) {
+            let timeLine:Array<Array<Posture>> = new Array()
+            startValue.forEach((line: Array<any>, i: number) => {
+                let one:Array<Posture> = new Array()
+                line.forEach((element ,j) => {
+                    one.push(
+                        new Posture(element.name,
+                             new THREE.Euler(element.rotation._x, 
+                                       element.rotation._y, 
+                                       element.rotation._z, 
+                                       element.rotation._order)))
+                })
+                timeLine.push(one)
+                one = new Array()
+            })
+            this.timeLine = timeLine
+        }
+        else {
+            this.timeLine = startValue
+        }
     }
     public push(posture: Array<Posture>) {
         const deepClonedArray = new Array()
@@ -32,7 +51,11 @@ export default class TimeLine {
     public movements(idx: number):Array<Posture> {
         const result = new Array()
         this.timeLine[idx].forEach(element => {
-            const root = this.getRootPosture(element.name, idx - 1)            
+            
+            const root = this.getRootPosture(element.name, idx - 1)   
+            if(element.name == 'left-top-arm') {
+                console.log(root, element)
+            }         
             result.push(new Posture(element.name, new THREE.Euler(
                 element.rotation.x - root.rotation.x,
                 element.rotation.y - root.rotation.y,
