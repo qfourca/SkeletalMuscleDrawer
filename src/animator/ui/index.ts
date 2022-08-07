@@ -5,20 +5,21 @@ import TimeLine from './timeline'
 
 export default class UI {
     private parent:HTMLElement
-    private buttons:ButtonContainer
+    private buttonContainer:ButtonContainer
+    private buttons: Array<Button> = new Array()
     private controller: Controller
     private timeLine: TimeLine
     constructor(
         domElement: HTMLElement,
-        buttons: Array<FunctionAndExpression>
+        buttonInfo: Array<FunctionAndExpression>
     ) {
         this.parent = domElement
         
-        this.buttons = new ButtonContainer(this.parent)
+        this.buttonContainer = new ButtonContainer(this.parent)
         this.timeLine = new TimeLine(this.parent)
         this.controller = new Controller(this.parent)
-        buttons.forEach((element) => {
-            new Button(this.buttons.me, element.expression, element.func)
+        buttonInfo.forEach((element) => {
+            this.buttons.push(new Button(this.buttonContainer.me, element.expression, element.func))
         })
     }
 

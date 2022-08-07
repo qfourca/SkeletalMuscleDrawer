@@ -19,17 +19,23 @@ export default class BoneMover {
         this.setPosture()
     }
     public animate(timeLine: TimeLine) {
-        timeLine.getTimeLine()[0].forEach((element: Posture) => {
-            this.bones.get(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z, element.rotation.order)
+        timeLine.getTimeLine()[0].postures.forEach((element: Posture) => {
+            this.bones.get(element.name)?.rotation.set(
+                element.rotation.x, 
+                element.rotation.y, 
+                element.rotation.z, 
+                element.rotation.order
+            )
         })
         const length = timeLine.getTimeLine().length
         for(let i = 1 ; i < length; i++) {
+            const { reservation, run } = timeLine.getTime(i)
             timeLine.movements(i).forEach((element: Posture) => {
                 this.moveBone(
                     element.name,
                     element.rotation,
-                    (i) * 2000,
-                    (i - 1) * 2000
+                    run,
+                    reservation
                 )
             })
         }

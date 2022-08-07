@@ -6,7 +6,7 @@ const app = new App(
     { devMode: true }
 )
 
-axios.get('./animation.json')
+axios.get('./test.json')
 .then((result) => {
     app.human.executeOnLoad(() => { app.human.animate(new TimeLine(result.data.timeLine)) })
 })

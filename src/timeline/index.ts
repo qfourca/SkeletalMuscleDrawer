@@ -2,25 +2,29 @@ import * as THREE from 'three'
 import Posture from "../posture"
 
 export default class TimeLine {
-    private timeLine:Array<Array<Posture>>
+    private timeLine:Array<moment>
     constructor(
-        startValue?: Array<Array<Posture>>
+        startValue?: Array<moment>
     ) {
         if(startValue == undefined) this.timeLine = new Array()
-        else if(startValue[0][0].rotation.x == undefined) {
-            let timeLine:Array<Array<Posture>> = new Array()
-            startValue.forEach((line: Array<any>, i: number) => {
-                let one:Array<Posture> = new Array()
-                line.forEach((element ,j) => {
-                    one.push(
+        else if(startValue[0].postures[0].rotation.x == undefined) {
+            let timeLine:Array<moment> = new Array()
+            startValue.forEach((line: moment, i: number) => {
+                let one:moment = { postures: new Array(), time: line.time}
+                line.postures.forEach((element ,j) => {
+                    one.postures.push(
                         new Posture(element.name,
+                            //@ts-ignore
                              new THREE.Euler(element.rotation._x, 
+                            //@ts-ignore
                                        element.rotation._y, 
-                                       element.rotation._z, 
+                            //@ts-ignore
+                                       element.rotation._z,
+                            //@ts-ignore 
                                        element.rotation._order)))
                 })
                 timeLine.push(one)
-                one = new Array()
+                one = { postures: new Array(), time: 0}
             })
             this.timeLine = timeLine
         }
@@ -32,10 +36,15 @@ export default class TimeLine {
         const deepClonedArray = new Array()
         posture.forEach(element => {
             if(!Posture.compare(element, this.getRootPosture(element.name))) {
-                deepClonedArray.push(new Posture(element.name, new THREE.Euler(element.rotation.x, element.rotation.y, element.rotation.z)))
+                deepClonedArray.push(
+                    new Posture(element.name, 
+                        new THREE.Euler(
+                            element.rotation.x, 
+                            element.rotation.y, 
+                            element.rotation.z)))
             }
         })
-        if(deepClonedArray.length != 0) this.timeLine.push(deepClonedArray)
+        if(deepClonedArray.length != 0) this.timeLine.push({ postures: deepClonedArray, time: 2000 })
     }
     public download() {
         const element = document.createElement('a')
@@ -50,7 +59,7 @@ export default class TimeLine {
     }
     public movements(idx: number):Array<Posture> {
         const result = new Array()
-        this.timeLine[idx].forEach(element => {
+        this.timeLine[idx].postures.forEach(element => {
             const root = this.getRootPosture(element.name, idx - 1)   
             result.push(new Posture(element.name, new THREE.Euler(
                 element.rotation.x - root.rotation.x,
@@ -62,10 +71,25 @@ export default class TimeLine {
     }
     private getRootPosture(name: string, idx?: number): Posture {
         for(let i = idx == undefined ? this.timeLine.length - 1 : idx; i >= 0; i--) {
-            const res = this.timeLine[i].find((element) => element.name === name)
+            const res = this.timeLine[i].postures.find((element) => element.name === name)
             if(res != undefined) return res
         }
         return new Posture('unExist', new THREE.Euler())
     }
-    
+    public getTime(idx: number): any {
+        let reservation = 0
+        for(let i = 0; i < idx; i++) {
+            reservation += this.timeLine[i].time
+        }
+        let run = this.timeLine[idx].time
+        return { 
+            reservation,
+            run
+        }
+    }
+}
+
+export interface moment {
+    postures: Array<Posture>
+    time: number
 }
