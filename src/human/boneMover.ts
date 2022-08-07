@@ -20,7 +20,6 @@ export default class BoneMover {
     }
     public animate(timeLine: TimeLine) {
         timeLine.getTimeLine()[0].forEach((element: Posture) => {
-            console.log(element)
             this.bones.get(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z, element.rotation.order)
         })
         const length = timeLine.getTimeLine().length
@@ -40,7 +39,6 @@ export default class BoneMover {
         this.currentTime = performance.now()
         this.executeBoneMovement(now)
     }
-    private test: number = 0
     private executeBoneMovement(now: number) {
         this.boneMoves.forEach((element:BoneMove, idx:number) => {
             let delta = now

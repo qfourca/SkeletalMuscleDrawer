@@ -1,9 +1,6 @@
-import * as THREE from 'three'
 import UI from "./ui";
 import App from "../app";
-import Posture from "../posture";
 import TimeLine from '../timeline';
-
 
 export default class Debug {
     private parent: HTMLElement
@@ -23,11 +20,10 @@ export default class Debug {
             ]
         )
         this.app.human.executeOnLoad(() => {
-            this.debugUI.setBoneSelector(this.app.human.selectBone.bind(this.app.human))
+            this.debugUI.setBone(this.app.human.selectBone.bind(this.app.human))
             this.debugUI.setOptions(this.app.human.getBones())
         })
     }
-
     public update() {
 
     }

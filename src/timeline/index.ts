@@ -51,11 +51,7 @@ export default class TimeLine {
     public movements(idx: number):Array<Posture> {
         const result = new Array()
         this.timeLine[idx].forEach(element => {
-            
             const root = this.getRootPosture(element.name, idx - 1)   
-            if(element.name == 'left-top-arm') {
-                console.log(root, element)
-            }         
             result.push(new Posture(element.name, new THREE.Euler(
                 element.rotation.x - root.rotation.x,
                 element.rotation.y - root.rotation.y,
