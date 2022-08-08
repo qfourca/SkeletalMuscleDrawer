@@ -32,7 +32,7 @@ export default class TimeLine {
             this.timeLine = startValue
         }
     }
-    public push(posture: Array<Posture>) {
+    public push(posture: Array<Posture>, time: number) {
         const deepClonedArray = new Array()
         posture.forEach(element => {
             if(!Posture.compare(element, this.getRootPosture(element.name))) {
@@ -44,7 +44,7 @@ export default class TimeLine {
                             element.rotation.z)))
             }
         })
-        if(deepClonedArray.length != 0) this.timeLine.push({ postures: deepClonedArray, time: 2000 })
+        if(deepClonedArray.length != 0) this.timeLine.push({ postures: deepClonedArray, time: time })
     }
     public download() {
         const element = document.createElement('a')
