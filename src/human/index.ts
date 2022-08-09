@@ -6,8 +6,8 @@ import TimeLine from "../timeline";
 
 export default class Human {
     private scene:THREE.Scene
-    public body: any
-    public boneMover: BoneMover = new BoneMover()
+    private body: any
+    private boneMover: BoneMover = new BoneMover()
     private loading:boolean = true
     private onLoadFunctions:Array<(arg?:any) => any> = new Array()
 
@@ -66,9 +66,4 @@ export default class Human {
         return this.loading
     }
 
-}
-
-
-export interface Option {
-    devMode?: boolean //개발 모드
 }
