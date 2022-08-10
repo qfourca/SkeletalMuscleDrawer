@@ -2,7 +2,7 @@ import * as Core from './core'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Human from "./human";
-import { UI as UIType, Animation } from './ui'
+import { UI as UIType, Animation, Production } from './ui'
 import TimeLine from './timeline';
 export default class App {
     private scene:Core.Scene
@@ -33,7 +33,9 @@ export default class App {
         window.addEventListener('resize', this.resize.bind(this), false)
         
         if(this.option.UI === UI.animation) this.ui = new Animation(this.parent, this.human)
-        
+        else if(this.option.UI === UI.production) this.ui = new Production(this.parent)
+        else this.ui = new Production(this.parent)
+
     }
 
     private update() {
