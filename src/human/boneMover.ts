@@ -1,26 +1,19 @@
 import * as THREE from 'three'
 import Posture from '../posture'
 import TimeLine from '../timeline'
+import Skeleton from './skeleton'
 export default class BoneMover {
-    public bones: Map<string, THREE.Bone> = new Map()
-    private boneMoves:Array<BoneMove> = new Array()  
+    private skeleton:Skeleton
     private currentTime: number = -1
-    public posture:Array<Posture> = new Array()
+    private boneMoves:Array<BoneMove> = new Array()
     constructor(
-        
+        skeleton: Skeleton
     ) {
-
-    }
-    public setBones(bone:THREE.Bone) {
-        this.bones.set(bone.name, bone)
-        bone.children.forEach((element:any) => {
-            this.setBones(element)
-        });
-        this.setPosture()
+        this.skeleton = skeleton
     }
     public animate(timeLine: TimeLine) {
         timeLine.getTimeLine()[0].postures.forEach((element: Posture) => {
-            this.bones.get(element.name)?.rotation.set(
+            this.skeleton.getBone(element.name)?.rotation.set(
                 element.rotation.x, 
                 element.rotation.y, 
                 element.rotation.z, 
@@ -61,33 +54,21 @@ export default class BoneMover {
                     this.boneMoves.splice(idx, 1)
                     delta += element.taken
                 }
-                const bone:THREE.Bone = this.bones.get(element.name)!
+                const bone:THREE.Bone = this.skeleton.getBone(element.name)!
                 bone.rotation.set(
                     bone.rotation.x + element.move.x * delta,
                     bone.rotation.y + element.move.y * delta,
                     bone.rotation.z + element.move.z * delta
                 )
-                // bone.rotateX(element.move.x * delta)
-                // bone.rotateY(element.move.y * delta)
-                // bone.rotateZ(element.move.z * delta)
             }
         })
     }
-    private setPosture() {
-        this.posture = new Array()
-        this.bones.forEach((value:THREE.Bone, key:string) => {
-            this.posture!.push({
-                name: key,
-                rotation: value.rotation
-            })
-        })
-    }
+
     public moveBone(name: string, move: THREE.Euler, taken: number, reservation?: number ) {
         reservation = reservation === undefined ? 0 : reservation
         move = new THREE.Euler(move.x / taken, move.y / taken, move.z / taken)
         this.boneMoves.push({ name, move, taken, reservation })
     }
-
 }
 
 export interface BoneMove {

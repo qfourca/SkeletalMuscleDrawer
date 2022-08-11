@@ -7,11 +7,12 @@ import TimeLine from './timeline';
 export default class App {
     private scene:Core.Scene
     private camera:Core.Camera
+    private renderer:Core.Renderer
+    private light:Core.Light
+    private control:OrbitControls
+
     private parent:HTMLElement
     private human:Human
-
-    private renderer:Core.Renderer
-    private control:OrbitControls
     private option:Option
 
     private ui?: UIType
@@ -22,14 +23,18 @@ export default class App {
         option?: Option
     ) {
         this.parent = domElement
+        this.option = option == undefined ? { } : option
+        
         this.scene = new Core.Scene()
         this.camera = new Core.Camera(95, this.parent.clientWidth / this.parent.clientHeight)
         this.renderer = new Core.Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
-        this.scene.add(new THREE.DirectionalLight(0xffffff, 1))
         this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        this.light = new Core.Light()
+        this.light.addLight(this.scene)
+        
         this.human = new Human(file, this.scene)
-        this.option = option == undefined ? { } : option
         this.update()
+
         window.addEventListener('resize', this.resize.bind(this), false)
         
         if(this.option.UI === UI.animation) this.ui = new Animation(this.parent, this.human)
@@ -44,20 +49,17 @@ export default class App {
         this.human.update()
         this.render()
     }
-    public resize() {
+    private resize() {
         this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(this.parent.clientWidth, this.parent.clientHeight)
         this.render()
     }
-    public isloading() {
-        return this.human.isLoading()
-    }
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
     public animate(timeLine: TimeLine) {
-        this.human.executeOnLoad(() => { this.human.animate(timeLine) })
+        this.human.execute(() => { this.human.animate(timeLine) })
     }
 }
 

@@ -22,9 +22,9 @@ export default class Animation implements UIRoot{
             ],
             this.timeLine
         )
-        this.human.executeOnLoad(() => {
-            this.debugUI.setBone(this.human.selectBone.bind(this.human))
-            this.debugUI.setOptions(this.human.getBones())
+        this.human.execute(() => {
+            this.debugUI.setBone(this.human.getBone.bind(this.human))
+            this.debugUI.setOptions(this.human.getBoneNames())
         })
     }
 }

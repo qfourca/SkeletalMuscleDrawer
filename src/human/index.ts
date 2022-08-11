@@ -2,12 +2,14 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import Posture from "../posture";
 import BoneMover from "./boneMover";
+import Skeleton from "./skeleton";
 import TimeLine from "../timeline";
 
 export default class Human {
     private scene:THREE.Scene
     private body: any
-    private boneMover: BoneMover = new BoneMover()
+    private skeleton: Skeleton = new Skeleton()
+    private boneMover: BoneMover = new BoneMover(this.skeleton)
     private loading:boolean = true
     private onLoadFunctions:Array<(arg?:any) => any> = new Array()
 
@@ -26,12 +28,13 @@ export default class Human {
     }
     private onLoad (gltf:any) {
         this.body = gltf.scene
-        this.boneMover.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
+        this.skeleton.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
         this.onLoadFunctions.forEach(element => { element() })
-        this.scene.add(gltf.scene);
+        this.scene.add(this.body);
         this.loading = false
     }
     private onProgress (xhr:any) {
+
     }
     private onError (error:any) {
         console.log("Error occur on loading:" + error);
@@ -41,29 +44,15 @@ export default class Human {
             this.boneMover.update()
         }
     }
-    public executeOnLoad(func: (arg?:any) => any) {
+    public execute(func: (arg?:any) => any) {
         if(this.loading) this.onLoadFunctions.push(func)
         else func()
-        
     }
     public animate(timeLine: TimeLine) {
         this.boneMover.animate(timeLine)
     }
-    public selectBone(name: string): THREE.Bone | undefined {
-        return this.boneMover.bones.get(name)
-    }
-    public getBones(): Array<string> {
-        let result = new Array()
-        this.boneMover.bones.forEach((val: THREE.Bone, key: string) => {
-            result.push(key)
-        })
-        return result
-    }
-    public getPosture(): Array<Posture> {
-        return this.boneMover.posture
-    }
-    public isLoading() {
-        return this.loading
-    }
 
+    public getBone:(name: string) => THREE.Bone | undefined = this.skeleton.getBone
+    public getBoneNames:() => Array<string> = this.skeleton.getBoneNames
+    public getPosture: () => Array<Posture> = this.skeleton.getCurrentPosture
 }
