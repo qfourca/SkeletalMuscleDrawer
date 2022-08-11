@@ -52,7 +52,7 @@ export default class Human {
         this.boneMover.animate(timeLine)
     }
 
-    public getBone:(name: string) => THREE.Bone | undefined = this.skeleton.getBone
-    public getBoneNames:() => Array<string> = this.skeleton.getBoneNames
-    public getPosture: () => Array<Posture> = this.skeleton.getCurrentPosture
+    public getBone(name: string): THREE.Bone | undefined { return this.skeleton.getBone(name) }
+    public getBoneNames(): Array<string> { return this.skeleton.getBoneNames() }
+    public getPosture(): Array<Posture> { return this.skeleton.getCurrentPosture() }
 }

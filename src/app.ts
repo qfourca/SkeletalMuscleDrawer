@@ -1,9 +1,9 @@
 import * as Core from './core'
-import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import Human from "./human";
 import { UI as UIType, Animation, Production } from './ui'
+import Human from "./human";
 import TimeLine from './timeline';
+
 export default class App {
     private scene:Core.Scene
     private camera:Core.Camera
@@ -13,6 +13,7 @@ export default class App {
 
     private parent:HTMLElement
     private human:Human
+    
     private option:Option
 
     private ui?: UIType
@@ -42,7 +43,6 @@ export default class App {
         else this.ui = new Production(this.parent)
 
     }
-
     private update() {
         requestAnimationFrame(this.update.bind(this))
         this.control.update()

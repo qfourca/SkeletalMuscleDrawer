@@ -3,7 +3,7 @@ import axios from "axios"
 const app = new App(
     document.getElementById('app')!,
     './human.gltf',
-    { UI: UI.production}
+    { UI: UI.animation}
 )
 
 axios.get('./test.json')
