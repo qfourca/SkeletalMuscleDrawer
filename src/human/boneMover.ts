@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Posture from '../posture'
-import TimeLine from '../timeline'
+import Animation from '../animation'
 import Skeleton from './skeleton'
 export default class BoneMover {
     private skeleton:Skeleton
@@ -11,7 +11,7 @@ export default class BoneMover {
     ) {
         this.skeleton = skeleton
     }
-    public animate(timeLine: TimeLine) {
+    public animate(timeLine: Animation) {
         timeLine.getTimeLine()[0].postures.forEach((element: Posture) => {
             this.skeleton.getBone(element.name)?.rotation.set(
                 element.rotation.x, 

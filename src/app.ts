@@ -1,8 +1,8 @@
 import * as Core from './core'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { UI as UIType, Animation, Production } from './ui'
+import { UI as UIType, AnimationUI, ProductionUI } from './ui'
 import Human from "./human";
-import TimeLine from './timeline';
+import Animation from './animation';
 
 export default class App {
     private scene:Core.Scene
@@ -13,7 +13,7 @@ export default class App {
 
     private parent:HTMLElement
     private human:Human
-    
+
     private option:Option
 
     private ui?: UIType
@@ -38,9 +38,9 @@ export default class App {
 
         window.addEventListener('resize', this.resize.bind(this), false)
         
-        if(this.option.UI === UI.animation) this.ui = new Animation(this.parent, this.human)
-        else if(this.option.UI === UI.production) this.ui = new Production(this.parent)
-        else this.ui = new Production(this.parent)
+        if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.human)
+        else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent)
+        else this.ui = new ProductionUI(this.parent)
 
     }
     private update() {
@@ -58,7 +58,7 @@ export default class App {
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
-    public animate(timeLine: TimeLine) {
+    public animate(timeLine: Animation) {
         this.human.execute(() => { this.human.animate(timeLine) })
     }
 }

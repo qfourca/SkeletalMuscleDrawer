@@ -1,10 +1,10 @@
 import UI from "./ui";
-import TimeLine from '../../timeline';
+import Animation from '../../animation';
 import Human from "../../human";
 import UIRoot from '../ui'
-export default class Animation implements UIRoot{
+export default class AnimationUI implements UIRoot{
     private parent: HTMLElement
-    private timeLine: TimeLine = new TimeLine()
+    private timeLine: Animation = new Animation()
     private human: Human
     private debugUI: UI 
     constructor(

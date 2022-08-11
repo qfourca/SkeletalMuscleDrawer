@@ -1,4 +1,4 @@
-import { App, TimeLine, UI } from "./index"
+import { App, Animation, UI } from "./index"
 import axios from "axios"
 const app = new App(
     document.getElementById('app')!,
@@ -8,6 +8,6 @@ const app = new App(
 
 axios.get('./test.json')
 .then((result) => {
-    app.animate(new TimeLine(result.data.timeLine))
+    app.animate(new Animation(result.data.timeLine))
 })
 .catch(console.error)

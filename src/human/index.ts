@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Posture from "../posture";
 import BoneMover from "./boneMover";
 import Skeleton from "./skeleton";
-import TimeLine from "../timeline";
+import Animation from "../animation";
 
 export default class Human {
     private scene:THREE.Scene
@@ -48,7 +48,7 @@ export default class Human {
         if(this.loading) this.onLoadFunctions.push(func)
         else func()
     }
-    public animate(timeLine: TimeLine) {
+    public animate(timeLine: Animation) {
         this.boneMover.animate(timeLine)
     }
 

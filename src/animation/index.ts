@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Posture from "../posture"
 
-export default class TimeLine {
+export default class Animation {
     private timeLine:Array<moment>
     constructor(
         startValue?: Array<moment>

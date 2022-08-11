@@ -1,7 +1,7 @@
-import TimeLine, { moment } from '../../timeline'
+import Animation, { moment } from '../../animation'
 
 export default class TimeLineUI {
-    private timeLine: TimeLine
+    private timeLine: Animation
     private element: HTMLElement
     private width: number
     private maximum: number = 10000
@@ -9,7 +9,7 @@ export default class TimeLineUI {
     private pointer: Pointer
     constructor(
         parent: HTMLElement,
-        timeLine: TimeLine,
+        timeLine: Animation,
         option?: Option
     ) {
         this.timeLine = timeLine

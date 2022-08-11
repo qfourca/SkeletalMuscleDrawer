@@ -1,10 +1,10 @@
 import App, { UI } from './app'
-import TimeLine from './timeline'
+import Animation from './animation'
 
 export default App
 
 export {
     App as App,
-    TimeLine as TimeLine,
+    Animation as Animation,
     UI as UI
 }
