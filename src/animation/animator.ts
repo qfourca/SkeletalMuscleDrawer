@@ -14,7 +14,7 @@ export default class Animator {
     public animate(animation: Animation, skeleton: Skeleton) {
         this.skeleton = skeleton
         const length = animation.length
-        animation.movements(1).forEach((element: Posture) => {
+        animation.movements(0).forEach((element: Posture) => {
             this.skeleton.getBone(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
         })
         for(let i = 1; i < length; i++) {
