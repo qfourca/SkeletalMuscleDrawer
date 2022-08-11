@@ -1,15 +1,15 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import Posture from "../posture";
-import BoneMover from "./boneMover";
+// import BoneMover from "./boneMover";
 import Skeleton from "./skeleton";
 import Animation from "../animation";
 
 export default class Human {
     private scene:THREE.Scene
     private body: any
-    private skeleton: Skeleton = new Skeleton()
-    private boneMover: BoneMover = new BoneMover(this.skeleton)
+    public skeleton: Skeleton = new Skeleton()
+    // private boneMover: BoneMover = new BoneMover(this.skeleton)
     private loading:boolean = true
     private onLoadFunctions:Array<(arg?:any) => any> = new Array()
 
@@ -40,19 +40,15 @@ export default class Human {
         console.log("Error occur on loading:" + error);
     }
     public update() {
-        if(!this.loading) {
-            this.boneMover.update()
-        }
+
     }
     public execute(func: (arg?:any) => any) {
         if(this.loading) this.onLoadFunctions.push(func)
         else func()
-    }
-    public animate(timeLine: Animation) {
-        this.boneMover.animate(timeLine)
     }
 
     public getBone(name: string): THREE.Bone | undefined { return this.skeleton.getBone(name) }
     public getBoneNames(): Array<string> { return this.skeleton.getBoneNames() }
     public getPosture(): Array<Posture> { return this.skeleton.getCurrentPosture() }
 }
+export { Skeleton as Skeleton }

@@ -5,9 +5,4 @@ const app = new App(
     './human.gltf',
     { UI: UI.animation}
 )
-
-axios.get('./test.json')
-.then((result) => {
-    app.animate(new Animation(result.data.timeLine))
-})
-.catch(console.error)
+app.animate('./test.json')

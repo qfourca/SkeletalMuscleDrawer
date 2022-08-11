@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { UI as UIType, AnimationUI, ProductionUI } from './ui'
 import Human from "./human";
 import Animation from './animation';
+import axios from 'axios';
 
 export default class App {
     private scene:Core.Scene
@@ -13,6 +14,7 @@ export default class App {
 
     private parent:HTMLElement
     private human:Human
+    private animation:Animation
 
     private option:Option
 
@@ -20,7 +22,7 @@ export default class App {
 
     constructor(
         domElement: HTMLElement,
-        file: string,
+        humanUrl: string,
         option?: Option
     ) {
         this.parent = domElement
@@ -33,7 +35,9 @@ export default class App {
         this.light = new Core.Light()
         this.light.addLight(this.scene)
         
-        this.human = new Human(file, this.scene)
+        this.human = new Human(humanUrl, this.scene)
+        this.animation = new Animation()
+
         this.update()
 
         window.addEventListener('resize', this.resize.bind(this), false)
@@ -41,11 +45,11 @@ export default class App {
         if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.human)
         else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent)
         else this.ui = new ProductionUI(this.parent)
-
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))
         this.control.update()
+        this.animation.update()
         this.human.update()
         this.render()
     }
@@ -58,8 +62,17 @@ export default class App {
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
-    public animate(timeLine: Animation) {
-        this.human.execute(() => { this.human.animate(timeLine) })
+    public animate(animationUrl: string) {
+        this.human.execute(() => { 
+            axios.get(animationUrl)
+            .then((result) => {
+                this.animation.setValue(result.data.timeLine)
+                this.animation.animate(this.human.skeleton)
+            })
+            .catch(() => {
+                console.error('animation loading error')
+            })
+        })
     }
 }
 

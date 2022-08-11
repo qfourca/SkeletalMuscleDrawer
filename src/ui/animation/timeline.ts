@@ -1,4 +1,4 @@
-import Animation, { moment } from '../../animation'
+import Animation, { Moment } from '../../animation'
 
 export default class TimeLineUI {
     private timeLine: Animation
@@ -33,11 +33,11 @@ export default class TimeLineUI {
     }
 
     private drawTimeLine() {
-        const length = this.timeLine.getTimeLine().length
+        const length = this.timeLine.length
         // console.log(length, this.times.length)
         for (let i = 0; i < length - this.times.length; i++) 
             this.times.push(new Time(this.element))
-        this.timeLine.getTimeLine().forEach((element: moment, idx: number) => {
+        this.timeLine.forEach((element: Moment, idx: number) => {
             const { run } = this.timeLine.getTime(idx)
             this.times[idx].move(run / this.maximum * this.width)
         })

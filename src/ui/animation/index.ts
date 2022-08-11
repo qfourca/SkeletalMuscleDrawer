@@ -16,7 +16,7 @@ export default class AnimationUI implements UIRoot{
         this.debugUI = new UI(this.parent, 
             [
                 { func: () => { console.log(this.timeLine) }, expression: "print" },
-                { func: () => { this.timeLine.push(this.human.getPosture(), this.debugUI.getTime()); this.debugUI.timeLineChange() }, expression: "timeline" },
+                { func: () => { this.timeLine.clonePush(this.human.getPosture(), this.debugUI.getTime()); this.debugUI.timeLineChange() }, expression: "timeline" },
                 { func: () => { this.timeLine.download() }, expression: "download" },
                 { func: () => { console.log(this.debugUI.getTime()) }, expression: "test" },
             ],
