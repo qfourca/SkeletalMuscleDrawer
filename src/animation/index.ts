@@ -56,11 +56,23 @@ export default class Animation extends Array<Moment> {
     public getCurrentTime():number  {
         return this.animator.currentTime
     }
+    public setCurrentTime(time: number) {
+        this.animator.currentTime = time
+    }
     public getMaximumTime() {
         return this.animator.maximumTime
     }
     public update() {
         this.animator.update()
+    }
+    public stop() {
+        this.animator.isRunning = false
+    }
+    public start() {
+        this.animator.isRunning = true
+    }
+    public render() {
+        this.animator.render()
     }
 }
 

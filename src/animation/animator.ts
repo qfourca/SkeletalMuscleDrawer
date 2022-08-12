@@ -30,10 +30,13 @@ export default class Animator {
                 this.currentTime = this.maximumTime
                 this.isRunning = false
             }
-            this.getTimeState(this.currentTime).forEach(element => {
-                this.skeleton.getBone(element.name)!.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
-            })
+            this.render()
         }
+    }
+    public render() {
+        this.getTimeState(this.currentTime).forEach(element => {
+            this.skeleton.getBone(element.name)!.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
+        })
     }
     private getTime(idx: number): any {
         let reservation = 0
@@ -96,11 +99,4 @@ export default class Animator {
         })
         return result
     }
-}
-
-export interface BoneMove {
-    name: string
-    move: THREE.Euler
-    taken: number
-    reservation: number
 }
