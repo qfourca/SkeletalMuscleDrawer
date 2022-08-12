@@ -38,8 +38,8 @@ export default class TimeLineUI {
         for (let i = 0; i < length - this.times.length; i++) 
             this.times.push(new Time(this.element))
         this.timeLine.forEach((element: Moment, idx: number) => {
-            const { run } = this.timeLine.getTime(idx)
-            this.times[idx].move(run / this.maximum * this.width)
+            // const { run } = this.timeLine.getTime(idx)
+            // this.times[idx].move(run / this.maximum * this.width)
         })
     }
 

@@ -2,73 +2,99 @@ import * as THREE from 'three'
 import Posture from '../posture'
 import Animation, { Moment } from '../animation'
 import { Skeleton } from '../human'
+import { Euler } from 'three'
 export default class Animator {
     private skeleton = new Skeleton()
     public performanceTime: number = -1
     public maximumTime: number = -1
     public currentTime: number = -1
-    private boneMoves:Array<BoneMove> = new Array()
+    public isRunning: boolean = false
+    private animation: Animation
     constructor(
-
+        animation: Animation
     ) {
-
+        this.animation = animation
     }
-    public animate(animation: Animation, skeleton: Skeleton) {
+    public animate(skeleton: Skeleton) {
         this.skeleton = skeleton
-        this.maximumTime = animation.getTime(animation.length - 1).reservation + animation.getTime(animation.length - 1).run
-        const length = animation.length
-        animation.movements(0).forEach((element: Posture) => {
-            this.skeleton.getBone(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
-        })
-        for(let i = 1; i < length; i++) {
-            const { reservation, run } = animation.getTime(i)
-            animation.movements(i).forEach((element: Posture) => {
-                this.moveBone(
-                    element.name,
-                    element.rotation,
-                    run,
-                    reservation
-                )
-            })
-        }
+        this.maximumTime = this.getTime(this.animation.length - 1).reservation + this.getTime(this.animation.length - 1).run
         this.currentTime = 0
+        this.isRunning = true
     }
     public update() {
         const now = performance.now() - this.performanceTime
         this.performanceTime = performance.now()
-        this.currentTime += now
-        if(this.currentTime > this.maximumTime) this.currentTime = this.maximumTime
-        this.executeBoneMovement(now)
+        if(this.isRunning) {
+            this.currentTime += now
+            if(this.currentTime > this.maximumTime) {
+                this.currentTime = this.maximumTime
+                this.isRunning = false
+            }
+            this.getTimeState(this.currentTime).forEach(element => {
+                this.skeleton.getBone(element.name)!.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
+            })
+        }
     }
-    private executeBoneMovement(now: number) {
-        this.boneMoves.forEach((element:BoneMove, idx:number) => {
-            let delta = now
-            if(element.reservation > 0) {
-                element.reservation -= delta
-                if(element.reservation < 0) {
-                    delta = element.reservation * -1
-                    element.reservation = 0
-                }
-            }
-            if(element.reservation <= 0) {
-                element.taken -= delta
-                if(element.taken < 0)  { 
-                    this.boneMoves.splice(idx, 1)
-                    delta += element.taken
-                }
-                const bone:THREE.Bone = this.skeleton.getBone(element.name)!
-                bone.rotation.set(
-                    bone.rotation.x + element.move.x * delta,
-                    bone.rotation.y + element.move.y * delta,
-                    bone.rotation.z + element.move.z * delta
-                )
-            }
+    private getTime(idx: number): any {
+        let reservation = 0
+        for(let i = 0; i < idx; i++) {
+            reservation += this.animation[i].time
+        }
+        let run = this.animation[idx].time
+        return { 
+            reservation,
+            run
+        }
+    }
+    private getTimeState(time: number):Array<Posture> {
+        let currnetTime: number = time
+        let beforeTime: number = 0
+        let duration: number
+        let idx: number
+        for(idx = 0; time > 0; idx++) { 
+            beforeTime += this.animation[idx].time 
+            time -= this.animation[idx].time 
+        }
+        idx--
+        duration = this.animation[idx].time
+        beforeTime -= duration
+        currnetTime -= beforeTime
+        if(idx == 0) { return this.animation[0].postures }
+        else {
+            const delta = currnetTime / duration
+            const result:Array<Posture> = new Array()
+            this.animation[idx].postures.forEach((element) => {
+                const root = this.getRootPosture(element.name, idx - 1)
+                result.push({
+                    name: element.name,
+                    rotation: new Euler(
+                        root.rotation.x + (element.rotation.x - root.rotation.x) * delta,
+                        root.rotation.y + (element.rotation.y - root.rotation.y) * delta,
+                        root.rotation.z + (element.rotation.z - root.rotation.z) * delta
+                    )
+                })
+            })
+            return result
+        }
+    }
+    public getRootPosture(name: string, idx?: number): Posture {
+        for(let i = idx == undefined ? this.animation.length - 1 : idx; i >= 0; i--) {
+            const res = this.animation[i].postures.find((element) => element.name === name)
+            if(res != undefined) return res
+        }
+        return new Posture('unExist', new THREE.Euler())
+    }
+    public movements(idx: number): Array<Posture> {
+        const result = new Array()
+        this.animation[idx].postures.forEach(element => {
+            const root = this.getRootPosture(element.name, idx - 1)   
+            result.push(new Posture(element.name, new THREE.Euler(
+                element.rotation.x - root.rotation.x,
+                element.rotation.y - root.rotation.y,
+                element.rotation.z - root.rotation.z
+            )))
         })
-    }
-    private moveBone(name: string, move: THREE.Euler, taken: number, reservation?: number ) {
-        reservation = reservation === undefined ? 0 : reservation
-        move = new THREE.Euler(move.x / taken, move.y / taken, move.z / taken)
-        this.boneMoves.push({ name, move, taken, reservation })
+        return result
     }
 }
 
