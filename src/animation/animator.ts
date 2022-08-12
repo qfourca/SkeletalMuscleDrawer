@@ -4,7 +4,9 @@ import Animation, { Moment } from '../animation'
 import { Skeleton } from '../human'
 export default class Animator {
     private skeleton = new Skeleton()
-    private currentTime: number = -1
+    public performanceTime: number = -1
+    public maximumTime: number = -1
+    public currentTime: number = -1
     private boneMoves:Array<BoneMove> = new Array()
     constructor(
 
@@ -13,6 +15,7 @@ export default class Animator {
     }
     public animate(animation: Animation, skeleton: Skeleton) {
         this.skeleton = skeleton
+        this.maximumTime = animation.getTime(animation.length - 1).reservation + animation.getTime(animation.length - 1).run
         const length = animation.length
         animation.movements(0).forEach((element: Posture) => {
             this.skeleton.getBone(element.name)?.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
@@ -28,10 +31,13 @@ export default class Animator {
                 )
             })
         }
+        this.currentTime = 0
     }
     public update() {
-        const now = performance.now() - this.currentTime
-        this.currentTime = performance.now()
+        const now = performance.now() - this.performanceTime
+        this.performanceTime = performance.now()
+        this.currentTime += now
+        if(this.currentTime > this.maximumTime) this.currentTime = this.maximumTime
         this.executeBoneMovement(now)
     }
     private executeBoneMovement(now: number) {

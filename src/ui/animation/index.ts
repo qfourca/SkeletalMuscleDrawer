@@ -2,8 +2,7 @@ import UI from "./ui";
 import Animation from '../../animation';
 import Human from "../../human";
 import UIRoot from '../ui'
-export default class AnimationUI implements UIRoot{
-    private parent: HTMLElement
+export default class AnimationUI extends UIRoot{
     private timeLine: Animation = new Animation()
     private human: Human
     private debugUI: UI 
@@ -11,6 +10,7 @@ export default class AnimationUI implements UIRoot{
         parent: HTMLElement,
         human: Human
     ) {
+        super(parent)
         this.parent = parent
         this.human = human
         this.debugUI = new UI(this.parent, 
@@ -26,5 +26,8 @@ export default class AnimationUI implements UIRoot{
             this.debugUI.setBone(this.human.getBone.bind(this.human))
             this.debugUI.setOptions(this.human.getBoneNames())
         })
+    }
+    public update() {
+        
     }
 }

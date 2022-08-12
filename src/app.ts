@@ -18,7 +18,7 @@ export default class App {
 
     private option:Option
 
-    private ui?: UIType
+    private ui: UIType
 
     constructor(
         domElement: HTMLElement,
@@ -38,17 +38,21 @@ export default class App {
         this.human = new Human(humanUrl, this.scene)
         this.animation = new Animation()
 
-        this.update()
+        
 
         window.addEventListener('resize', this.resize.bind(this), false)
         
         if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.human)
-        else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent)
-        else this.ui = new ProductionUI(this.parent)
+        else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent, this.animation)
+        else this.ui = new ProductionUI(this.parent, this.animation)
+        this.ui.render()
+        
+        this.update()
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))
         this.control.update()
+        this.ui.update()
         this.animation.update()
         this.human.update()
         this.render()

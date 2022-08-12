@@ -72,7 +72,7 @@ export default class Animation extends Array<Moment> {
             run
         }
     }
-    private getRootPosture(name: string, idx?: number): Posture {
+     private getRootPosture(name: string, idx?: number): Posture {
         for(let i = idx == undefined ? this.length - 1 : idx; i >= 0; i--) {
             const res = this[i].postures.find((element) => element.name === name)
             if(res != undefined) return res
@@ -85,6 +85,13 @@ export default class Animation extends Array<Moment> {
     }
     public update() {
         this.animator.update()
+    }
+
+    public getCurrentTime():number  {
+        return this.animator.currentTime
+    }
+    public getMaximumTime() {
+        return this.animator.maximumTime
     }
 }
 
