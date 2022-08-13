@@ -29,9 +29,8 @@
     "webpack-merge": "^5.8.0"
   },
   "files": [
-    "dist",
-    "!dist/index.html",
-    "!dist/favicon.ico"
+    "dist/bundle.js",
+    "dist/human.gltf"
   ],
   "dependencies": {
     "@types/lodash": "^4.14.168",

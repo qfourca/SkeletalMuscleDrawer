@@ -4,8 +4,7 @@ import { UI as UIType, AnimationUI, ProductionUI } from './ui'
 import Human from "./human";
 import Animation from './animation';
 import axios from 'axios';
-//@ts-ignore
-import human from './static/asset/human.gltf'
+
 export default class App {
     private scene:Core.Scene
     private camera:Core.Camera
@@ -23,7 +22,7 @@ export default class App {
 
     constructor(
         domElement: HTMLElement,
-        humanUrl: string,
+        human: string,
         option?: Option
     ) {
         this.parent = domElement
