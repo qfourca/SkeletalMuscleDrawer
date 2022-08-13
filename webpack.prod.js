@@ -6,5 +6,25 @@ module.exports = merge(common, {
     mode: 'production',
     performance: {
         hints: false
+    },
+    module: {
+        rules: [
+            {
+                test: /\.gltf$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: './node_modules/skeletalmuscle-drawer'
+                    }
+                }
+            },
+            {
+                test: /\.json$/,
+                type: 'javascript/auto',
+                use: {
+                    loader: 'json5-loader',
+                }
+            }
+        ]
     }
 });

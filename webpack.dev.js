@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common.js')
-const path = require('path');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(common, {
     entry: './src/dev.ts',
@@ -12,4 +13,28 @@ module.exports = merge(common, {
         },
         hot: true,
     },
+    module: {
+        rules: [
+            {
+                test: /\.gltf$/,
+                use: {
+                    loader: 'file-loader',
+                }
+            },
+            {
+                test: /\.json$/,
+                type: 'javascript/auto',
+                use: {
+                    loader: 'json5-loader',
+                }
+            },
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: path.resolve(__dirname, 'src', 'static', 'index.html'),
+            favicon: "./src/static/favicon/favicon.ico",
+        }),
+    ]
 })

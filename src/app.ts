@@ -4,7 +4,8 @@ import { UI as UIType, AnimationUI, ProductionUI } from './ui'
 import Human from "./human";
 import Animation from './animation';
 import axios from 'axios';
-
+//@ts-ignore
+import human from './static/asset/human.gltf'
 export default class App {
     private scene:Core.Scene
     private camera:Core.Camera
@@ -35,10 +36,8 @@ export default class App {
         this.light = new Core.Light()
         this.light.addLight(this.scene)
         
-        this.human = new Human(humanUrl, this.scene)
+        this.human = new Human(human, this.scene)
         this.animation = new Animation()
-
-        
 
         window.addEventListener('resize', this.resize.bind(this), false)
         
@@ -66,17 +65,26 @@ export default class App {
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
-    public animate(animationUrl: string) {
-        this.human.execute(() => { 
-            axios.get(animationUrl)
-            .then((result) => {
-                this.animation.setValue(result.data.timeLine)
+    public animate(animation: string | any) {
+        if(typeof animation == 'string') {
+            this.human.execute(() => { 
+                axios.get(animation)
+                .then((result) => {
+                    this.animation.setValue(result.data.timeLine)
+                    this.animation.animate(this.human.skeleton)
+                })
+                .catch(() => {
+                    console.error('animation loading error')
+                })
+            })
+        }
+        else {
+            this.human.execute(() => {
+                this.animation.setValue(animation.timeLine)
                 this.animation.animate(this.human.skeleton)
             })
-            .catch(() => {
-                console.error('animation loading error')
-            })
-        })
+        }
+        
     }
 }
 
