@@ -1,6 +1,7 @@
 import UIRoot from "../../ui";
 import Animation from "../../../animation";
 import Left from './left'
+import Right from './right'
 import './index.scss'
 export default class TimeLineUI extends UIRoot {
     private width: number = 0
@@ -12,6 +13,7 @@ export default class TimeLineUI extends UIRoot {
     private currentBall: HTMLElement
 
     private leftFunctionContainer: Left
+    private rightFunctionContainer: Right
     constructor(
         parent: HTMLElement,
         animation: Animation
@@ -26,6 +28,7 @@ export default class TimeLineUI extends UIRoot {
         this.element.appendChild(this.timeLine)
 
         this.leftFunctionContainer = new Left(this.element, this.animation)
+        this.rightFunctionContainer = new Right(this.element, this.animation, this.parent)
 
         this.progress = document.createElement('div')
         this.progress.className = 'progress'
@@ -39,6 +42,7 @@ export default class TimeLineUI extends UIRoot {
     public render() {
         this.parent.appendChild(this.element)
         this.leftFunctionContainer.render()
+        this.rightFunctionContainer.render()
     }
     public update() {
         this.current = this.animation.getCurrentTime()

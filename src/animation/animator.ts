@@ -9,6 +9,7 @@ export default class Animator {
     public maximumTime: number = -1
     public currentTime: number = -1
     public isRunning: boolean = false
+    public isLoaded: boolean = false
     private animation: Animation
     constructor(
         animation: Animation
@@ -19,6 +20,7 @@ export default class Animator {
         this.skeleton = skeleton
         this.maximumTime = this.getTime(this.animation.length - 1).reservation + this.getTime(this.animation.length - 1).run
         this.currentTime = 0
+        this.isLoaded = true
         this.isRunning = true
     }
     public update() {
@@ -30,8 +32,9 @@ export default class Animator {
                 this.currentTime = this.maximumTime
                 this.isRunning = false
             }
-            this.render()
+            else if(this.currentTime < 0) this.currentTime = 0
         }
+        if(this.isLoaded) this.render()
     }
     public render() {
         this.getTimeState(this.currentTime).forEach(element => {

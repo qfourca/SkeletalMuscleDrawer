@@ -70,18 +70,28 @@ export default class Left extends UIRoot{
             else if(e.code === "ArrowLeft") this.jump(false)
         })
     }   
+    private msToTime(duration: number) {
+        let seconds = Math.floor((duration/1000)%60)
+        let minutes = Math.floor((duration/(1000*60)))
+        let minuteStr = (minutes < 10) ? '0' + minutes : minutes;
+        let secondStr = (seconds < 10) ? '0' + seconds : seconds;
+        return minuteStr + "  :  " + secondStr
+    }
     private pause() {
         const current = this.animation.togglePause()
         if(current) this.pauseButton.classList.add('paused')
         else this.pauseButton.classList.remove('paused')
     }
+    
     private skip(direction: boolean) {
 
     }
+    
     private jump(direction: boolean) {
         this.animation.setCurrentTime(this.animation.getCurrentTime() + (direction ? this.jumpTime : -this.jumpTime))
     }
     public update() {
-        this.time.innerText = `0:${Math.floor(this.animation.getCurrentTime() / 1000)} / 0:${Math.floor(this.animation.getMaximumTime() / 1000)}`
+        this.time.innerText = this.msToTime(this.animation.getCurrentTime())
+
     }
 }
