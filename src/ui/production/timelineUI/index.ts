@@ -44,6 +44,7 @@ export default class TimeLineUI extends UIRoot {
         this.current = this.animation.getCurrentTime()
         this.maximum = this.animation.getMaximumTime()
         this.progress.style.width = `${(this.current / this.maximum) * 100}%`
+        this.leftFunctionContainer.update()
     }
     private drag(event: Event) {
         const mouseMove = (e: MouseEvent) => {

@@ -1,3 +1,4 @@
+$icon-color: #eee;
 .SMD-UI {
     .main {
         height: 10%;
@@ -30,7 +31,7 @@
             }
         }
         .left {
-            width: 30%;
+            width: 40%;
             left: 0;
         }
         .functionContainer {
@@ -40,27 +41,37 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
-            .pauseAndStart {
-                position: absolute;
-                box-sizing: border-box;
-                border-style: solid;
-                width: 30px;
-                height: 30px;
-                border-width: 18px 0px 18px 30px;
-                border-color: transparent transparent transparent #eee;
-                transition: all 100ms ease-in-out;
-                cursor: pointer;
+            .pauseContainer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .pauseAndStart {
+                    position: absolute;
+                    box-sizing: border-box;
+                    border-style: solid;
+                    width: 30px;
+                    height: 30px;
+                    border-width: 18px 0px 18px 30px;
+                    border-color: transparent transparent transparent $icon-color;
+                    transition: all 100ms ease-in-out;
+                }
+                .paused {
+                    border-style: double;
+                    border-width:0px 0px 0px 26px;
+                }
             }
-            .paused {
-                border-style: double;
-                border-width:0px 0px 0px 26px;
-            }
-            .skipButton {
-                width: 10%;
+            .function {
+                width: 8%;
                 height: 50%;
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
+                cursor: pointer;
+            }
+            .time {
+                width: 30%;
+                font-size: 30px;
+                color: $icon-color;
             }
         }
     }
