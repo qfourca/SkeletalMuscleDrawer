@@ -1,5 +1,4 @@
-import { App, Animation, UI } from "./index"
-import axios from "axios"
+import { App, UI } from "./index"
 //@ts-ignore
 import animation from './static/animation/test.json'
 const app = new App(

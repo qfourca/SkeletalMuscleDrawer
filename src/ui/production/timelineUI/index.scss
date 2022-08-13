@@ -1,0 +1,67 @@
+.SMD-UI {
+    .main {
+        height: 10%;
+        width: 100%;
+        background: linear-gradient( to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
+        position: absolute;
+        bottom: 0;
+        .timeLine {
+            width: 98%;
+            height: 5px;
+            left: 1%;
+            position: absolute;
+            margin-top: 20px;
+            background-color: rgba(150, 150, 150, 0.8);
+            .progress {
+                width: 50%;
+                height: 5px;
+                position: absolute;
+                background-color: red;
+                .currentBall {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background-color: red;
+                    position: absolute;
+                    right: 0;
+                    bottom: -7px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .left {
+            width: 30%;
+            left: 0;
+        }
+        .functionContainer {
+            position: absolute;
+            bottom: 0;
+            height: 80%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            .pauseAndStart {
+                position: absolute;
+                box-sizing: border-box;
+                border-style: solid;
+                width: 30px;
+                height: 30px;
+                border-width: 18px 0px 18px 30px;
+                border-color: transparent transparent transparent #eee;
+                transition: all 100ms ease-in-out;
+                cursor: pointer;
+            }
+            .paused {
+                border-style: double;
+                border-width:0px 0px 0px 26px;
+            }
+            .skipButton {
+                width: 10%;
+                height: 50%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+    }
+}

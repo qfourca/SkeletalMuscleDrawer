@@ -65,11 +65,15 @@ export default class Animation extends Array<Moment> {
     public update() {
         this.animator.update()
     }
-    public stop() {
+    public pause() {
         this.animator.isRunning = false
     }
     public start() {
         this.animator.isRunning = true
+    }
+    public togglePause() {
+        this.animator.isRunning = !this.animator.isRunning
+        return this.animator.isRunning
     }
     public render() {
         this.animator.render()

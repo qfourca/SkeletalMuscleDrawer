@@ -13,6 +13,27 @@ module.exports = {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
                 use: 'ts-loader',
+            },
+            {
+                test: /\.gltf$/,
+                use: {
+                    loader: 'file-loader',
+                }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            { 
+                test: /\.(png|svg|jpg|gif|jpe?g)$/, 
+                use: {
+                    loader: 'url-loader?limit=10000' 
+                }
+                
             }
         ],
     },

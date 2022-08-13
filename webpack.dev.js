@@ -16,12 +16,6 @@ module.exports = merge(common, {
     module: {
         rules: [
             {
-                test: /\.gltf$/,
-                use: {
-                    loader: 'file-loader',
-                }
-            },
-            {
                 test: /\.json$/,
                 type: 'javascript/auto',
                 use: {

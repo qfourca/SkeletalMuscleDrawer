@@ -1,6 +1,7 @@
 import TimeLineUI from './timelineUI'
 import UIRoot from '../ui'
 import Animation from '../../animation'
+
 export default class ProductionUI extends UIRoot{
     private timeLineUI: UIRoot
     constructor(
@@ -8,6 +9,7 @@ export default class ProductionUI extends UIRoot{
         animation: Animation
     ) {
         super(parent)
+        this.parent.className = "SMD-UI"
         this.timeLineUI = new TimeLineUI(this.parent, animation)
     }
     public render() {
