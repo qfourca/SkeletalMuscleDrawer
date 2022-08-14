@@ -10,5 +10,5 @@ export default abstract class UIRoot {
     public render() {
         this.parent.appendChild(this.element)
     }
-    public abstract update(interval: number): void
+    public update(interval: number): void { }
 }

@@ -2,7 +2,7 @@ import TimeLineUI from './timelineUI'
 import UIRoot from '../ui'
 import Animator from '../../animator'
 
-import './index.scss'
+import './style.scss'
 
 export default class ProductionUI extends UIRoot{
     private static WaitTime: number = 1000

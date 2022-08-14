@@ -16,7 +16,7 @@ export default class Animation extends Array<Moment> {
     public setValue(value: any) {
         value.forEach((line: Moment) => {
             const postures:Array<Posture> = new Array()
-            line.postures.forEach((element: any ,j: number) => {
+            line.postures.forEach((element: any) => {
                 postures.push(
                     new Posture(element.name,
                          new THREE.Euler(element.rotation._x, 

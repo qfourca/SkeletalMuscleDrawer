@@ -109,7 +109,6 @@ class Pointer {
         document.addEventListener('mouseup', mouseUp)
     }
     public move(pos: number) {
-        
         const parentWidth = Number(window.getComputedStyle(this.parent).width.replace('px', ''))
         if(pos <= parentWidth - 40 && pos >= 0) {
             this.posistion = pos
