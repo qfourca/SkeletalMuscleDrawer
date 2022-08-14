@@ -4,7 +4,6 @@ import Left from './left'
 import Right from './right'
 import './index.scss'
 export default class TimeLineUI extends UIRoot {
-    private width: number = 0
     private maximum: number = -1
     private current: number = -1
     private animation: Animation
@@ -16,19 +15,20 @@ export default class TimeLineUI extends UIRoot {
     private rightFunctionContainer: Right
     constructor(
         parent: HTMLElement,
-        animation: Animation
+        animation: Animation,
+        root: HTMLElement
     ) {
         super(parent)
         this.animation = animation
 
-        this.element.className = 'main'
+        this.element.className = 'timeline-container'
 
         this.timeLine = document.createElement('div')
         this.timeLine.className = 'timeLine'
         this.element.appendChild(this.timeLine)
 
         this.leftFunctionContainer = new Left(this.element, this.animation)
-        this.rightFunctionContainer = new Right(this.element, this.animation, this.parent)
+        this.rightFunctionContainer = new Right(this.element, root)
 
         this.progress = document.createElement('div')
         this.progress.className = 'progress'

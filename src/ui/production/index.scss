@@ -1,0 +1,9 @@
+.SMD-UI {
+    .production-ui {
+        opacity: 0;
+        transition: opacity 200ms;
+    }
+    .display {
+        opacity: 1;
+    }
+}

@@ -1,9 +1,12 @@
-import * as Core from './core'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { UI as UIType, AnimationUI, ProductionUI } from './ui'
+import * as Core from './core'
 import Human from "./human";
 import Animation from './animation';
 import axios from 'axios';
+import {
+    Performance
+} from './util'
 
 export default class App {
     private scene:Core.Scene
@@ -13,12 +16,14 @@ export default class App {
     private control:OrbitControls
 
     private parent:HTMLElement
+
     private human:Human
     private animation:Animation
+    private ui: UIType
+
+    private performance:Performance = new Performance()
 
     private option:Option
-
-    private ui: UIType
 
     constructor(
         domElement: HTMLElement,
@@ -49,11 +54,14 @@ export default class App {
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))
+        const interval = this.performance.getInterval()
+        this.performance.start()
         this.control.update()
-        this.ui.update()
-        this.animation.update()
+        this.ui.update(interval)
+        this.animation.update(interval)
         this.human.update()
         this.render()
+        // console.log(this.performance.end())
     }
     private resize() {
         this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
@@ -89,6 +97,7 @@ export default class App {
 
 export interface Option {
     UI?: number
+    
 }
 export const UI = {
     production: 0,

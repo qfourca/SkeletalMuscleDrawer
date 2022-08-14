@@ -5,7 +5,6 @@ import { Skeleton } from '../human'
 import { Euler } from 'three'
 export default class Animator {
     private skeleton = new Skeleton()
-    public performanceTime: number = -1
     public maximumTime: number = -1
     public currentTime: number = -1
     public isRunning: boolean = false
@@ -23,11 +22,9 @@ export default class Animator {
         this.isLoaded = true
         this.isRunning = true
     }
-    public update() {
-        const now = performance.now() - this.performanceTime
-        this.performanceTime = performance.now()
+    public update(interval: number) {
         if(this.isRunning) {
-            this.currentTime += now
+            this.currentTime += interval
             if(this.currentTime > this.maximumTime) {
                 this.currentTime = this.maximumTime
                 this.isRunning = false

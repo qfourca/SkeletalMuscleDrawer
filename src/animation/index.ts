@@ -62,8 +62,8 @@ export default class Animation extends Array<Moment> {
     public getMaximumTime() {
         return this.animator.maximumTime
     }
-    public update() {
-        this.animator.update()
+    public update(interval: number) {
+        this.animator.update(interval)
     }
     public pause() {
         this.animator.isRunning = false

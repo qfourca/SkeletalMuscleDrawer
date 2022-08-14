@@ -7,7 +7,6 @@ import fullScreenExit from '../../../static/image/fullscreen_exit_white_24dp.svg
 //@ts-ignore
 import setting from '../../../static/image/settings_white_24dp.svg'
 export default class Right extends UIRoot{
-    private animation: Animation
     private fullScreenButton: HTMLElement
     private settingButton: HTMLElement
     private isFullscreen: boolean = false
@@ -15,11 +14,9 @@ export default class Right extends UIRoot{
     private fullScreenExitFunction: () => any
     constructor(
         parent: HTMLElement,
-        animation: Animation,
         fullScreenElement: HTMLElement
     ) {
         super(parent)
-        this.animation = animation
         this.fullScreenFunction = Right.runFullscreenFunction(fullScreenElement)
         this.fullScreenExitFunction = Right.runExitFullscreenFunction()
         this.element.className = 'right functionContainer'
