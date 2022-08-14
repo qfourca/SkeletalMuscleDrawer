@@ -1,5 +1,5 @@
 import UIRoot from '../../ui'
-import Animation from "../../../animation";
+import Animator from "../../../animator";
 
 //@ts-ignore
 import skipNext from '../../../static/image/skip_next_white_24dp.svg'
@@ -13,7 +13,7 @@ import jumpPrevious from '../../../static/image/replay_10_white_24dp.svg'
 
 export default class Left extends UIRoot{
     private jumpTime: number = 1000
-    private animation: Animation
+    private animator: Animator
     private time: HTMLElement
     private pauseButton: HTMLElement
     private pauseButtonContainer: HTMLElement
@@ -23,10 +23,10 @@ export default class Left extends UIRoot{
     private rightJumpButton: HTMLElement
     constructor(
         parent: HTMLElement,
-        animation: Animation
+        animator: Animator
     ) {
         super(parent)
-        this.animation = animation
+        this.animator = animator
         this.element.className = 'left functionContainer'
 
         this.pauseButtonContainer = document.createElement('div')
@@ -78,7 +78,7 @@ export default class Left extends UIRoot{
         return minuteStr + "  :  " + secondStr
     }
     private pause() {
-        const current = this.animation.togglePause()
+        const current = this.animator.togglePause()
         if(current) this.pauseButton.classList.add('paused')
         else this.pauseButton.classList.remove('paused')
     }
@@ -88,10 +88,10 @@ export default class Left extends UIRoot{
     }
     
     private jump(direction: boolean) {
-        this.animation.setCurrentTime(this.animation.getCurrentTime() + (direction ? this.jumpTime : -this.jumpTime))
+        this.animator.setCurrentTime(this.animator.getCurrentTime() + (direction ? this.jumpTime : -this.jumpTime))
     }
     public update() {
-        this.time.innerText = this.msToTime(this.animation.getCurrentTime())
+        this.time.innerText = this.msToTime(this.animator.getCurrentTime())
 
     }
 }

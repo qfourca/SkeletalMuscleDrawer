@@ -1,5 +1,5 @@
 import { Bone } from 'three'
-import Posture from '../posture'
+import Posture from '../animation/posture'
 export default class Skeleton {
     private bones: Map<string, Bone> = new Map()
     private names: Array<string> = new Array()

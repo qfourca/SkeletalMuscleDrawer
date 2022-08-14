@@ -1,9 +1,7 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
-import Posture from "../posture";
-// import BoneMover from "./boneMover";
+import Posture from "../animation/posture";
 import Skeleton from "./skeleton";
-import Animation from "../animation";
 
 export default class Human {
     private scene:THREE.Scene

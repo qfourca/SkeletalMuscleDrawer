@@ -1,12 +1,12 @@
 import UIRoot from "../../ui";
-import Animation from "../../../animation";
+import Animator from "../../../animator";
 import Left from './left'
 import Right from './right'
 import './index.scss'
 export default class TimeLineUI extends UIRoot {
     private maximum: number = -1
     private current: number = -1
-    private animation: Animation
+    private animator: Animator
     private progress: HTMLElement
     private timeLine: HTMLElement
     private currentBall: HTMLElement
@@ -15,11 +15,11 @@ export default class TimeLineUI extends UIRoot {
     private rightFunctionContainer: Right
     constructor(
         parent: HTMLElement,
-        animation: Animation,
+        animator: Animator,
         root: HTMLElement
     ) {
         super(parent)
-        this.animation = animation
+        this.animator = animator
 
         this.element.className = 'timeline-container'
 
@@ -27,7 +27,7 @@ export default class TimeLineUI extends UIRoot {
         this.timeLine.className = 'timeLine'
         this.element.appendChild(this.timeLine)
 
-        this.leftFunctionContainer = new Left(this.element, this.animation)
+        this.leftFunctionContainer = new Left(this.element, this.animator)
         this.rightFunctionContainer = new Right(this.element, root)
 
         this.progress = document.createElement('div')
@@ -45,8 +45,8 @@ export default class TimeLineUI extends UIRoot {
         this.rightFunctionContainer.render()
     }
     public update() {
-        this.current = this.animation.getCurrentTime()
-        this.maximum = this.animation.getMaximumTime()
+        this.current = this.animator.getCurrentTime()
+        this.maximum = this.animator.getMaximumTime()
         this.progress.style.width = `${(this.current / this.maximum) * 100}%`
         this.leftFunctionContainer.update()
     }
@@ -55,11 +55,11 @@ export default class TimeLineUI extends UIRoot {
             this.move(this.current + e.movementX * this.maximum / Number(window.getComputedStyle(this.timeLine).width.replace('px', '')))
         }
         const mouseUp = (e: Event) => {
-            this.animation.start()
+            this.animator.start()
             document.removeEventListener('mousemove', mouseMove)
             document.removeEventListener('mouseup', mouseUp)
         }
-        this.animation.pause()
+        this.animator.pause()
         document.addEventListener('mousemove', mouseMove)
         document.addEventListener('mouseup', mouseUp)
     }
@@ -67,7 +67,7 @@ export default class TimeLineUI extends UIRoot {
     private move(pos: number) {
         this.current = pos
         this.progress.style.width = `${(this.current / this.maximum) * 100}%`
-        this.animation.setCurrentTime(pos)
-        this.animation.render()
+        this.animator.setCurrentTime(pos)
+        this.animator.render()
     }
 }
