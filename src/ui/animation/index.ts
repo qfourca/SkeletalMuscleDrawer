@@ -1,7 +1,8 @@
-import UI from "./ui";
-import Animation from '../../animation';
-import Human from "../../human";
-import UIRoot from '../ui'
+// import UI from "./ui";
+// import Animation from '../../animation';
+// import Human from "../../human";
+// import UIRoot from '../ui'
+
 // export default class AnimationUI extends UIRoot{
 //     private timeLine: Animation = new Animation()
 //     private human: Human
@@ -32,12 +33,17 @@ import UIRoot from '../ui'
 //     }
 // }
 
-import Buttons, { buttonInfo } from "./buttons";
+import Human from "../../human"
+import UIRoot from '../ui'
+import Animation from '../../animation'
+import Buttons from "./buttons"
+import Controller from './controller/index'
 import './style.scss'
 export default class AnimationUI extends UIRoot{
-    private timeLine: Animation = new Animation()
+    private animation: Animation = new Animation()
     private human: Human
     private buttons: Buttons
+    private controller: Controller
     constructor(
         parent: HTMLElement,
         human: Human
@@ -47,14 +53,16 @@ export default class AnimationUI extends UIRoot{
         this.parent.classList.add("SMD-UI")
         this.element.className = "animation-ui"
         this.buttons = new Buttons(this.element, [
-                { onClick: () => { console.log(this.timeLine) }, expression: "print" },
-                { onClick: () => { this.timeLine.clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
-                { onClick: () => { this.timeLine.download() }, expression: "download" }
+                { onClick: () => { console.log(this.animation) }, expression: "print" },
+                { onClick: () => { this.animation.clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
+                { onClick: () => { this.animation.download() }, expression: "download" }
             ]
         )
+        this.controller = new Controller(this.element, this.human)
     }
     render() {
         this.parent.appendChild(this.element)
         this.buttons.render()
+        this.controller.render()
     }
 }

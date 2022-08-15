@@ -62,9 +62,8 @@ export default class App {
         this.control.update()
         this.ui.update(interval)
         this.animator.update(interval)
-        this.human.update()
         this.render()
-        // console.log(this.performance.end())
+        this.performance.end()
     }
     private resize() {
         this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight

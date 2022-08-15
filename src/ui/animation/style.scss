@@ -1,11 +1,10 @@
 .SMD-UI {
     .animation-ui {
         .button-container {
-            height: 100px;
             width: 50%;
             display: flex;
             gap: 10px;
-            background-color: red;
+            padding: 10px;
             position: absolute;
             .button {
                 font-size: 24px;
@@ -15,6 +14,54 @@
                 height: 100px;
                 background-color: green;
                 cursor: pointer;
+            }
+        }
+        .controller {
+            width: 300px;
+            padding-bottom: 30px;
+            background: rgba(10, 150, 100, 0.5);
+            position: absolute;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            .picker-container {
+                width: 80%;
+                padding-top: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                height: 100px;
+                input {
+                    height: 20px;
+                    width: 80%;
+                }
+                select {
+                    height: 20px;
+                    width: 80%;
+                }
+            }
+            .bone-info {
+                height: 100px;
+                overflow: scroll;
+                background: purple;
+                width: 80%;
+            }
+            .rotator-container{
+                width: 100%;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                .rotator {
+                    width: 70%;
+                    display: flex;
+                    flex-direction: column;
+                }
             }
         }
     }
