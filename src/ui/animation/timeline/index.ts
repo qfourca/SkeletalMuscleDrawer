@@ -1,16 +1,39 @@
-import './style.scss'
-import TimeLineUI from "../../production/timelineUI";
+import UIRoot from "../../ui";
 import Animator from "../../../animator";
-import Dev from './dev';
-export default class TimeLine extends TimeLineUI {
-    public dev:Dev
+import Left from './left'
+import Right from './right'
+import './style.scss'
+import Bar from "./bar";
+import Dev from "./dev";
+export default class TimeLineUI extends UIRoot {
+    private animator: Animator
+
+    private leftFunctionContainer: Left
+    private rightFunctionContainer: Right
+    private progressBar: Bar
+    private dev: Dev
     constructor(
         parent: HTMLElement,
         animator: Animator,
         root: HTMLElement
     ) {
-        super(parent, animator, root)
-        this.dev = new Dev(this.element, animator)
-        this.dev.render() 
+        super(parent)
+        this.animator = animator
+        this.element.className = 'timeline-container'
+
+        this.progressBar = new Bar(this.element, this.animator)
+        this.leftFunctionContainer = new Left(this.element, this.animator)
+        this.rightFunctionContainer = new Right(this.element, root)
+        this.dev = new Dev(this.element, this.animator)
+
+        this.progressBar.render()
+        this.leftFunctionContainer.render()
+        this.rightFunctionContainer.render()
+        this.dev.render()
     }
+    public update() {
+        this.leftFunctionContainer.update()
+        this.progressBar.update()
+    }
+
 }

@@ -94,6 +94,15 @@ $icon-color: #eee;
                 right: 50%;
                 left: 50%;
             }
+            .moment {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: green;
+                position: absolute;
+                bottom: -7px;
+                cursor: pointer;
+            }
         }
     }
 }

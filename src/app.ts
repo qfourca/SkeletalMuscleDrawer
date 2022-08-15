@@ -1,5 +1,5 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { UI as UIType, AnimationUI, ProductionUI } from './ui'
+import { UI as UIRoot, AnimationUI, ProductionUI } from './ui'
 import * as Core from './core'
 import Human from "./human";
 import Animation from './animation';
@@ -19,7 +19,7 @@ export default class App {
 
     private human:Human
     private animator:Animator
-    private ui: UIType
+    private ui: UIRoot
 
     private performance:Performance = new Performance()
 

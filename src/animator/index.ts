@@ -39,7 +39,7 @@ export default class Animator {
             this.skeleton.getBone(element.name)!.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
         })
     }
-    private getTime(idx: number): any {
+    public getTime(idx: number): any {
         let reservation = 0
         for(let i = 0; i < idx; i++) {
             reservation += this.animation[i].time

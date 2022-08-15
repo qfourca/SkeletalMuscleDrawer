@@ -1,44 +1,9 @@
-// import UI from "./ui";
-// import Animation from '../../animation';
-// import Human from "../../human";
-// import UIRoot from '../ui'
-
-// export default class AnimationUI extends UIRoot{
-//     private timeLine: Animation = new Animation()
-//     private human: Human
-//     private debugUI: UI 
-//     constructor(
-//         parent: HTMLElement,
-//         human: Human
-//     ) {
-//         super(parent)
-//         this.parent = parent
-//         this.human = human
-//         this.debugUI = new UI(this.parent, 
-//             [
-//                 { func: () => { console.log(this.timeLine) }, expression: "print" },
-//                 { func: () => { this.timeLine.clonePush(this.human.getPosture(), this.debugUI.getTime()); this.debugUI.timeLineChange() }, expression: "timeline" },
-//                 { func: () => { this.timeLine.download() }, expression: "download" },
-//                 { func: () => { console.log(this.debugUI.getTime()) }, expression: "test" },
-//             ],
-//             this.timeLine
-//         )
-//         this.human.execute(() => {
-//             this.debugUI.setBone(this.human.getBone.bind(this.human))
-//             this.debugUI.setOptions(this.human.getBoneNames())
-//         })
-//     }
-//     public update() {
-        
-//     }
-// }
-
 import Human from "../../human"
 import UIRoot from '../ui'
 import Animation from '../../animation'
 import Buttons from "./buttons"
 import Controller from './controller/index'
-import TimeLine from "./timeline/index"
+import TimeLine from "./timeline"
 import './style.scss'
 import Animator from "../../animator"
 export default class AnimationUI extends UIRoot{
@@ -74,6 +39,5 @@ export default class AnimationUI extends UIRoot{
     }
     public update(interval: number): void {
         this.timeLine.update()
-        this.timeLine.dev.update()
     }
 }
