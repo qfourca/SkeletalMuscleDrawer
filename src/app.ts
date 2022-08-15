@@ -48,7 +48,7 @@ export default class App {
         })
         window.addEventListener('resize', this.resize.bind(this), false)
         
-        if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.human)
+        if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.animator, this.human)
         else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent, this.animator)
         else this.ui = new ProductionUI(this.parent, this.animator)
         this.ui.render()

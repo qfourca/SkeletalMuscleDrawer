@@ -94,7 +94,9 @@ export default class Animator {
         })
         return result
     }
-
+    public getAnimation():Animation {
+        return this.animation
+    }
     public getCurrentTime():number  {
         return this.currentTime
     }
@@ -103,6 +105,9 @@ export default class Animator {
     }
     public getMaximumTime() {
         return this.maximumTime
+    }
+    public setMaximumTime(time: number) {
+        this.maximumTime = time
     }
     public pause() {
         this.isRunning = false

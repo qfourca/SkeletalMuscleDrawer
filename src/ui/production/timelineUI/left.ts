@@ -91,7 +91,7 @@ export default class Left extends UIRoot{
         this.animator.setCurrentTime(this.animator.getCurrentTime() + (direction ? this.jumpTime : -this.jumpTime))
     }
     public update() {
-        this.time.innerText = this.msToTime(this.animator.getCurrentTime())
+        this.time.innerText = this.msToTime(this.animator.getCurrentTime()) + ' / ' + this.msToTime(this.animator.getMaximumTime())
 
     }
 }
