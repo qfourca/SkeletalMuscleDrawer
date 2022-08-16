@@ -32,7 +32,7 @@ export default class Animator {
             }
             else if(this.currentTime < 0) this.currentTime = 0
         }
-        if(this.isLoaded) this.render()
+        if(this.isLoaded) this.render() 
     }
     public render() {
         this.getTimeState(this.currentTime).forEach(element => {

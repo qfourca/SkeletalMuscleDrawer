@@ -6,6 +6,7 @@ export default class Bar extends UIRoot {
     protected progress: HTMLElement
     protected currentBall: HTMLElement
     protected animator: Animator
+    private pickedMoment: Moment
     protected current: number = 1
     protected maximum: number = -1
     private moments: Array<HTMLDivElement> = new Array()
@@ -15,6 +16,8 @@ export default class Bar extends UIRoot {
     ) {
         super(parent)
         this.animator = animator
+        this.pickedMoment = this.animator.getAnimation()[0]
+
         this.element.className = 'timeLine'
 
         this.progress = document.createElement('div')
@@ -54,6 +57,10 @@ export default class Bar extends UIRoot {
         for(let i = 0; i < animation.length - this.moments.length; i++) {
             const temp = document.createElement('div')
             temp.className = 'moment'
+            temp.addEventListener('click', () => {
+                this.pickedMoment = animation[i]
+                console.log(this.pickedMoment)
+            })
             this.append(temp)
             this.moments.push(temp)
         }
