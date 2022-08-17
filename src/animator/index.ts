@@ -119,4 +119,13 @@ export default class Animator {
         this.isRunning = !this.isRunning
         return this.isRunning
     }
+    public getMomentIdx(moment: Moment):number {
+        let result = -1
+        this.animation.forEach((element, idx) => {
+            if(element === moment) {
+                result = idx
+            }
+        })
+        return result
+    }
 }
