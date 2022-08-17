@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import { Moment } from '../../../animation'
+import Posture from '../../../animation/posture'
+import Animator from '../../../animator'
 import Human from '../../../human'
 import UIRoot from '../../ui'
 import Picker from './picker'
@@ -11,15 +14,19 @@ export default class Controller extends UIRoot {
     private picker: Picker
     private rotatorContainer: HTMLElement
     private rotators: Array<Rotator> = new Array()
-    
+    private getPicked: () => Moment
+    private animator: Animator
     constructor (
         parent: HTMLElement,
-        human: Human
+        human: Human,
+        animatior: Animator,
+        getPicked: () => Moment
     ) {
         super(parent)
         this.element.className = 'controller'
+        this.animator = animatior
         this.human = human
-
+        this.getPicked = getPicked
         this.picker = new Picker(this.element, this.reload.bind(this))
         this.picker.render()
         this.human.execute(() => {
@@ -43,7 +50,20 @@ export default class Controller extends UIRoot {
 
     private reload(boneName: string) {
         this.bone = this.human.getBone(boneName)
-        this.boneInfo.innerText = JSON.stringify(this.bone)
-        this.rotators.forEach(element => element.setTarget(this.bone?.rotation))
+
+        if(this.bone != undefined) {
+            const find = this.getPicked().postures.find(element => element.name === this.bone?.name)
+            if(find == undefined) {
+                this.getPicked().postures.push(new Posture(this.bone.name, this.animator.getAnimation().getRootPosture(String(this.animator.getMomentIdx(this.getPicked()))).rotation))
+            }
+            else {
+                this.rotators.forEach(element => element.setTarget(find.rotation))
+            }
+            this.boneInfo.innerText = JSON.stringify(this.bone)
+           
+        }
+        else {
+            this.boneInfo.innerText = ""
+        }
     }
 }

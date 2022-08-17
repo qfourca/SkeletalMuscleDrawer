@@ -5,12 +5,12 @@ import Right from './right'
 import './style.scss'
 import Bar from "./bar";
 import Dev from "./dev";
+import { Moment } from "../../../animation";
 export default class TimeLineUI extends UIRoot {
     private animator: Animator
-
     private leftFunctionContainer: Left
     private rightFunctionContainer: Right
-    private progressBar: Bar
+    public progressBar: Bar
     private dev: Dev
     constructor(
         parent: HTMLElement,

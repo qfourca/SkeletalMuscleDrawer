@@ -6,17 +6,16 @@ export default class Bar extends UIRoot {
     protected progress: HTMLElement
     protected currentBall: HTMLElement
     protected animator: Animator
-    private pickedMoment: Moment
     protected current: number = 1
     protected maximum: number = -1
     private moments: Array<HTMLDivElement> = new Array()
+    public picked: Moment = { postures: [], time: 0 }
     constructor(
         parent: HTMLElement,
-        animator: Animator
+        animator: Animator,
     ) {
         super(parent)
         this.animator = animator
-        this.pickedMoment = this.animator.getAnimation()[0]
 
         this.element.className = 'timeLine'
 
@@ -58,15 +57,17 @@ export default class Bar extends UIRoot {
             const temp = document.createElement('div')
             temp.className = 'moment'
             temp.addEventListener('click', () => {
-                this.pickedMoment = animation[i]
-                console.log(this.pickedMoment)
+                this.picked = animation[i]
             })
             this.append(temp)
             this.moments.push(temp)
         }
+        const pickedIdx = this.animator.getMomentIdx(this.picked)
         this.moments.forEach((element: HTMLDivElement, idx: number) => {
             const { reservation, run } = this.animator.getTime(idx)
-            element.style.left = ((reservation + run)  / this.maximum) * 100 + '%'
+            element.style.left = 'calc(' + ((reservation + run)  / this.maximum) * 100 + '% - 20px)'
+            if(pickedIdx === idx) element.style.backgroundColor = 'orange'
+            else if(element.style.backgroundColor === 'orange') element.style.backgroundColor = 'green'
         })
     }
 }
