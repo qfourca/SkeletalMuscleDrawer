@@ -43,6 +43,7 @@ export default class Animation extends Array<Moment> {
         if(deepClonedArray.length != 0) this.push({ postures: deepClonedArray, time: time })
     }
     public download() {
+        console.log(this)
         const element = document.createElement('a')
         element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this))
         element.setAttribute('download', "animation.json")

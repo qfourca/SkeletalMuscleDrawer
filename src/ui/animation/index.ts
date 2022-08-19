@@ -7,7 +7,7 @@ import TimeLine from "./timeline"
 import './style.scss'
 import Animator from "../../animator"
 export default class AnimationUI extends UIRoot{
-    private animation: Animation = new Animation()
+    private animator: Animator
     private human: Human
     private buttons: Buttons
     private controller: Controller
@@ -18,14 +18,15 @@ export default class AnimationUI extends UIRoot{
         human: Human
     ) {
         super(parent)
+        this.animator = animator
         this.human = human
         this.parent.classList.add("SMD-UI")
         this.element.className = "animation-ui"
 
         this.buttons = new Buttons(this.element, [
-                { onClick: () => { console.log(this.animation) }, expression: "print" },
-                { onClick: () => { this.animation.clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
-                { onClick: () => { this.animation.download() }, expression: "download" }
+                { onClick: () => { console.log(this.animator.getAnimation()) }, expression: "print" },
+                { onClick: () => { this.animator.getAnimation().clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
+                { onClick: () => { this.animator.getAnimation().download() }, expression: "download" }
             ]
         )
         this.controller = new Controller(this.element, this.human, animator, this.getPickedMoment.bind(this))
