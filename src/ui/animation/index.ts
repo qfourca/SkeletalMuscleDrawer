@@ -1,33 +1,47 @@
-import UI from "./ui";
-import Animation from '../../animation';
-import Human from "../../human";
+import Human from "../../human"
 import UIRoot from '../ui'
+import Animation, { Moment } from '../../animation'
+import Buttons from "./buttons"
+import Controller from './controller/index'
+import TimeLine from "./timeline"
+import './style.scss'
+import Animator from "../../animator"
 export default class AnimationUI extends UIRoot{
-    private timeLine: Animation = new Animation()
+    private animator: Animator
     private human: Human
-    private debugUI: UI 
+    private buttons: Buttons
+    private controller: Controller
+    private timeLine: TimeLine
     constructor(
         parent: HTMLElement,
+        animator: Animator,
         human: Human
     ) {
         super(parent)
-        this.parent = parent
+        this.animator = animator
         this.human = human
-        this.debugUI = new UI(this.parent, 
-            [
-                { func: () => { console.log(this.timeLine) }, expression: "print" },
-                { func: () => { this.timeLine.clonePush(this.human.getPosture(), this.debugUI.getTime()); this.debugUI.timeLineChange() }, expression: "timeline" },
-                { func: () => { this.timeLine.download() }, expression: "download" },
-                { func: () => { console.log(this.debugUI.getTime()) }, expression: "test" },
-            ],
-            this.timeLine
+        this.parent.classList.add("SMD-UI")
+        this.element.className = "animation-ui"
+
+        this.buttons = new Buttons(this.element, [
+                { onClick: () => { console.log(this.animator.getAnimation()) }, expression: "print" },
+                { onClick: () => { this.animator.getAnimation().clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
+                { onClick: () => { this.animator.getAnimation().download() }, expression: "download" }
+            ]
         )
-        this.human.execute(() => {
-            this.debugUI.setBone(this.human.getBone.bind(this.human))
-            this.debugUI.setOptions(this.human.getBoneNames())
-        })
+        this.controller = new Controller(this.element, this.human, animator, this.getPickedMoment.bind(this))
+        this.timeLine = new TimeLine(this.element, animator, this.parent)
     }
-    public update() {
-        
+    render() {
+        this.parent.appendChild(this.element)
+        this.buttons.render()
+        this.controller.render()
+        this.timeLine.render()
+    }
+    public getPickedMoment(): Moment{
+        return this.timeLine.progressBar.picked
+    }
+    public update(interval: number): void {
+        this.timeLine.update()
     }
 }

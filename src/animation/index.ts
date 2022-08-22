@@ -1,22 +1,22 @@
 import * as THREE from 'three'
-import { Skeleton } from '../human'
-import Posture from "../posture"
-import Animator from './animator'
+import Posture from "./posture"
 export default class Animation extends Array<Moment> {
-    private animator: Animator = new Animator(this)
     constructor(
-        startValue?: Array<Moment>
+        startValue?: any
     ) {
         super()
         if(startValue == undefined) {}
+        else if(startValue.timeLine != undefined) {
+            this.setValue(startValue.timeLine)
+        }
         else if(startValue[0].postures[0].rotation.x == undefined) {
             this.setValue(startValue)
         }
     }
     public setValue(value: any) {
-        value.forEach((line: Moment, i: number) => {
+        value.forEach((line: Moment) => {
             const postures:Array<Posture> = new Array()
-            line.postures.forEach((element: any ,j: number) => {
+            line.postures.forEach((element: any) => {
                 postures.push(
                     new Posture(element.name,
                          new THREE.Euler(element.rotation._x, 
@@ -31,7 +31,7 @@ export default class Animation extends Array<Moment> {
     public clonePush(posture: Array<Posture>, time: number) {
         const deepClonedArray = new Array()
         posture.forEach(element => {
-            if(!Posture.compare(element, this.animator.getRootPosture(element.name))) {
+            if(!Posture.compare(element, this.getRootPosture(element.name))) {
                 deepClonedArray.push(
                     new Posture(element.name, 
                         new THREE.Euler(
@@ -43,6 +43,7 @@ export default class Animation extends Array<Moment> {
         if(deepClonedArray.length != 0) this.push({ postures: deepClonedArray, time: time })
     }
     public download() {
+        console.log(this)
         const element = document.createElement('a')
         element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this))
         element.setAttribute('download', "animation.json")
@@ -50,33 +51,12 @@ export default class Animation extends Array<Moment> {
         element.click()
         document.body.removeChild(element)
     }
-    public animate(skeleton: Skeleton) {
-        this.animator.animate(skeleton)
-    }
-    public getCurrentTime():number  {
-        return this.animator.currentTime
-    }
-    public setCurrentTime(time: number) {
-        this.animator.currentTime = time
-    }
-    public getMaximumTime() {
-        return this.animator.maximumTime
-    }
-    public update(interval: number) {
-        this.animator.update(interval)
-    }
-    public pause() {
-        this.animator.isRunning = false
-    }
-    public start() {
-        this.animator.isRunning = true
-    }
-    public togglePause() {
-        this.animator.isRunning = !this.animator.isRunning
-        return this.animator.isRunning
-    }
-    public render() {
-        this.animator.render()
+    public getRootPosture(name: string, idx?: number): Posture {
+        for(let i = idx == undefined ? this.length - 1 : idx; i >= 0; i--) {
+            const res = this[i].postures.find((element) => element.name === name)
+            if(res != undefined) return res
+        }
+        return new Posture('unExist', new THREE.Euler())
     }
 }
 

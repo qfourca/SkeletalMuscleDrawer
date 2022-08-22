@@ -1,7 +1,7 @@
 $icon-color: #eee;
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .SMD-UI {
-    .production-ui {
+    .animation-ui {
         .timeline-container {
             height: 10%;
             width: 100%;
@@ -65,7 +65,7 @@ $icon-color: #eee;
                 }
                 .time {
                     width: 30%;
-                    font-size: 30px;
+                    font-size: 26px;
                     font-family: 'Roboto';
                     color: $icon-color;
                 }
@@ -85,6 +85,22 @@ $icon-color: #eee;
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
+                cursor: pointer;
+            }
+
+            .dev {
+                margin-top: 40px;
+                position: absolute;
+                right: 50%;
+                left: 50%;
+            }
+            .moment {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: green;
+                position: absolute;
+                bottom: -7px;
                 cursor: pointer;
             }
         }

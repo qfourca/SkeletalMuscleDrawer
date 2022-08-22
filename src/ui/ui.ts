@@ -7,8 +7,11 @@ export default abstract class UIRoot {
         this.parent = parent
         this.element = document.createElement('div')
     }
+    protected append(element: HTMLElement) {
+        this.element.appendChild(element)
+    }
     public render() {
         this.parent.appendChild(this.element)
     }
-    public abstract update(interval: number): void
+    public update(interval: number): void { }
 }

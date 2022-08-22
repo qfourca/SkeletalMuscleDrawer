@@ -1,8 +1,8 @@
 import TimeLineUI from './timelineUI'
 import UIRoot from '../ui'
-import Animation from '../../animation'
+import Animator from '../../animator'
 
-import './index.scss'
+import './style.scss'
 
 export default class ProductionUI extends UIRoot{
     private static WaitTime: number = 1000
@@ -10,14 +10,13 @@ export default class ProductionUI extends UIRoot{
     private display: number = ProductionUI.WaitTime
     constructor(
         parent: HTMLElement,
-        animation: Animation
+        animator: Animator
     ) {
         super(parent)
         this.parent.classList.add("SMD-UI")
         this.element.className = "production-ui"
-        this.timeLineUI = new TimeLineUI(this.element, animation, this.parent)
+        this.timeLineUI = new TimeLineUI(this.element, animator, this.parent)
         this.parent.addEventListener('mousemove', this.show.bind(this))
-        // this.show()
     }
     private show() {
         this.display = ProductionUI.WaitTime

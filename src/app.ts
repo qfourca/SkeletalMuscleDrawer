@@ -1,9 +1,9 @@
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { UI as UIType, AnimationUI, ProductionUI } from './ui'
+import { UI as UIRoot, AnimationUI, ProductionUI } from './ui'
 import * as Core from './core'
 import Human from "./human";
 import Animation from './animation';
-import axios from 'axios';
+import Animator from './animator';
 import {
     Performance
 } from './util'
@@ -18,8 +18,8 @@ export default class App {
     private parent:HTMLElement
 
     private human:Human
-    private animation:Animation
-    private ui: UIType
+    private animator:Animator
+    private ui: UIRoot
 
     private performance:Performance = new Performance()
 
@@ -28,6 +28,7 @@ export default class App {
     constructor(
         domElement: HTMLElement,
         human: string,
+        animation: any,
         option?: Option
     ) {
         this.parent = domElement
@@ -41,13 +42,15 @@ export default class App {
         this.light.addLight(this.scene)
         
         this.human = new Human(human, this.scene)
-        this.animation = new Animation()
-
+        this.animator = new Animator()
+        this.human.execute(() => {
+            this.animator.animate(new Animation(animation), this.human.skeleton)
+        })
         window.addEventListener('resize', this.resize.bind(this), false)
         
-        if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.human)
-        else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent, this.animation)
-        else this.ui = new ProductionUI(this.parent, this.animation)
+        if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.animator, this.human)
+        else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent, this.animator)
+        else this.ui = new ProductionUI(this.parent, this.animator)
         this.ui.render()
         
         this.update()
@@ -58,10 +61,9 @@ export default class App {
         this.performance.start()
         this.control.update()
         this.ui.update(interval)
-        this.animation.update(interval)
-        this.human.update()
+        this.animator.update(interval)
         this.render()
-        // console.log(this.performance.end())
+        this.performance.end()
     }
     private resize() {
         this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
@@ -71,27 +73,6 @@ export default class App {
     }
     private render() {
         this.renderer.render(this.scene, this.camera)
-    }
-    public animate(animation: string | any) {
-        if(typeof animation == 'string') {
-            this.human.execute(() => { 
-                axios.get(animation)
-                .then((result) => {
-                    this.animation.setValue(result.data.timeLine)
-                    this.animation.animate(this.human.skeleton)
-                })
-                .catch(() => {
-                    console.error('animation loading error')
-                })
-            })
-        }
-        else {
-            this.human.execute(() => {
-                this.animation.setValue(animation.timeLine)
-                this.animation.animate(this.human.skeleton)
-            })
-        }
-        
     }
 }
 

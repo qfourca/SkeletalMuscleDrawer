@@ -4,6 +4,6 @@ import animation from './static/animation/test.json'
 const app = new App(
     document.getElementById('app')!,
     './human.gltf',
-    { UI: UI.production}
+    animation,
+    { UI: UI.animation}
 )
-app.animate(animation)

@@ -1,22 +1,23 @@
 import * as THREE from 'three'
-import Posture from '../posture'
+import Posture from '../animation/posture'
 import Animation, { Moment } from '../animation'
 import { Skeleton } from '../human'
 import { Euler } from 'three'
 export default class Animator {
     private skeleton = new Skeleton()
+    private animation: Animation = new Animation()
     public maximumTime: number = -1
     public currentTime: number = -1
     public isRunning: boolean = false
     public isLoaded: boolean = false
-    private animation: Animation
     constructor(
-        animation: Animation
+
     ) {
-        this.animation = animation
+
     }
-    public animate(skeleton: Skeleton) {
+    public animate(animation: Animation, skeleton: Skeleton) {
         this.skeleton = skeleton
+        this.animation = animation
         this.maximumTime = this.getTime(this.animation.length - 1).reservation + this.getTime(this.animation.length - 1).run
         this.currentTime = 0
         this.isLoaded = true
@@ -31,14 +32,14 @@ export default class Animator {
             }
             else if(this.currentTime < 0) this.currentTime = 0
         }
-        if(this.isLoaded) this.render()
+        if(this.isLoaded) this.render() 
     }
     public render() {
         this.getTimeState(this.currentTime).forEach(element => {
             this.skeleton.getBone(element.name)!.rotation.set(element.rotation.x, element.rotation.y, element.rotation.z)
         })
     }
-    private getTime(idx: number): any {
+    public getTime(idx: number): any {
         let reservation = 0
         for(let i = 0; i < idx; i++) {
             reservation += this.animation[i].time
@@ -67,7 +68,7 @@ export default class Animator {
             const delta = currnetTime / duration
             const result:Array<Posture> = new Array()
             this.animation[idx].postures.forEach((element) => {
-                const root = this.getRootPosture(element.name, idx - 1)
+                const root = this.animation.getRootPosture(element.name, idx - 1)
                 result.push({
                     name: element.name,
                     rotation: new Euler(
@@ -80,22 +81,50 @@ export default class Animator {
             return result
         }
     }
-    public getRootPosture(name: string, idx?: number): Posture {
-        for(let i = idx == undefined ? this.animation.length - 1 : idx; i >= 0; i--) {
-            const res = this.animation[i].postures.find((element) => element.name === name)
-            if(res != undefined) return res
-        }
-        return new Posture('unExist', new THREE.Euler())
-    }
+
     public movements(idx: number): Array<Posture> {
         const result = new Array()
         this.animation[idx].postures.forEach(element => {
-            const root = this.getRootPosture(element.name, idx - 1)   
+            const root = this.animation.getRootPosture(element.name, idx - 1)   
             result.push(new Posture(element.name, new THREE.Euler(
                 element.rotation.x - root.rotation.x,
                 element.rotation.y - root.rotation.y,
                 element.rotation.z - root.rotation.z
             )))
+        })
+        return result
+    }
+    public getAnimation():Animation {
+        return this.animation
+    }
+    public getCurrentTime():number  {
+        return this.currentTime
+    }
+    public setCurrentTime(time: number) {
+        this.currentTime = time
+    }
+    public getMaximumTime() {
+        return this.maximumTime
+    }
+    public setMaximumTime(time: number) {
+        this.maximumTime = time
+    }
+    public pause() {
+        this.isRunning = false
+    }
+    public start() {
+        this.isRunning = true
+    }
+    public togglePause() {
+        this.isRunning = !this.isRunning
+        return this.isRunning
+    }
+    public getMomentIdx(moment: Moment):number {
+        let result = -1
+        this.animation.forEach((element, idx) => {
+            if(element === moment) {
+                result = idx
+            }
         })
         return result
     }
