@@ -24,14 +24,13 @@ export default class App {
     private performance:Performance = new Performance()
 
     private option:Option
-
     constructor(
-        domElement: HTMLElement,
+        parent: HTMLElement,
         human: string,
         animation: any,
         option?: Option
     ) {
-        this.parent = domElement
+        this.parent = parent
         this.option = option == undefined ? { } : option
         
         this.scene = new Core.Scene()
@@ -78,8 +77,8 @@ export default class App {
 
 export interface Option {
     UI?: number
-    
 }
+
 export const UI = {
     production: 0,
     animation: 1

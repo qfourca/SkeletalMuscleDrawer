@@ -39,6 +39,7 @@ export default class Controller extends UIRoot {
 
         this.rotatorContainer = document.createElement('div')
         this.rotatorContainer.className = 'rotator-container'
+
         Controller.XYZ.forEach(element => {
             this.rotators.push(new Rotator(this.rotatorContainer, this.bone?.rotation, element))
         })
@@ -50,11 +51,11 @@ export default class Controller extends UIRoot {
 
     private reload(boneName: string) {
         this.bone = this.human.getBone(boneName)
-
         if(this.bone != undefined) {
             const find = this.getPicked().postures.find(element => element.name === this.bone?.name)
             if(find == undefined) {
                 this.getPicked().postures.push(new Posture(this.bone.name, this.animator.getAnimation().getRootPosture(String(this.animator.getMomentIdx(this.getPicked()))).rotation))
+                this.rotators.forEach(element => element.setTarget(this.bone!.rotation))
             }
             else {
                 this.rotators.forEach(element => element.setTarget(find.rotation))

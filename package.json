@@ -36,9 +36,6 @@
     "dist/human.gltf"
   ],
   "dependencies": {
-    "@material-design-icons/svg": "^0.12.0",
-    "@mui/icons-material": "^5.8.4",
-    "axios": "^0.27.2",
     "three": "^0.140.2"
   },
   "repository": {
