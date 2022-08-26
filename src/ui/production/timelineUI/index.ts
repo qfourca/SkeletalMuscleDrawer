@@ -1,14 +1,11 @@
 import UIRoot from "../../ui";
 import Animator from "../../../animator";
-import Left from './left'
-import Right from './right'
 import './style.scss'
 import Bar from "./bar";
+import Functions from "./functions";
 export default class TimeLineUI extends UIRoot {
     private animator: Animator
-
-    private leftFunctionContainer: Left
-    private rightFunctionContainer: Right
+    private functions: Functions
     private progressBar: Bar
     constructor(
         parent: HTMLElement,
@@ -20,15 +17,13 @@ export default class TimeLineUI extends UIRoot {
         this.element.className = 'timeline-container'
 
         this.progressBar = new Bar(this.element, this.animator)
-        this.leftFunctionContainer = new Left(this.element, this.animator)
-        this.rightFunctionContainer = new Right(this.element, root)
+        this.functions = new Functions(this.element, root, this.animator)
 
         this.progressBar.render()
-        this.leftFunctionContainer.render()
-        this.rightFunctionContainer.render()
+        this.functions.render()
+        
     }
     public update() {
-        this.leftFunctionContainer.update()
         this.progressBar.update()
     }
 

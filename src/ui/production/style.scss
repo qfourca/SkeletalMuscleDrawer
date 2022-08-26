@@ -2,8 +2,8 @@
     .production-ui {
         opacity: 0;
         position: relative;
-        height: 100%;
         width: 100%;
+        top: 100%;
         transition: opacity 200ms;
     }
     .display {
