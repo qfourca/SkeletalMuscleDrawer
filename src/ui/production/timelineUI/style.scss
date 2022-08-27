@@ -39,23 +39,42 @@ $icon-color: #eee;
                 position: absolute;
                 bottom: 0;
                 padding: 0 12px;
+                display: flex;
                 .function-button {
-                    
-                    width: 35px;
-                    height: 35px;
+                    width: 30px;
+                    height: 30px;
+                    margin-left: 5px;
+                    margin-right: 5px;
                     position: relative;
                     background-size: cover;
+                    svg {
+                        fill: red;
+                    }
+                }
+                .pause-button {
+                    border: 0;
+                    background: transparent;
+                    box-sizing: border-box;
+                    width: 0;
+                    height: 24px;
+                    border-color: transparent transparent transparent white;
+                    transition: 200ms all ease;
                     cursor: pointer;
-                }
-                .left {
-                    float: left;
-                    margin-right: 10px;
-                }
-                .right {
-                    float: right;
-                    margin-left: 10px;
+                    border-style: solid;
+                    border-width: 12px 0 12px 20px;
+                    margin-top: 3px;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    &.pause {
+                        border-style: double;
+                        border-width: 0px 0 0px 20px;
+                    }
+                    &:hover {
+                        border-color: transparent transparent transparent #eee;
+                    }
                 }
             }
         }
     }
 }
+svg { cursor: pointer; }
