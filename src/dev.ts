@@ -1,13 +1,13 @@
 import { App, UI } from "./index"
 //@ts-ignore
-import animation from './static/animation/test.json'
+import animation from './static/animation/re.json'
 
-const model = './human.gltf'
+const model = './final.gltf'
 const app = new App(
     document.getElementById('app')!,
     model,
     animation,
     { 
-        UI: UI.production
+        UI: UI.animation
     }
 )

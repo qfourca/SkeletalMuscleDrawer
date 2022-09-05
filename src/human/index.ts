@@ -26,6 +26,8 @@ export default class Human {
     }
     private onLoad (gltf:any) {
         this.body = gltf.scene
+        console.log(this.body.position.y - 10)
+        this.body.position.y -= 1
         this.skeleton.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
         this.onLoadFunctions.forEach(element => { element() })
         this.scene.add(this.body);
