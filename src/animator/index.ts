@@ -40,11 +40,12 @@ export default class Animator {
         })
     }
     public getTime(idx: number): any {
-        let reservation = 0
-        for(let i = 0; i < idx; i++) {
-            reservation += this.animation[i].time
-        }
-        let run = this.animation[idx].time
+        // let reservation = 0
+        // for(let i = 0; i < idx; i++) {
+        //     reservation += this.animation[i].time
+        // }
+        let reservation = idx === 0 ? 0 : this.animation[idx - 1].time
+        let run = this.animation[idx].time - reservation
         return { 
             reservation,
             run
@@ -55,30 +56,36 @@ export default class Animator {
         let beforeTime: number = 0
         let duration: number
         let idx: number
-        for(idx = 0; time > 0; idx++) { 
-            beforeTime += this.animation[idx].time 
-            time -= this.animation[idx].time 
-        }
-        idx--
-        duration = this.animation[idx].time
-        beforeTime -= duration
-        currnetTime -= beforeTime
-        if(idx == 0) { return this.animation[0].postures }
-        else {
-            const delta = currnetTime / duration
-            const result:Array<Posture> = new Array()
-            this.animation[idx].postures.forEach((element) => {
-                const root = this.animation.getRootPosture(element.name, idx - 1)
-                result.push({
-                    name: element.name,
-                    rotation: new Euler(
-                        root.rotation.x + (element.rotation.x - root.rotation.x) * delta,
-                        root.rotation.y + (element.rotation.y - root.rotation.y) * delta,
-                        root.rotation.z + (element.rotation.z - root.rotation.z) * delta
-                    )
+        try {
+            for(idx = 0; time > 0; idx++) { 
+                beforeTime += this.animation[idx].time 
+                time -= this.animation[idx].time 
+            }
+            idx--
+            duration = this.animation[idx].time
+            beforeTime -= duration
+            currnetTime -= beforeTime
+            if(idx == 0) { return this.animation[0].postures }
+            else {
+                const delta = currnetTime / duration
+                const result:Array<Posture> = new Array()
+                this.animation[idx].postures.forEach((element) => {
+                    const root = this.animation.getRootPosture(element.name, idx - 1)
+                    result.push({
+                        name: element.name,
+                        rotation: new Euler(
+                            root.rotation.x + (element.rotation.x - root.rotation.x) * delta,
+                            root.rotation.y + (element.rotation.y - root.rotation.y) * delta,
+                            root.rotation.z + (element.rotation.z - root.rotation.z) * delta
+                        )
+                    })
                 })
-            })
-            return result
+                return result
+            }
+        }
+        catch(e) {
+            console.log("OUT OF BOUND TIME")
+            return new Array()
         }
     }
 

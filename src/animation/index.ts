@@ -12,6 +12,10 @@ export default class Animation extends Array<Moment> {
         else if(startValue[0].postures[0].rotation.x == undefined) {
             this.setValue(startValue)
         }
+
+        this.sort((a, b) => {
+            return a.time - b.time;
+        });
     }
     public setValue(value: any) {
         value.forEach((line: Moment) => {
@@ -40,7 +44,10 @@ export default class Animation extends Array<Moment> {
                             element.rotation.z)))
             }
         })
-        if(deepClonedArray.length != 0) this.push({ postures: deepClonedArray, time: time })
+        this.push({ postures: deepClonedArray, time: time })
+        this.sort((a, b) => {
+            return a.time - b.time;
+        });
     }
     public download() {
         console.log(this)

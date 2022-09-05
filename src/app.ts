@@ -1,6 +1,6 @@
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
 import { UI as UIRoot, AnimationUI, ProductionUI } from './ui'
-import * as Core from './core'
+import Core from './core'
 import Human from "./human";
 import Animation from './animation';
 import Animator from './animator';
@@ -9,12 +9,8 @@ import {
 } from './util'
 
 export default class App {
-    private scene:Core.Scene
-    private camera:Core.Camera
-    private renderer:Core.Renderer
-    private light:Core.Light
-    private control:OrbitControls
 
+    private core: Core
     private parent:HTMLElement
 
     private human:Human
@@ -33,20 +29,13 @@ export default class App {
         this.parent = parent
         this.option = option == undefined ? { } : option
         
-        this.scene = new Core.Scene()
-        this.camera = new Core.Camera(95, this.parent.clientWidth / this.parent.clientHeight)
-        this.renderer = new Core.Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
-        this.control = new OrbitControls(this.camera, this.renderer.domElement)
-        this.light = new Core.Light()
-        this.light.addLight(this.scene)
-        
-        this.human = new Human(human, this.scene)
+        this.core = new Core(this.parent)
+        this.human = new Human(human, this.core.getScene())
         this.animator = new Animator()
         this.human.execute(() => {
             this.animator.animate(new Animation(animation), this.human.skeleton)
         })
-        window.addEventListener('resize', this.resize.bind(this), false)
-        
+
         if(this.option.UI === UI.animation) this.ui = new AnimationUI(this.parent, this.animator, this.human)
         else if(this.option.UI === UI.production) this.ui = new ProductionUI(this.parent, this.animator)
         else this.ui = new ProductionUI(this.parent, this.animator)
@@ -58,20 +47,10 @@ export default class App {
         requestAnimationFrame(this.update.bind(this))
         const interval = this.performance.getInterval()
         this.performance.start()
-        this.control.update()
         this.ui.update(interval)
         this.animator.update(interval)
-        this.render()
+        this.core.update()
         this.performance.end()
-    }
-    private resize() {
-        this.camera.aspect = this.parent.clientWidth / this.parent.clientHeight
-        this.camera.updateProjectionMatrix()
-        this.renderer.setSize(this.parent.clientWidth, this.parent.clientHeight)
-        this.render()
-    }
-    private render() {
-        this.renderer.render(this.scene, this.camera)
     }
 }
 

@@ -25,7 +25,7 @@ export default class AnimationUI extends UIRoot{
 
         this.buttons = new Buttons(this.element, [
                 { onClick: () => { console.log(this.animator.getAnimation()) }, expression: "print" },
-                { onClick: () => { this.animator.getAnimation().clonePush(this.human.getPosture(), 1000)}, expression: "timeline" },
+                { onClick: () => { this.animator.getAnimation().clonePush([], this.animator.getCurrentTime() ); console.log(this.animator.getAnimation()) }, expression: "timeline" },
                 { onClick: () => { this.animator.getAnimation().download() }, expression: "download" }
             ]
         )
