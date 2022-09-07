@@ -21,6 +21,7 @@ export default class Left extends UIRoot{
     private rightSkipButton: HTMLElement
     private leftJumpButton: HTMLElement
     private rightJumpButton: HTMLElement
+    private timeInput: HTMLInputElement
     constructor(
         parent: HTMLElement,
         animator: Animator
@@ -53,6 +54,10 @@ export default class Left extends UIRoot{
         this.leftJumpButton.style.backgroundImage = `url(${jumpPrevious})`
         this.leftJumpButton.addEventListener('click', () => {this.jump(false)})
 
+        this.timeInput = document.createElement('input')
+        this.timeInput.addEventListener('change' ,(e) => {
+            this.animator.setCurrentTime(Number(this.timeInput.value))
+        })
         this.time = document.createElement('div')
         this.time.className = "time"
 
@@ -63,6 +68,7 @@ export default class Left extends UIRoot{
         this.element.appendChild(this.rightJumpButton)
         this.element.appendChild(this.rightSkipButton)
         this.element.appendChild(this.time)
+        this.element.appendChild(this.timeInput)
 
         document.addEventListener('keydown', (e) => {
             if(e.code === "Space") this.pause()
@@ -90,7 +96,7 @@ export default class Left extends UIRoot{
     private jump(direction: boolean) {
         this.animator.setCurrentTime(this.animator.getCurrentTime() + (direction ? this.jumpTime : -this.jumpTime))
     }
-    public update() {
+    public update() { 
         this.time.innerText = this.msToTime(this.animator.getCurrentTime()) + ' / ' + this.msToTime(this.animator.getMaximumTime())
 
     }

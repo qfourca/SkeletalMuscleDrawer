@@ -40,10 +40,6 @@ export default class Animator {
         })
     }
     public getTime(idx: number): any {
-        // let reservation = 0
-        // for(let i = 0; i < idx; i++) {
-        //     reservation += this.animation[i].time
-        // }
         let reservation = idx === 0 ? 0 : this.animation[idx - 1].time
         let run = this.animation[idx].time - reservation
         return { 

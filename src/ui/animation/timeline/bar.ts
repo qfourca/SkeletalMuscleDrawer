@@ -56,7 +56,7 @@ export default class Bar extends UIRoot {
         for(let i = 0; i < animation.length - this.moments.length; i++) {
             const temp = document.createElement('div')
             temp.className = 'moment'
-            temp.id = String(i + this.moments.length)
+            temp.id = String(this.moments.length)
             temp.addEventListener('click', (event) => {
                 //@ts-ignore
                 this.picked = animation[Number(event.target.id)]

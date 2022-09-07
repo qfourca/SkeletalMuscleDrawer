@@ -39,7 +39,6 @@ export default class AnimationUI extends UIRoot{
         this.timeLine.render()
     }
     public getPickedMoment(): Moment {
-        console.log("ASDSADAS")
         return this.timeLine.progressBar.picked
     }
     public update(interval: number): void {

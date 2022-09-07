@@ -2,6 +2,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import Posture from "../animation/posture";
 import Skeleton from "./skeleton";
+import { Moment } from "../animation";
 
 export default class Human {
     private scene:THREE.Scene
@@ -29,6 +30,17 @@ export default class Human {
         console.log(this.body.position.y - 10)
         this.body.position.y -= 1
         this.skeleton.setBones(gltf.scene.children[0].children.find((el:any) => el.type === 'Bone'))
+        // const temp: Moment = {
+        //     postures: [],
+        //     time: 0
+        // }
+        // this.skeleton.forEach(element => {
+        //     temp.postures.push({
+        //         name: element.name,
+        //         rotation: element.rotation
+        //     })
+        // })
+        // console.log(JSON.stringify(temp))
         this.onLoadFunctions.forEach(element => { element() })
         this.scene.add(this.body);
         this.loading = false

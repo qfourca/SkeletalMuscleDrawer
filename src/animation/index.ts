@@ -12,7 +12,6 @@ export default class Animation extends Array<Moment> {
         else if(startValue[0].postures[0].rotation.x == undefined) {
             this.setValue(startValue)
         }
-
         this.sort((a, b) => {
             return a.time - b.time;
         });

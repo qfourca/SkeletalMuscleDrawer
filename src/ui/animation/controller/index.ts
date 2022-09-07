@@ -55,16 +55,15 @@ export default class Controller extends UIRoot {
             const find = this.getPicked().postures.find(element => element.name === this.bone?.name)
             if(find == undefined) {
                 this.getPicked().postures.push(new Posture(this.bone.name, this.animator.getAnimation().getRootPosture(String(this.animator.getMomentIdx(this.getPicked()))).rotation))
-                this.rotators.forEach(element => element.setTarget(this.bone!.rotation))
+                this.rotators.forEach(element => element.setTarget(this.getPicked().postures.find(element => element.name === this.bone?.name)!.rotation))
             }
             else {
                 this.rotators.forEach(element => element.setTarget(find.rotation))
             }
             this.boneInfo.innerText = JSON.stringify(this.bone)
-           
         }
         else {
             this.boneInfo.innerText = ""
-        }
+        } 
     }
 }
