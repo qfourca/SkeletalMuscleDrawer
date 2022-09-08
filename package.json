@@ -36,6 +36,7 @@
     "dist/human.gltf"
   ],
   "dependencies": {
+    "@mediapipe/pose": "^0.5.1635988162",
     "three": "^0.140.2"
   },
   "repository": {

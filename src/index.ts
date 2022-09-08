@@ -1,10 +1,7 @@
-import App, { UI } from './app'
-import Animation from './animation'
+import App from './app'
 
 export default App
 
 export {
     App as App,
-    Animation as Animation,
-    UI as UI
 }

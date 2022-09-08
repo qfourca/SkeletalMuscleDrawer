@@ -29,7 +29,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             { 
-                test: /\.(png|svg|jpg|gif|jpe?g)$/, 
+                test: /\.(mp4|png|svg|jpg|gif|jpe?g)$/, 
                 use: {
                     loader: 'url-loader?limit=10000' 
                 }
