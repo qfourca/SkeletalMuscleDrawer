@@ -17,13 +17,12 @@ export default class Core extends AppMember implements LoadAble {
     private animation: Animation
     private engine: Engine
     constructor (
-        parent: HTMLElement,
         appManager: AppManager,
         humanFile: string,
         animationFile: string | any,
         scene: Scene
     ) {
-        super(parent, appManager)
+        super(appManager)
         this.human = new Human(humanFile)
         this.human.onLoad(() => {
             this.human.render(scene)

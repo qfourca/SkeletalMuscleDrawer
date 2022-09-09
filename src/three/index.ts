@@ -18,11 +18,12 @@ export default class Three extends AppMember implements RenderAble {
     private renderer:Renderer
     private light:Light
     private control:OrbitControls
+    private parent: HTMLElement
     constructor(
         parent: HTMLElement,
         appManager: AppManager
     ) {
-        super(parent, appManager)
+        super(appManager)
         this.parent = parent
         this.scene = new Scene()
         this.camera = new Camera(95, this.parent.clientWidth / this.parent.clientHeight)

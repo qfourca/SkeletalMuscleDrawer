@@ -32,7 +32,7 @@ export default class App {
             option: this.option
         }
         this.three = new Three(this.parent, this.appManager)
-        this.core = new Core(this.parent, this.appManager, human, animation, this.three.getScene())
+        this.core = new Core(this.appManager, human, animation, this.three.getScene())
         this.update()
     }
     private update() {
