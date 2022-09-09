@@ -1,6 +1,6 @@
 import { Euler } from "three";
 
 export default interface Moment {
-    posture: Map<string, Euler>
+    postures: Map<string, Euler>
     time: number
 }

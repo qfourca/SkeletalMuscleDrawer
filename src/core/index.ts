@@ -4,6 +4,7 @@ import { Scene } from "../three";
 
 import Human from "./human";
 import Animation from "./animation";
+import Engine from "./engine";
 
 export default class Core extends AppMember implements LoadAble {
     private onLoadFunctions: Array<() => void> = new Array()
@@ -14,6 +15,7 @@ export default class Core extends AppMember implements LoadAble {
 
     private human: Human
     private animation: Animation
+    private engine: Engine
     constructor (
         parent: HTMLElement,
         appManager: AppManager,
@@ -27,10 +29,25 @@ export default class Core extends AppMember implements LoadAble {
             this.human.render(scene)
         })
         this.animation = new Animation(animationFile)
+        this.engine = new Engine(this.human, this.animation)
     }
     
     public update = (interval: number) => {
-
+        this.checkLoad()
+        
+        if(!this.isLoading) {
+            this.engine.update(interval)
+        }
+    }
+    private checkLoad() {
+        if(this.isLoading) {
+            if(!this.animation.getIsLoading() && !this.human.getIsLoading()) {
+                this.isLoading = false
+                this.onLoadFunctions.forEach((func) => {
+                    func()
+                })
+            }
+        }
     }
 
     public getAnimationRunning = () => { }
