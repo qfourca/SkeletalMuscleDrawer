@@ -25,9 +25,8 @@ export default class Finder {
                     result.set(
                         boneName,
                         new Euler(
-                            past.x + (future.x - past.x) * percent,
-                            past.y + (future.y - past.y) * percent,
-                            past.z + (future.y - past.y) * percent
+                            //@ts-ignore
+                            past._x + (future._x - past._x) * percent, past._y + (future._y - past._y) * percent, past._z + (future._y - past._y) * percent
                         )
                     )
                 }
