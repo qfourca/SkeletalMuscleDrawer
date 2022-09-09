@@ -8,34 +8,41 @@ import AppManager, {
 import AppMember from './appMember'
 
 import Three from '../three'
+import Core from '../core'
 
 export default class App {
     private performance:Performance = new Performance()
     private appManager: AppManager 
-    private appMembers: Array<AppMember> = new Array()
+
+    private three: Three
+    private core: Core
+
     private parent: HTMLElement
-    // private option:Option
+    private option:Option
     constructor(
         parent: HTMLElement,
         human: string,
-        animation: any,
+        animation: string | any,
         option?: Option
     ) {
         this.parent = parent
+        this.option = option === undefined ? { } : option
         this.appManager = {
             eventManager: new EventManager(),
-            option: option === undefined ? { } : option
+            option: this.option
         }
-        this.appMembers.push(new Three(this.parent, this.appManager))
+        this.three = new Three(this.parent, this.appManager)
+        this.core = new Core(this.parent, this.appManager, human, animation, this.three.getScene())
         this.update()
     }
     private update() {
         requestAnimationFrame(this.update.bind(this))
         const interval = this.performance.getInterval()
         this.performance.start()
-        this.appMembers.forEach(member => {
-            member.update(interval)
-        })
+
+        this.three.update(interval)
+        this.core.update(interval)
+
         this.performance.end()
     }
 }
