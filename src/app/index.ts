@@ -9,6 +9,7 @@ import AppMember from './appMember'
 
 import Three from '../three'
 import Core from '../core'
+import UI from '../ui'
 
 export default class App {
     private performance:Performance = new Performance()
@@ -16,8 +17,9 @@ export default class App {
 
     private three: Three
     private core: Core
+    private ui: UI
 
-    private parent: HTMLElement
+
     private option:Option
     constructor(
         parent: HTMLElement,
@@ -25,14 +27,19 @@ export default class App {
         animation: string | any,
         option?: Option
     ) {
-        this.parent = parent
         this.option = option === undefined ? { } : option
         this.appManager = {
             eventManager: new EventManager(),
-            option: this.option
+            option: this.option,
+            uiRoot: this.HTMLMaker('div', 'skeletalmuscle-drawer-uiroot'),
+            canvas: this.HTMLMaker('canvas', 'skeletalmuscle-drawer-canvas'),
+            root: parent
         }
-        this.three = new Three(this.parent, this.appManager)
+        this.appManager.root.appendChild(this.appManager.canvas)
+        this.ui = new UI(this.appManager)
+        this.three = new Three(this.appManager)
         this.core = new Core(this.appManager, human, animation, this.three.getScene())
+        
         this.update()
     }
     private update() {
@@ -40,10 +47,19 @@ export default class App {
         const interval = this.performance.getInterval()
         this.performance.start()
 
+        this.ui.update(interval)
         this.three.update(interval)
         this.core.update(interval)
 
         this.performance.end()
+    }
+    private HTMLMaker(element: string, className?: string) {
+        const result = document.createElement(element)
+        if(className != undefined) {
+            result.className = className
+        }
+        // this.parent.appendChild(result)
+        return result
     }
 }
 

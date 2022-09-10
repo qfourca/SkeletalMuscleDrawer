@@ -1,7 +1,21 @@
+.skeletalmuscle-drawer-canvas {
+    position: absolute;
+}
 .skeletalmuscle-drawer-uiroot {
     width: 100%;
-    .timeline {
-        height: 200px;
+    height: 100%;
+    // z-index: -1;
+    position: absolute;
+    .ProductionUI {
         width: 100%;
+        .TimeLine {
+            height: 200px;
+            width: 100%;
+            background-color: red;
+            position: absolute;
+            z-index: 1;
+            bottom: 0
+        }
     }
 }
+

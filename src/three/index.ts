@@ -20,15 +20,14 @@ export default class Three extends AppMember implements RenderAble {
     private control:OrbitControls
     private parent: HTMLElement
     constructor(
-        parent: HTMLElement,
         appManager: AppManager
     ) {
         super(appManager)
-        this.parent = parent
+        this.parent = appManager.root
         this.scene = new Scene()
         this.camera = new Camera(95, this.parent.clientWidth / this.parent.clientHeight)
-        this.renderer = new Renderer(this.parent.clientWidth, this.parent.clientHeight, this.parent)
-        this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        this.renderer = new Renderer(this.parent.clientWidth, this.parent.clientHeight, this.appManager.canvas)
+        this.control = new OrbitControls(this.camera, this.appManager.uiRoot)
         this.light = new Light()
         this.light.addLight(this.scene)
 

@@ -12,8 +12,7 @@ export default abstract class UIMember implements RenderAble{
     ) {
         this.parent = parent
         this.me = document.createElement(myElement)
-        if(className != undefined)
-            this.me.className = className
+        this.me.className = className == undefined ? "" : className
     }
 
     public render = () => {

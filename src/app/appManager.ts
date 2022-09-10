@@ -3,6 +3,9 @@ import EventManager from "../event"
 export default interface AppManager {
     eventManager: EventManager
     option: Option
+    uiRoot: HTMLElement
+    canvas: HTMLElement
+    root: HTMLElement
 }
 
 export interface Option {

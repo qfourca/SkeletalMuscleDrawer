@@ -1,13 +1,13 @@
 import UIMember from "./uimember";
 
-export default class timeLine extends UIMember{
+export default class TimeLine extends UIMember{
     constructor (
         parent: HTMLElement
     ) {
-        super(parent, 'div', 'timeline')
+        super(parent, 'div', TimeLine.name)
     }
 
     protected onUpdate = () => {
-        
+
     };
-}
+ }

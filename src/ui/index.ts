@@ -1,27 +1,26 @@
 import { AppManager, AppMember } from "../app"
 import { RenderAble } from "../interface"
 import UIMember from "./common/uimember"
+import ProductionUI from "./production"
+
+import './style.scss'
 
 export default class UI extends AppMember implements RenderAble {
-    private parent: HTMLElement
-    private children: Array<UIMember> = new Array()
+    private myUI: UIMember
     constructor(
-        parent: HTMLElement,
         appManager: AppManager
     ) {
         super(appManager)
-        this.parent = parent
+        this.appManager.root.appendChild(appManager.uiRoot)
+        this.myUI = new ProductionUI(appManager.uiRoot)
+        this.render()
     }
 
     public update = (interval: number) => {
-        this.children.forEach(child => {
-            child.update(interval)
-        })
+        this.myUI.update(interval)
     }
 
     public render = () => {
-        this.children.forEach(child => {
-            child.render()
-        })
+        this.myUI.render()
     }
 }
