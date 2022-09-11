@@ -7,6 +7,7 @@ import {
 export default class Engine implements UpdateAble {
     private human: Human
     private animation: Animation
+    public maximumTime: number
     public currentTime: number = 0
     public isPaused: boolean = false
     constructor (
@@ -15,19 +16,17 @@ export default class Engine implements UpdateAble {
     ) {
         this.human = human
         this.animation = animation
+        this.maximumTime = this.animation[this.animation.length - 1].time
     }
     public update = (interval: number) => {
         this.currentTime += interval
+        if(this.currentTime > this.maximumTime) {
+            this.currentTime = this.maximumTime
+        }
         const current = this.animation.finder.getTimePosture(this.currentTime, this.human.getBoneNames())
         current.forEach((value, key) => {
             //@ts-ignore
             this.human.getBone(key)?.rotation.set(value._x, value._y, value._z, value._order)
         })
-        // const test = "Neck"
-        // const testCurrent = current.get(test)
-        // if(testCurrent != undefined) {
-        //     //@ts-ignore
-        //     this.human.getBone(test)?.rotation.set(testCurrent._x, testCurrent._y, testCurrent._z)
-        // }
     }
 }

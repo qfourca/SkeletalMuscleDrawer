@@ -1,4 +1,7 @@
-import EventManager from '../event'
+import {
+    StateManager,
+    EventManager
+} from '../manager'
 import {
     Performance
 } from '../util'
@@ -19,7 +22,6 @@ export default class App {
     private core: Core
     private ui: UI
 
-
     private option:Option
     constructor(
         parent: HTMLElement,
@@ -30,6 +32,7 @@ export default class App {
         this.option = option === undefined ? { } : option
         this.appManager = {
             eventManager: new EventManager(),
+            stateManager: new StateManager(),
             option: this.option,
             uiRoot: this.HTMLMaker('div', 'skeletalmuscle-drawer-uiroot'),
             canvas: this.HTMLMaker('canvas', 'skeletalmuscle-drawer-canvas'),

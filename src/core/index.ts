@@ -29,13 +29,14 @@ export default class Core extends AppMember implements LoadAble {
         })
         this.animation = new Animation(animationFile)
         this.engine = new Engine(this.human, this.animation)
+        this.appManager.stateManager.maximunTime = this.engine.maximumTime
     }
     
     public update = (interval: number) => {
         this.checkLoad()
-        
         if(!this.isLoading) {
             this.engine.update(interval)
+            this.appManager.stateManager.currentTime = this.engine.currentTime
         }
     }
     private checkLoad() {

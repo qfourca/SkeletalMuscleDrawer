@@ -12,7 +12,7 @@ export default class UI extends AppMember implements RenderAble {
     ) {
         super(appManager)
         this.appManager.root.appendChild(appManager.uiRoot)
-        this.myUI = new ProductionUI(appManager.uiRoot)
+        this.myUI = new ProductionUI(appManager.uiRoot, appManager)
         this.render()
     }
 

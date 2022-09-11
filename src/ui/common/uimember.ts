@@ -3,7 +3,7 @@ import { RenderAble } from "../../interface";
 export default abstract class UIMember implements RenderAble{
     protected parent: HTMLElement
     protected me: HTMLElement
-    protected children: Array<UIMember> = new Array()
+    private children: Array<UIMember> = new Array()
 
     constructor(
         parent: HTMLElement,
@@ -13,6 +13,10 @@ export default abstract class UIMember implements RenderAble{
         this.parent = parent
         this.me = document.createElement(myElement)
         this.me.className = className == undefined ? "" : className
+    }
+
+    protected appendChild = (child: UIMember) => {
+        this.children.push(child)
     }
 
     public render = () => {
@@ -29,5 +33,7 @@ export default abstract class UIMember implements RenderAble{
         })
     }
 
-    protected abstract onUpdate: (interval: number) => void
+    protected onUpdate = (interval: number) => {
+
+    }
 }

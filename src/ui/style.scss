@@ -1,20 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .skeletalmuscle-drawer-canvas {
     position: absolute;
 }
+
 .skeletalmuscle-drawer-uiroot {
     width: 100%;
     height: 100%;
-    // z-index: -1;
     position: absolute;
     .ProductionUI {
         width: 100%;
+        height: 100%;
         .TimeLine {
-            height: 200px;
+            min-height: 80px;
+            max-height: 120px;
+            height: 10%;
             width: 100%;
-            background-color: red;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
             position: absolute;
+            bottom: 0;
             z-index: 1;
-            bottom: 0
+            .ProgressBarContainer {
+                $progress-color: red;
+                width: 97%;
+                height: 5px;
+                position: absolute;
+                background-color: #aaa;
+                top: 20px;
+                left: 1.5%;
+                .ProgressBar {
+                    width: 50%;
+                    height: 5px;
+                    position: absolute;
+                    background-color: $progress-color;
+                    .ProgressBall {
+                        z-index: 10;
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        background-color: $progress-color;
+                        position: absolute;
+                        right: 0;
+                        bottom: -5px;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 }
