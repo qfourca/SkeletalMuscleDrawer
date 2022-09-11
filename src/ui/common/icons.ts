@@ -12,6 +12,8 @@ import setting from '../../static/image/icons/setting.svg'
 import fullscreen from '../../static/image/icons/fullscreen.svg'
 //@ts-ignore
 import fullscreen_exit from '../../static/image/icons/fullscreen_exit.svg'
+//@ts-ignore
+import pause from '../../static/image/icons/pause.svg'
 export default interface IconInfo {
     src: string,
     float: string,
@@ -24,5 +26,6 @@ export {
     skip_previous as skip_previous,
     setting as setting,
     fullscreen as fullscreen,
-    fullscreen_exit as fullscreen_exit
+    fullscreen_exit as fullscreen_exit,
+    pause as pause
 }

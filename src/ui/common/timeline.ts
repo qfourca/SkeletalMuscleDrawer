@@ -72,13 +72,50 @@ class ProgressBall extends UIMember {
 }
 
 class FunctionContainer extends UIMember {
+    private readonly IconInfos: Array<IconInfo> = [
+        { src: skip_previous, float: 'left'},
+        { src: foward, float: 'left', onClick: this.foward.bind(this)},
+        { src: pause, float: 'left', onClick: this.togglePause.bind(this)},
+        { src: replay, float: 'left', onClick: this.replay.bind(this)},
+        { src: skip_next, float: 'left'},
+
+        { src: setting, float: 'right' },
+        { src: fullscreen, float: 'right', onClick: this.toggleFullscreen.bind(this)},
+    ]
+    private readonly KeyBind: Map<string, () => void> = new Map([
+        [" ", this.togglePause.bind(this)],
+        ["ArrowRight", this.foward.bind(this)],
+        ["ArrowLeft", this.replay.bind(this)]
+    ])
+    private readonly ControlTime: number = 1000
+    private appManager: AppManager
+    private fullScreen: FullScreen
     constructor (
         parent: HTMLElement,
         appManager: AppManager
     ) {
         super(parent, 'div', FunctionContainer.name)
-        this.appendChild(new Functions(this.me, 'left', appManager))
-        this.appendChild(new Functions(this.me, 'right', appManager))
+        this.appManager = appManager
+        this.fullScreen = new FullScreen(this.appManager.root)
+        this.appendChild(new FunctionsLeft(this.me, this.IconInfos.filter((ico) => ico.float === 'left'), appManager))
+        this.appendChild(new FunctionsRight(this.me, this.IconInfos.filter((ico) => ico.float === 'right')))
+        document.addEventListener('keydown' ,(event: KeyboardEvent) => {
+            const exe = this.KeyBind.get(event.key)
+            if(exe != undefined) exe()
+        })
+    }
+    private togglePause() {
+        this.appManager.eventManager.execute(this.appManager.stateManager.isPaused ? "start" : "pause")        
+    }
+    private foward() {
+        this.appManager.eventManager.execute('setTime', this.appManager.stateManager.currentTime += this.ControlTime)
+    }
+    private replay() {
+        this.appManager.eventManager.execute('setTime', this.appManager.stateManager.currentTime -= this.ControlTime)
+    }
+    private toggleFullscreen() {
+        if(this.fullScreen.isFullScreen) { this.fullScreen.exit() }
+        else { this.fullScreen.full() }
     }
 }
 import IconInfo, {
@@ -87,34 +124,40 @@ import IconInfo, {
     replay,
     setting,
     skip_next,
-    skip_previous
+    skip_previous,
+    pause
 } from './icons'
+import FullScreen from "../../util/fullscreen";
 class Functions extends UIMember {
-    private readonly IconInfos: Array<IconInfo> = [
-        { src: skip_previous, float: 'left' },
-        { src: foward, float: 'left' },
-        { src: replay, float: 'left' },
-        { src: skip_next, float: 'left' },
-
-        { src: setting, float: 'right' },
-        { src: fullscreen, float: 'right' },
-    ]
     constructor (
         parent: HTMLElement,
         direction: string,
-        appManager: AppManager
+        functions: Array<IconInfo>
     ) {
         super(parent, 'div', Functions.name + ' ' + direction)
-        this.IconInfos.forEach((iconInfo: IconInfo) => {
-            if(iconInfo.float === direction)
-                this.appendChild(new Function(this.me, iconInfo))
+        functions.forEach((iconInfo: IconInfo) => {
+            this.appendChild(new Function(this.me, iconInfo))
         })
-        if(direction === 'left') {
-            this.appendChild(new TimeProgress(this.me, appManager))
-        }
     }
 }
-
+class FunctionsLeft extends Functions {
+    constructor (
+        parent: HTMLElement,
+        iconInfos: Array<IconInfo>,
+        appManager: AppManager
+    ) {
+        super(parent, 'left', iconInfos)
+        this.appendChild(new TimeProgress(this.me, appManager))
+    }
+}
+class FunctionsRight extends Functions {
+    constructor (
+        parent: HTMLElement,
+        iconInfos: Array<IconInfo>
+    ) {
+        super(parent, 'right', iconInfos)
+    }
+}
 class Function extends UIMember {
     constructor (
         parent: HTMLElement,

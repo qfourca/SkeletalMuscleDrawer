@@ -47,6 +47,7 @@ export default class Core extends AppMember implements LoadAble {
         if(!this.isLoading) {
             this.engine.update(interval)
             this.appManager.stateManager.currentTime = this.engine.currentTime
+            this.appManager.stateManager.isPaused = this.engine.isPaused
         }
     }
     private checkLoad() {
