@@ -28,9 +28,11 @@ export default class Core extends AppMember implements LoadAble {
             this.human.render(scene)
         })
         this.animation = new Animation(animationFile)
+        this.animation.onLoad(() => { this.appManager.animation = this.animation})
+        this.animation.onLoad(() => { this.appManager.eventManager.execute('animation-change', "")})
         this.engine = new Engine(this.human, this.animation)
         this.appManager.stateManager.maximunTime = this.engine.maximumTime
-        
+        this.appManager.animation = this.animation
         this.appManager.eventManager.add('setTime', (time: number) => {
             this.engine.currentTime = time
         })

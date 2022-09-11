@@ -2,7 +2,7 @@ import { RenderAble } from "../../interface";
 
 export default abstract class UIMember implements RenderAble{
     protected parent: HTMLElement
-    protected me: HTMLElement
+    public me: HTMLElement
     private children: Array<UIMember> = new Array()
 
     constructor(
@@ -18,7 +18,9 @@ export default abstract class UIMember implements RenderAble{
     protected appendChild = (child: UIMember) => {
         this.children.push(child)
     }
-
+    protected findChildAsClass = (className: string) => {
+        return this.children.find((element) => element.me.className === className)
+    }
     public render = () => {
         this.parent.appendChild(this.me)
         this.children.forEach((child: UIMember) => {

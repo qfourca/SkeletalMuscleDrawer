@@ -14,6 +14,8 @@ import Three from '../three'
 import Core from '../core'
 import UI from '../ui'
 
+import Animation from '../core/animation'
+
 export default class App {
     private performance:Performance = new Performance()
     private appManager: AppManager 
@@ -41,10 +43,9 @@ export default class App {
         this.appManager.root.appendChild(this.appManager.canvas)
     
         this.three = new Three(this.appManager)
-        this.core = new Core(this.appManager, human, animation, this.three.getScene())
         this.ui = new UI(this.appManager)
-        
-        
+        this.core = new Core(this.appManager, human, animation, this.three.getScene())
+
         this.update()
     }
     private update() {

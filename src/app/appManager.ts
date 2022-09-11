@@ -1,5 +1,6 @@
 import EventManager from "../manager/event"
 import StateManager from "../manager/state"
+import Animation from "../core/animation";
 export default interface AppManager {
     eventManager: EventManager
     stateManager: StateManager
@@ -7,6 +8,7 @@ export default interface AppManager {
     uiRoot: HTMLElement
     canvas: HTMLElement
     root: HTMLElement
+    animation?: Animation
 }
 
 export interface Option {

@@ -44,7 +44,6 @@ export default class Animation extends Array<Moment> implements LoadAble {
     private onError = (error: any) => {
 
     }
-
 }
 
 interface RawAnimation {

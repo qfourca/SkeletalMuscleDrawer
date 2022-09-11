@@ -36,5 +36,5 @@ class ProductionTimeline extends TimeLine {
                 this.isHided = true
             }
         }
-    };
+    }
 }
