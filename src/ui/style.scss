@@ -7,13 +7,8 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    .ProductionUI {
-        width: 100%;
-        height: 100%;
-    }
-    .AnimationUI {
-        width: 100%;
-        height: 100%;
+    .hide {
+        opacity: 0;
     }
     .TimeLine {
         height: 75px;
@@ -22,6 +17,7 @@
         position: absolute;
         bottom: 0;
         z-index: 1;
+        transition: 0.3s;
         .ProgressBarContainer {
             $progress-color: red;
             width: 97%;

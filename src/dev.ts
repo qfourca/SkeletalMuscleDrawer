@@ -8,6 +8,6 @@ const app = new App(
     model,
     animation,
     {
-        UI: "animation"
+        UI: "production"
     }
 )

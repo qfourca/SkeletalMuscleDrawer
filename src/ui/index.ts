@@ -15,8 +15,9 @@ export default class UI extends AppMember implements RenderAble {
         super(appManager)
         this.appManager.root.appendChild(appManager.uiRoot)
         this.myUI = 
-            this.appManager.option.UI === undefined || this.appManager.option.UI === "production" ?
-            new ProductionUI(appManager.uiRoot, appManager) : new AnimationUI(appManager.uiRoot, appManager)
+            this.appManager.option.UI === "animation" ?
+            new AnimationUI(appManager.uiRoot, appManager) : 
+            new ProductionUI(appManager.uiRoot, appManager) 
         this.render()
     }
 
