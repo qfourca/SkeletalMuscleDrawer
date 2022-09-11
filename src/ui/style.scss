@@ -10,76 +10,80 @@
     .ProductionUI {
         width: 100%;
         height: 100%;
-        .TimeLine {
-            height: 75px;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
+    }
+    .AnimationUI {
+        width: 100%;
+        height: 100%;
+    }
+    .TimeLine {
+        height: 75px;
+        width: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        .ProgressBarContainer {
+            $progress-color: red;
+            width: 97%;
+            height: 4px;
             position: absolute;
-            bottom: 0;
-            z-index: 1;
-            .ProgressBarContainer {
-                $progress-color: red;
-                width: 97%;
+            background-color: #aaa;
+            top: 20px;
+            left: 1.5%;
+            .ProgressBar {
+                width: 50%;
                 height: 4px;
                 position: absolute;
-                background-color: #aaa;
-                top: 20px;
-                left: 1.5%;
-                .ProgressBar {
-                    width: 50%;
-                    height: 4px;
-                    position: absolute;
+                background-color: $progress-color;
+                .ProgressBall {
+                    z-index: 10;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
                     background-color: $progress-color;
-                    .ProgressBall {
-                        z-index: 10;
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        background-color: $progress-color;
-                        position: absolute;
-                        right: -4px;
-                        bottom: -4px;
-                        cursor: pointer;
-                    }
+                    position: absolute;
+                    right: -4px;
+                    bottom: -4px;
+                    cursor: pointer;
                 }
             }
-            .FunctionContainer {
-                width: 100%;
+        }
+        .FunctionContainer {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            display: flex;
+            .Functions {
+                width: 96%;
                 height: 50px;
-                position: absolute;
-                bottom: 0;
                 display: flex;
-                justify-content: space-around;
                 align-items: center;
-                display: flex;
-                .Functions {
-                    width: 96%;
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    .Function {
-                        width: 30px;
-                        height: 30px;
-                        background-repeat : no-repeat;
-                        background-size : cover;
-                        cursor: pointer;
-                    }
-                    .TimeProgress {
-                        margin-left: 10px;
-                        font-size: 22px;
-                        font-family: "Roboto";
-                        color: #eee;
-                    }
+                gap: 5px;
+                .Function {
+                    width: 30px;
+                    height: 30px;
+                    background-repeat : no-repeat;
+                    background-size : cover;
+                    cursor: pointer;
                 }
-                .left {
-                    width: 60%;
-                    justify-content: flex-start;
+                .TimeProgress {
+                    margin-left: 10px;
+                    font-size: 22px;
+                    font-family: "Roboto";
+                    color: #eee;
                 }
-                .right {
-                    width: 30%;
-                    justify-content: flex-end;
-                }
+            }
+            .left {
+                width: 60%;
+                justify-content: flex-start;
+            }
+            .right {
+                width: 30%;
+                justify-content: flex-end;
             }
         }
     }

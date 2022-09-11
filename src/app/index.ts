@@ -70,5 +70,6 @@ export default class App {
 
 export { 
     AppManager as AppManager, 
-    AppMember as AppMember
+    AppMember as AppMember,
+    Option as Option
 }

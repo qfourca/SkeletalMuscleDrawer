@@ -1,7 +1,9 @@
 import { AppManager, AppMember } from "../app"
 import { RenderAble } from "../interface"
 import UIMember from "./common/uimember"
+
 import ProductionUI from "./production"
+import AnimationUI from "./animation"
 
 import './style.scss'
 
@@ -12,7 +14,9 @@ export default class UI extends AppMember implements RenderAble {
     ) {
         super(appManager)
         this.appManager.root.appendChild(appManager.uiRoot)
-        this.myUI = new ProductionUI(appManager.uiRoot, appManager)
+        this.myUI = 
+            this.appManager.option.UI === undefined || this.appManager.option.UI === "production" ?
+            new ProductionUI(appManager.uiRoot, appManager) : new AnimationUI(appManager.uiRoot, appManager)
         this.render()
     }
 

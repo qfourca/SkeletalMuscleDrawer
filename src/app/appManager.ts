@@ -10,10 +10,5 @@ export default interface AppManager {
 }
 
 export interface Option {
-    UI?: number
-}
-
-export const UI = {
-    production: 0,
-    animation: 1
+    UI?: "production" | "animation"
 }
