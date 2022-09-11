@@ -1,11 +1,11 @@
 export default class EventManager {
-    private events: Map<string, Array<() => void>> = new Map()
+    private events: Map<string, Array<(arg: any) => void>> = new Map()
     constructor (
 
     ) {
 
     }
-    public add(eventName: string, execute:() => void) {
+    public add(eventName: string, execute:(arg: any) => void) {
         const get = this.events.get(eventName)
         if(get != undefined) {
             get.push(execute)
@@ -16,11 +16,11 @@ export default class EventManager {
             this.events.set(eventName, array)
         }
     }
-    public execute(eventName: string) {
+    public execute(eventName: string, arg?: any) {
         const get = this.events.get(eventName)
         if(get != undefined) {
-            get.forEach((func:() => void) => {
-                func()
+            get.forEach((func:(arg: any) => void) => {
+                func(arg)
             })
         }
     }

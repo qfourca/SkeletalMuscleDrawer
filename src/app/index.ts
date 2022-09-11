@@ -39,9 +39,11 @@ export default class App {
             root: parent
         }
         this.appManager.root.appendChild(this.appManager.canvas)
-        this.ui = new UI(this.appManager)
+    
         this.three = new Three(this.appManager)
         this.core = new Core(this.appManager, human, animation, this.three.getScene())
+        this.ui = new UI(this.appManager)
+        
         
         this.update()
     }

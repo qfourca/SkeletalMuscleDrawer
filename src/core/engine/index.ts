@@ -19,9 +19,11 @@ export default class Engine implements UpdateAble {
         this.maximumTime = this.animation[this.animation.length - 1].time
     }
     public update = (interval: number) => {
-        this.currentTime += interval
-        if(this.currentTime > this.maximumTime) {
-            this.currentTime = this.maximumTime
+        if(!this.isPaused) {
+            this.currentTime += interval
+            if(this.currentTime > this.maximumTime) {
+                this.currentTime = this.maximumTime
+            }
         }
         const current = this.animation.finder.getTimePosture(this.currentTime, this.human.getBoneNames())
         current.forEach((value, key) => {

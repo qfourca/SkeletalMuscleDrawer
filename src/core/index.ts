@@ -30,6 +30,16 @@ export default class Core extends AppMember implements LoadAble {
         this.animation = new Animation(animationFile)
         this.engine = new Engine(this.human, this.animation)
         this.appManager.stateManager.maximunTime = this.engine.maximumTime
+        
+        this.appManager.eventManager.add('setTime', (time: number) => {
+            this.engine.currentTime = time
+        })
+        this.appManager.eventManager.add('start', () => {
+            this.engine.isPaused = false
+        })
+        this.appManager.eventManager.add('pause', () => {
+            this.engine.isPaused = true
+        })
     }
     
     public update = (interval: number) => {
@@ -49,9 +59,4 @@ export default class Core extends AppMember implements LoadAble {
             }
         }
     }
-
-    public getAnimationRunning = () => { }
-    public setAnimationRunning = () => { }
-    public getCurrentProgress = () => { }
-    public setCurrentProgress = () => { }
 }
