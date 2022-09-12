@@ -3,6 +3,7 @@ import Moment from "./moment";
 import axios from 'axios'
 import Finder from "./finder";
 import { Euler } from "three";
+import { AppManager } from "../../app";
 
 export default class Animation extends Array<Moment> implements LoadAble {
     private onLoadFunctions: Array<() => void> = new Array()
@@ -12,10 +13,14 @@ export default class Animation extends Array<Moment> implements LoadAble {
     public getIsLoading = () => this.isLoading
 
     public finder: Finder
+
+    private appManager: AppManager 
     constructor (
-        file: string | any
+        file: string | any,
+        appManager: AppManager
     ) {
         super()
+        this.appManager = appManager
         if(typeof file === 'object') {
             this.onResult(file)
         }
@@ -40,6 +45,8 @@ export default class Animation extends Array<Moment> implements LoadAble {
         })
         this.isLoading = false
         this.onLoadFunctions.forEach(func => { func() })
+        this.appManager.eventManager.execute("animation-load", this)
+        
     }
     private onError = (error: any) => {
 

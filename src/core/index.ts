@@ -26,8 +26,9 @@ export default class Core extends AppMember implements LoadAble {
         this.human = new Human(humanFile)
         this.human.onLoad(() => {
             this.human.render(scene)
+            this.appManager.eventManager.execute("human-load", this.human)
         })
-        this.animation = new Animation(animationFile)
+        this.animation = new Animation(animationFile, appManager)
         this.animation.onLoad(() => { this.appManager.animation = this.animation})
         this.animation.onLoad(() => { this.appManager.eventManager.execute('animation-change', "")})
         this.engine = new Engine(this.human, this.animation)
