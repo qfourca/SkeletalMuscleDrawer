@@ -1,6 +1,6 @@
 import { RenderAble } from "../../interface";
 
-export default abstract class UIMember implements RenderAble{
+export default class UIMember implements RenderAble{
     protected parent: HTMLElement
     public me: HTMLElement
     private children: Array<UIMember> = new Array()

@@ -5,7 +5,7 @@ import { Scene } from "../three";
 import Human from "./human";
 import Animation from "./animation";
 import Engine from "./engine";
-
+import Motion from './motion'
 export default class Core extends AppMember implements LoadAble {
     private onLoadFunctions: Array<() => void> = new Array()
     public onLoad = (func: () => any) => { this.onLoadFunctions.push(func); if(!this.getIsLoading()){ func() } }
@@ -16,6 +16,8 @@ export default class Core extends AppMember implements LoadAble {
     private human: Human
     private animation: Animation
     private engine: Engine
+    private motion?: Motion
+    
     constructor (
         appManager: AppManager,
         humanFile: string,
@@ -43,6 +45,7 @@ export default class Core extends AppMember implements LoadAble {
         this.appManager.eventManager.add('pause', () => {
             this.engine.isPaused = true
         })
+        if(appManager.option.UI === "animation") this.motion = new Motion(this.appManager.appElement)
     }
     
     public update = (interval: number) => {
@@ -51,6 +54,7 @@ export default class Core extends AppMember implements LoadAble {
             this.engine.update(interval)
             this.appManager.stateManager.currentTime = this.engine.currentTime
             this.appManager.stateManager.isPaused = this.engine.isPaused
+            if(this.motion != undefined) this.motion.update()
         }
     }
     private checkLoad() {

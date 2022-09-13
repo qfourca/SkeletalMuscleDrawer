@@ -1,6 +1,5 @@
 import { LoadAble } from "../../interface";
-import Moment from "./moment";
-import axios from 'axios'
+import Moment from "./moment"
 import Finder from "./finder";
 import { Euler } from "three";
 import { AppManager } from "../../app";
@@ -25,9 +24,9 @@ export default class Animation extends Array<Moment> implements LoadAble {
             this.onResult(file)
         }
         else {
-            axios.get(file)
-            .then((result) => { this.onResult(result.data) })
-            .catch(this.onError.bind(this))
+            // axios.get(file)
+            // .then((result) => { this.onResult(result.data) })
+            // .catch(this.onError.bind(this))
         }
         this.finder = new Finder(this)
     }

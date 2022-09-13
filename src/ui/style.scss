@@ -1,155 +1,167 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-.skeletalmuscle-drawer-canvas {
-    position: absolute;
-}
-
-.skeletalmuscle-drawer-uiroot {
+.skeletalmuscle-drawer-root {
     width: 100%;
     height: 100%;
-    .hide {
-        opacity: 0;
-    }
-    .TimeLine {
-        height: 75px;
-        width: 100%;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
+    position: relative;
+    background-color: skyblue;
+    .skeletalmuscle-drawer-canvas {
         position: absolute;
-        bottom: 0;
-        z-index: 1;
-        transition: 0.3s;
-        .ProgressBarContainer {
-            $progress-color: red;
-            $diameter: 12px;
-            width: 97%;
-            height: 6px;
+    }
+    .skeletalmuscle-drawer-uiroot {
+        width: 100%;
+        height: 100%;
+        .hide {
+            opacity: 0;
+        }
+        .TimeLine {
+            height: 75px;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
             position: absolute;
-            background-color: #aaa;
-            top: 20px;
-            left: 1.5%;
-            .MomentBall {
-                width: $diameter;
-                height: $diameter;
-                border-radius: 50%;
-                background-color: green;
-                position: absolute;
-                bottom: -3px;
-                cursor: pointer;
-            }
-            .ProgressBar {
-                width: 50%;
+            bottom: 0;
+            z-index: 1;
+            transition: 0.3s;
+            .ProgressBarContainer {
+                $progress-color: red;
+                $diameter: 12px;
+                width: 97%;
                 height: 6px;
                 position: absolute;
-                background-color: $progress-color;
-                .ProgressBall {
-                    z-index: 10;
+                background-color: #aaa;
+                top: 20px;
+                left: 1.5%;
+                .MomentBall {
                     width: $diameter;
                     height: $diameter;
                     border-radius: 50%;
-                    background-color: $progress-color;
+                    background-color: green;
                     position: absolute;
-                    right: -6px;
                     bottom: -3px;
                     cursor: pointer;
-                    z-index: 0;
+                }
+                .ProgressBar {
+                    width: 50%;
+                    height: 6px;
+                    position: absolute;
+                    background-color: $progress-color;
+                    .ProgressBall {
+                        z-index: 10;
+                        width: $diameter;
+                        height: $diameter;
+                        border-radius: 50%;
+                        background-color: $progress-color;
+                        position: absolute;
+                        right: -6px;
+                        bottom: -3px;
+                        cursor: pointer;
+                        z-index: 0;
+                    }
                 }
             }
-        }
-        .FunctionContainer {
-            width: 100%;
-            height: 50px;
-            position: absolute;
-            bottom: 0;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            display: flex;
-            .Functions {
-                width: 96%;
+            .FunctionContainer {
+                width: 100%;
                 height: 50px;
+                position: absolute;
+                bottom: 0;
                 display: flex;
+                justify-content: space-around;
                 align-items: center;
-                gap: 5px;
-                .Function {
-                    width: 30px;
-                    height: 30px;
-                    background-repeat : no-repeat;
-                    background-size : cover;
-                    cursor: pointer;
+                display: flex;
+                .Functions {
+                    width: 96%;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    .Function {
+                        width: 30px;
+                        height: 30px;
+                        background-repeat : no-repeat;
+                        background-size : cover;
+                        cursor: pointer;
+                    }
+                    .TimeProgress {
+                        margin-left: 10px;
+                        font-size: 20px;
+                        font-family: "Roboto";
+                        color: #eee;
+                    }
                 }
-                .TimeProgress {
-                    margin-left: 10px;
-                    font-size: 20px;
-                    font-family: "Roboto";
-                    color: #eee;
+                .left {
+                    width: 60%;
+                    justify-content: flex-start;
                 }
-            }
-            .left {
-                width: 60%;
-                justify-content: flex-start;
-            }
-            .right {
-                width: 30%;
-                justify-content: flex-end;
+                .right {
+                    width: 30%;
+                    justify-content: flex-end;
+                }
             }
         }
-    }
-    .BonePicker {
-        width: 240px;
-        height: 360px;
-        background-color: green;
-        position: absolute;
-        right: 0;
-        margin: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-        z-index: 10;
-        .BoneSelectContainer {
-            width: 90%;
-            height: 120px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            .BoneSelector {
-                width: 90%;
-                height: 20px;
-            }
-            .BoneInfo {
-                width: 90%;
-                height: 70%;
-                background-color: red;
-            }
-        }
-        .BoneRotatorContainer{
-            width: 90%;
-            height: 60px;
+        .BonePicker {
+            width: 240px;
+            height: 360px;
+            background-color: green;
+            position: absolute;
+            right: 0;
+            margin: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
-            .BoneRotateInput {
-                width: 80%;
+            z-index: 10;
+            .BoneSelectContainer {
+                width: 90%;
+                height: 120px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+                .BoneSelector {
+                    width: 90%;
+                    height: 20px;
+                }
+                .BoneInfo {
+                    width: 90%;
+                    height: 70%;
+                    background-color: red;
+                }
+            }
+            .BoneRotatorContainer{
+                width: 90%;
+                height: 60px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                .BoneRotateInput {
+                    width: 80%;
+                }
+            }
+        }
+        .ButtonContainer {
+            width: 50%;
+            height: 32px;
+            position: absolute;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            .Button {
+                cursor: pointer;
+                background-color: green;
+                height: 28px;
+                width: 20%;
+                line-height: 28px;
+                text-align: center;
             }
         }
     }
-    .ButtonContainer {
-        width: 50%;
-        height: 32px;
-        position: absolute;
-        margin: 5px;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-        .Button {
-            cursor: pointer;
-            background-color: green;
-            height: 28px;
-            width: 20%;
-            line-height: 28px;
-            text-align: center;
-        }
-    }
+    
+    
 }
 
+.skeletalmuscle-drawer-motion-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

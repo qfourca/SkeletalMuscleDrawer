@@ -13,7 +13,6 @@ export default class UI extends AppMember implements RenderAble {
         appManager: AppManager
     ) {
         super(appManager)
-        this.appManager.root.appendChild(appManager.uiRoot)
         this.myUI = 
             this.appManager.option.UI === "animation" ?
             new AnimationUI(appManager.uiRoot, appManager) : 

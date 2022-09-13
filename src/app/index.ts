@@ -14,7 +14,6 @@ import Three from '../three'
 import Core from '../core'
 import UI from '../ui'
 
-import Animation from '../core/animation'
 
 export default class App {
     private performance:Performance = new Performance()
@@ -38,10 +37,13 @@ export default class App {
             option: this.option,
             uiRoot: this.HTMLMaker('div', 'skeletalmuscle-drawer-uiroot'),
             canvas: this.HTMLMaker('canvas', 'skeletalmuscle-drawer-canvas'),
-            root: parent
+            root: this.HTMLMaker('div', 'skeletalmuscle-drawer-root'),
+            appElement: parent,
         }
+        this.appManager.appElement.appendChild(this.appManager.root)
         this.appManager.root.appendChild(this.appManager.canvas)
-    
+        this.appManager.root.appendChild(this.appManager.uiRoot)
+
         this.three = new Three(this.appManager)
         this.ui = new UI(this.appManager)
         this.core = new Core(this.appManager, human, animation, this.three.getScene())
@@ -64,7 +66,6 @@ export default class App {
         if(className != undefined) {
             result.className = className
         }
-        // this.parent.appendChild(result)
         return result
     }
 }

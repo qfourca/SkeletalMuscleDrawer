@@ -1,4 +1,4 @@
-import { App } from "./index"
+import App from "./index"
 //@ts-ignore
 import animation from './static/animation/develop.json'
 

@@ -7,6 +7,7 @@ export default interface AppManager {
     option: Option
     uiRoot: HTMLElement
     canvas: HTMLElement
+    appElement: HTMLElement,
     root: HTMLElement
     animation?: Animation
 }

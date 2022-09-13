@@ -24,13 +24,13 @@ export default class Three extends AppMember implements RenderAble {
     ) {
         super(appManager)
         this.parent = appManager.root
+        if(appManager.option.UI === 'animation') this.parent.style.width = "calc(100% - 360px)"
         this.scene = new Scene()
-        this.camera = new Camera(95, this.parent.clientWidth / this.parent.clientHeight)
+        this.camera = new Camera(70, this.parent.clientWidth / this.parent.clientHeight)
         this.renderer = new Renderer(this.parent.clientWidth, this.parent.clientHeight, this.appManager.canvas)
         this.control = new OrbitControls(this.camera, this.appManager.canvas)
         this.light = new Light()
         this.light.addLight(this.scene)
-
         window.addEventListener('resize', this.resize.bind(this), false)
     }
     public update = (interval: number) => {
