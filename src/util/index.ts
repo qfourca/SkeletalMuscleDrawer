@@ -1,6 +1,6 @@
 import Performance from "./performance";
 import FullScreen from "./fullscreen";
-import Webcam from "./fullscreen/webcam";
+import Webcam from "./webcam";
 export {
     Performance as Performance,
     FullScreen as FullScreen,

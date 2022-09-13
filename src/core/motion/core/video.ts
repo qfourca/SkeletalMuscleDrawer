@@ -24,6 +24,7 @@ export default class Video {
         this.element.autoplay = true
         this.element.muted = true
         this.element.playsInline = true
+        this.element.controls = true
         this.element.style.width = "360px";
         
         this.parent.appendChild(this.element)

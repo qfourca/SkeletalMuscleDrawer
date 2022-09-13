@@ -6,6 +6,7 @@ import Human from "./human";
 import Animation from "./animation";
 import Engine from "./engine";
 import Motion from './motion'
+import { PoseInfo } from "./motion/calculation";
 export default class Core extends AppMember implements LoadAble {
     private onLoadFunctions: Array<() => void> = new Array()
     public onLoad = (func: () => any) => { this.onLoadFunctions.push(func); if(!this.getIsLoading()){ func() } }
@@ -45,7 +46,11 @@ export default class Core extends AppMember implements LoadAble {
         this.appManager.eventManager.add('pause', () => {
             this.engine.isPaused = true
         })
-        if(appManager.option.UI === "animation") this.motion = new Motion(this.appManager.appElement)
+        if(appManager.option.UI === "animation") this.motion = new Motion(this.appManager.appElement, this.onResult.bind(this))
+    }
+
+    private onResult(poseInfo: PoseInfo) {
+        // console.log(poseInfo)
     }
     
     public update = (interval: number) => {
