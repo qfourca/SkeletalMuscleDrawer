@@ -13,8 +13,8 @@ export default class Calculation {
     }
     public static calculate(result: Results):PoseInfo {
         console.log(result)
-        return { 
-            ...result 
+        return {
+            ...result
         }
     }
 }

@@ -1,5 +1,6 @@
 import { Pose, Results } from "@mediapipe/pose"
 import Video from "./video"
+
 export default class Core {
     private parent: HTMLElement
     private pose: Pose

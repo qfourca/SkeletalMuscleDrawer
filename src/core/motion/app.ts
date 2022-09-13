@@ -7,7 +7,7 @@ import UIMember from '../../ui/common';
 //@ts-ignore
 import testVideo from '../../static/video/left.mp4'
 import Calculation, { PoseInfo } from './calculation';
-
+import boneInfos from './core/link'
 export default class App implements UpdateAble{
     private parent: HTMLElement
     private core: Core
@@ -31,7 +31,8 @@ export default class App implements UpdateAble{
 
         this.parent.appendChild(three)
         this.graphic = new Graphic(
-            three
+            three,
+            boneInfos
         )
     }
     private out: (poseInfo: PoseInfo) => void
