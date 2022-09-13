@@ -37,7 +37,7 @@ export default class Finder {
 
     public getTimeToIndex(time: number): number {
         for(let i = 1; i < this.animation.length; i++) {
-            if(this.animation[i].time > time)
+            if(this.animation[i].time >= time)
                 return i
         }
         return -1

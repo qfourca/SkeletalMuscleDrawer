@@ -5,20 +5,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: ['babel-loader'],
-              },
-            {
-                test: /\.tsx?$/,
-                exclude: /node_modules/,
-                use: 'ts-loader',
-            },
-            {
-                test: /\.gltf$/,
-                use: {
-                    loader: 'file-loader',
-                }
+                test: /\.ts$/,
+                include: path.resolve(__dirname, "./src"),
+                use: [
+                {
+                    loader: "babel-loader",
+                },
+                "ts-loader",
+                ],
             },
             {
                 test: /\.css$/,
@@ -27,6 +21,12 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.gltf$/,
+                use: {
+                    loader: 'file-loader',
+                }
             },
             { 
                 test: /\.(mp4|png|svg|jpg|gif|jpe?g)$/, 
@@ -42,11 +42,5 @@ module.exports = {
             three: path.resolve('./node_modules/three')
         },
         extensions: ['.ts', '.js'],
-    },
-    output: {
-        filename: 'bundle.js',
-        library: "skeletalmuscledrawer",
-        libraryTarget: "umd",
-        path: path.resolve(__dirname, './dist'),
     }
 };
