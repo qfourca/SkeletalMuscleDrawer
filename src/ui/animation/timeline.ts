@@ -36,6 +36,9 @@ export default class AnimationTimeline extends TimeLine {
         }
         this.appManager.eventManager.execute('moment-change', this.pickedMoment)
     }
+    protected onUpdate: (interval: number) => void = () => {
+        // console.log(this.pickedMoment.postures.get("Hips"))
+    }
 }
 class MomentBall extends UIMember {
     private moment: Moment

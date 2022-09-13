@@ -57,10 +57,18 @@ export default class Human implements LoadAble, RenderAble {
     public getBone(name: string): Bone | undefined {
         return this.bones.get(name)
     }
+
+    private readonly BalckList = [
+        "Finger",
+        "Eyebrow"
+    ]
     public getBoneNames(): Array<string> {
         const result = new Array()
         this.bones.forEach((value: Bone, key: string) => {
-            result.push(key)
+            let black: boolean = false
+            this.BalckList.forEach((s: string) => {if(key.includes(s)) black = true})
+            if(!black)
+                result.push(key)
         })
         return result
     }

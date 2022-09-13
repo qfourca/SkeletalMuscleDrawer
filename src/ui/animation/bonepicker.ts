@@ -31,26 +31,63 @@ export default class BonePicker extends UIMember {
         this.appManager.eventManager.add('human-load', (human: Human) => {
             this.boneSeletor.setOptions(human.getBoneNames())
         })
+        this.appManager.eventManager.add('moment-change', (moment: Moment) => { 
+            this.moment = moment
+        })
+    }
+    private static changeEuler(euler: Euler, x: number, y: number, z: number, order?: string) {
+        //@ts-ignore
+        euler._x = x
+        //@ts-ignore
+        euler._y = y
+        //@ts-ignore
+        euler._z = z
+        //@ts-ignore
+        euler._order = order
     }
     protected onUpdate: (interval: number) => void = () => {
-        this.boneName = this.boneSeletor.getPickedBone()
+        const boneName = this.boneSeletor.getPickedBone()
+        if(this.boneName != boneName) {
+            this.boneName = boneName
+            if(this.boneName != undefined) {
+                const first = this.appManager.animation?.finder.getRootPosture(
+                    this.appManager.animation?.finder.getTimeToIndex(this.moment.time)!, 
+                    this.boneName
+                )
+                //@ts-ignore
+                this.boneRotators.get('x')!.setValue(first!._x),
+                //@ts-ignore
+                this.boneRotators.get('y')!.setValue(first!._y),
+                //@ts-ignore
+                this.boneRotators.get('z')!.setValue(first!._z)
+            }
+            
+        }
         if(this.boneName != undefined) {
-            if(this.moment.postures.has(this.boneName)) {
-                this.moment.postures.get(this.boneName)?.set(
-                    this.boneRotators.get('x')!.getValue(),
-                    this.boneRotators.get('y')!.getValue(),
-                    this.boneRotators.get('z')!.getValue()
+            this.boneSetter(this.boneName, new Euler(
+                this.boneRotators.get('x')!.getValue(),
+                this.boneRotators.get('y')!.getValue(),
+                this.boneRotators.get('z')!.getValue()
+            ))
+        }
+    }
+    private boneSetter(boneName: string, euler: Euler) {
+        if(this.moment.postures.has(boneName)) {
+            BonePicker.changeEuler(
+                this.moment.postures.get(boneName)!,
+                euler.x,
+                euler.y,
+                euler.z
+            )
+        }
+        else {
+            this.moment.postures.set(boneName,
+                new Euler(
+                    euler.x,
+                    euler.y,
+                    euler.z
                 )
-            }
-            else {
-                this.moment.postures.set(this.boneName,
-                    new Euler(
-                        this.boneRotators.get('x')!.getValue(),
-                        this.boneRotators.get('y')!.getValue(),
-                        this.boneRotators.get('z')!.getValue()
-                    )
-                )
-            }
+            )
         }
     }
 }
