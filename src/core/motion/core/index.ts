@@ -1,5 +1,4 @@
 import { Pose, Results } from "@mediapipe/pose"
-import UIMember from "../../../ui/common"
 import Video from "./video"
 export default class Core {
     private parent: HTMLElement
@@ -12,7 +11,7 @@ export default class Core {
         this.parent = parent
 
         this.pose = new Pose({locateFile: (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+            return `http://localhost:8080/mediapipe/${file}`;
         }});
         this.pose.setOptions({
             modelComplexity: 1,

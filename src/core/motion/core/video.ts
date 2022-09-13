@@ -1,4 +1,4 @@
-import { Webcam } from '../util';
+import { Webcam } from '../../../util';
 
 export default class Video {
     private parent: HTMLElement
