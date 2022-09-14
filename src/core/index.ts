@@ -50,7 +50,7 @@ export default class Core extends AppMember implements LoadAble {
     }
 
     private onResult(poseInfo: PoseInfo) {
-        // console.log(poseInfo)
+        // console.log(poseInfo.boneRotations)
     }
     
     public update = (interval: number) => {

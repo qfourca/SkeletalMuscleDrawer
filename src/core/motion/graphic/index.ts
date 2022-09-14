@@ -2,8 +2,10 @@ import { Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Core from './core'
 import Point from './point'
-import { NormalizedLandmarkList } from '@mediapipe/pose'
+import { NormalizedLandmark, NormalizedLandmarkList } from '@mediapipe/pose'
 import Line from './line'
+import Axis from './axis'
+import link, { boneInfo } from '../link'
 export default class Graphic {
     private scene:Core.Scene
     private camera:Core.Camera
@@ -16,9 +18,9 @@ export default class Graphic {
 
     private points: Array<Point> = new Array()
     private lines: Array<Line> = new Array()
+    private axis: Axis
     constructor (
-        parent: HTMLElement,
-        link: Array<boneInfo>
+        parent: HTMLElement
     ) {
         this.parent = parent
         this.link = link
@@ -38,6 +40,8 @@ export default class Graphic {
             this.lines.push(line)
             line.render(this.scene)
         })
+        this.axis = new Axis(new Vector3(0, 0, 0))
+        this.axis.render(this.scene)
     }
     public set(positions: NormalizedLandmarkList) {
         this.setPoints(positions)
@@ -46,12 +50,8 @@ export default class Graphic {
     private setBone(positions: NormalizedLandmarkList) {
         this.link.forEach((element, idx) => {
             this.lines[idx].set([
-                new Vector3(
-                    positions[element.parent].x * 100, positions[element.parent].y * 100, positions[element.parent].z * 100
-                ),
-                new Vector3(
-                    positions[element.child].x * 100, positions[element.child].y * 100, positions[element.child].z * 100
-                )
+                Graphic.LandmarkToVec3(positions[element.parent]),
+                Graphic.LandmarkToVec3(positions[element.child]),
             ])
         })
     }
@@ -68,7 +68,7 @@ export default class Graphic {
                 color = 0x00AA00
             }
             element.set(
-                new Vector3(positions[idx].x * 100, positions[idx].y * 100, positions[idx].z * 100),
+                Graphic.LandmarkToVec3(positions[idx]),
                 color
             )
         })
@@ -79,10 +79,12 @@ export default class Graphic {
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
-}
 
-export interface boneInfo {
-    name: string
-    parent: number
-    child: number
+    private static LandmarkToVec3(landMark: NormalizedLandmark): Vector3 {
+        return new Vector3(
+            landMark.x,
+            landMark.y,
+            landMark.z
+        )
+    }
 }

@@ -17,7 +17,6 @@ export default class Core {
         this.pose.setOptions({
             modelComplexity: 1,
             smoothLandmarks: true,
-            enableSegmentation: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5

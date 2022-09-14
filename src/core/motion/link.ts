@@ -1,4 +1,4 @@
-import { boneInfo } from "../graphic"
+import { Vector3 } from "three"
 
 const bones: Array<boneInfo> = [
     {
@@ -94,3 +94,10 @@ const bones: Array<boneInfo> = [
     },
 ]
 export default bones
+
+export interface boneInfo {
+    name: string
+    parent: number
+    child: number
+    origin?: Vector3
+}
