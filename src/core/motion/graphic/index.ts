@@ -1,11 +1,11 @@
-import { Vector3 } from 'three'
+import { Euler, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Core from './core'
 import Point from './point'
 import { NormalizedLandmark, NormalizedLandmarkList } from '@mediapipe/pose'
 import Line from './line'
 import Axis from './axis'
-import link, { boneInfo } from '../link'
+import link, { boneInfo } from './link'
 export default class Graphic {
     private scene:Core.Scene
     private camera:Core.Camera
@@ -79,12 +79,18 @@ export default class Graphic {
     private render() {
         this.renderer.render(this.scene, this.camera)
     }
-
-    private static LandmarkToVec3(landMark: NormalizedLandmark): Vector3 {
+    public static LandmarkToVec3(landMark: NormalizedLandmark): Vector3 {
         return new Vector3(
             landMark.x,
             landMark.y,
             landMark.z
         )
+    }
+
+    public drawLine(points: Array<Vector3>) {
+        const line = new Line()
+        line.set(points)
+        line.render(this.scene)
+        this.lines.push(new Line())
     }
 }
