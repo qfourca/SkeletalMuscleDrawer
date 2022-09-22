@@ -32,7 +32,7 @@ export default class Calculation {
         const abNorm = [ab[0] / abVec, ab[1] / abVec, ab[2] / abVec]
         const bcNorm = [bc[0] / bcVec, bc[1] / bcVec, bc[2] / bcVec]
         const res = abNorm[0] * bcNorm[0] + abNorm[1] * bcNorm[1] + abNorm[2] * bcNorm[2];
-        return Math.acos(res)
+        return Math.PI - Math.acos(res)
     }
     public static isMiddle(target: number, other1: number, other2: number): boolean {
         return (target > other1 && target < other2) || (target > other2 && target < other1)

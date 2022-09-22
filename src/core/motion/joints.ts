@@ -6,6 +6,10 @@ const joints: Map<string, Array<number>> = new Map([
     ["rightArm", [12, 14, 16]],
     ["leftLeg", [23, 25, 27]],
     ["rightLeg", [24, 26, 28]],
+    ["leftHipY", [25, 23, 24]],
+    ["rightHipY", [26, 24, 23]],
+    ["leftHipX", [11, 23, 25]],
+    ["rightHipX", [12, 24, 26]],
 ])
 
 export default joints

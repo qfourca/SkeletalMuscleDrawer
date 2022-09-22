@@ -7,6 +7,7 @@ import Animation from "./animation";
 import Engine from "./engine";
 import Motion from './motion'
 import { PoseInfo } from "./motion/calculation";
+import bindList, { bind } from "./bind";
 export default class Core extends AppMember implements LoadAble {
     private onLoadFunctions: Array<() => void> = new Array()
     public onLoad = (func: () => any) => { this.onLoadFunctions.push(func); if(!this.getIsLoading()){ func() } }
@@ -50,7 +51,13 @@ export default class Core extends AppMember implements LoadAble {
     }
 
     private onResult(poseInfo: PoseInfo) {
-        // console.log(poseInfo.boneRotations)
+        bindList.forEach((element: bind) => {
+            //@ts-ignore
+            this.animation[0].postures.get(element.target)['_' + element.direction] 
+                = element.delta == undefined ? poseInfo.boneRotations.get(element.posename) : element.delta(poseInfo.boneRotations.get(element.posename)!)
+        })
+        // console.log(poseInfo.boneRotations.get("leftLeg")! * 180 / Math.PI, 
+        //             poseInfo.boneRotations.get("rightLeg")! * 180 / Math.PI)
     }
     
     public update = (interval: number) => {

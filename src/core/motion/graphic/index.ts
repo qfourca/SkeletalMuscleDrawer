@@ -1,4 +1,4 @@
-import { Euler, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Core from './core'
 import Point from './point'

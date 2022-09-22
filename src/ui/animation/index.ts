@@ -10,9 +10,7 @@ export default class AnimationUI extends UIMember {
         appManager: AppManager
     ) {
         super(parent, 'div', AnimationUI.name)
-        const animationTimeline = new AnimationTimeline(this.me, appManager)
-
-        this.appendChild(animationTimeline)
+        this.appendChild(new AnimationTimeline(this.me, appManager))
         this.appendChild(new BonePicker(this.me, appManager))
         this.appendChild(new Buttons(this.me, appManager))
     }
