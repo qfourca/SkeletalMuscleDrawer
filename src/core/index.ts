@@ -19,7 +19,7 @@ export default class Core extends AppMember implements LoadAble {
     private animation: Animation
     private engine: Engine
     private motion?: Motion
-    
+
     constructor (
         appManager: AppManager,
         humanFile: string,
@@ -49,12 +49,15 @@ export default class Core extends AppMember implements LoadAble {
         })
         if(appManager.option.UI === "animation") this.motion = new Motion(this.appManager.appElement, this.onResult.bind(this))
     }
-
+    
     private onResult(poseInfo: PoseInfo) {
         bindList.forEach((element: bind) => {
-            //@ts-ignore
-            this.animation[0].postures.get(element.target)['_' + element.direction] 
-                = element.delta == undefined ? poseInfo.boneRotations.get(element.posename) : element.delta(poseInfo.boneRotations.get(element.posename)!)
+            const get = poseInfo.boneRotations.get(element.posename)
+            if(get != undefined) {
+                //@ts-ignore
+                this.animation[0].postures.get(element.target)['_' + element.direction] 
+                    = element.delta == undefined ? get : element.delta(get)
+            }
         })
         // console.log(poseInfo.boneRotations.get("leftLeg")! * 180 / Math.PI, 
         //             poseInfo.boneRotations.get("rightLeg")! * 180 / Math.PI)

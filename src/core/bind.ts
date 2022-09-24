@@ -39,6 +39,42 @@ const bind:Array<bind> = [
         posename: "leftHipX",
         direction: "x",
         delta: (arg: number) => arg + Math.PI / 2
+    },
+    {
+        target: "UpperArmR",
+        posename: "rightShoulderX",
+        direction: "x",
+        delta: (arg: number) => arg - 1
+    },
+    {
+        target: "UpperArmL",
+        posename: "leftShoulderX",
+        direction: "x",
+        delta: (arg: number) => arg - 1
+    },
+    {
+        target: "UpperArmR",
+        posename: "rightShoulderY",
+        direction: "z",
+        delta: (arg: number) => -arg + Math.PI
+    },
+    {
+        target: "UpperArmL",
+        posename: "leftShoulderY",
+        direction: "z",
+        delta: (arg: number) => arg - Math.PI
+    },
+    {
+        target: "LowerArmR",
+        posename: "rightArm",
+        direction: "x",
+        delta: (arg: number) => arg - Math.PI
+    },
+    {
+        target: "LowerArmL",
+        posename: "leftArm",
+        direction: "x",
+        delta: (arg: number) => arg - Math.PI
     }
 ]
 export default bind
