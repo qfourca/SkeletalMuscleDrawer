@@ -1,47 +1,39 @@
 import { Bone } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { LoadAble, RenderAble } from "../interface";
 import { 
     Scene
 } from "../three";
 
-export default class Human implements LoadAble, RenderAble {
+export default class Human {
+    private scene: Scene
     private body: any
     private bones: Map<string, Bone> = new Map()
-
-    private onLoadFunctions: Array<() => void> = new Array()
-    public onLoad = (func: () => any) => { this.onLoadFunctions.push(func); if(!this.getIsLoading()){ func() } }
-
     private isLoading = true
     public getIsLoading = () => this.isLoading
 
     constructor(
-        file: string
+        file: string,
+        scene: Scene
     ) {
+        this.scene = scene
         const loader = new GLTFLoader();
         loader.load(
             file,
-            this.onLoad_L.bind(this),
-            this.onProgress_L.bind(this),
-            this.onError_L.bind(this)
+            this.onLoad.bind(this),
+            this.onProgress.bind(this),
+            this.onError.bind(this)
         );
     }
-    private onLoad_L (gltf:any) {
+    private onLoad (gltf:any) {
         this.body = gltf.scene
         this.setBones(this.body.children[0].children.find((el:any) => el.type === 'Bone'))
-        // let test: string = '{"postures":['
-        // this.bones.forEach(bone => {
-        //     test += `{"name":"${bone.name}","rotation":${JSON.stringify(bone.rotation)}},` 
-        // })
-        // console.log(test)
         this.body.position.y -= 1
-        this.isLoading = false
-        this.onLoadFunctions.forEach(element => { element() })
+        this.scene.add(this.body)
     }
-    private onProgress_L (xhr:any) {
+    private onProgress (xhr:any) {
         // console.log(xhr)
     }
-    private onError_L (error:any) {
+    private onError (error:any) {
         console.log("Error occur on loading:" + error);
     }
     private setBones(bone: Bone) {
@@ -49,10 +41,6 @@ export default class Human implements LoadAble, RenderAble {
         bone.children.forEach((element:any) => {
             this.setBones(element)
         });
-    }
-
-    public render = (parent: Scene) => {
-        parent.add(this.body)
     }
     public getBone(name: string): Bone | undefined {
         return this.bones.get(name)

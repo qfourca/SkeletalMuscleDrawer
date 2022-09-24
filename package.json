@@ -1,6 +1,6 @@
 {
   "name": "skeletalmuscle-drawer",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "description": "",
   "main": "dist/bundle.js",
   "scripts": {
@@ -32,8 +32,7 @@
     "webpack-merge": "^5.8.0"
   },
   "files": [
-    "dist/bundle.js",
-    "dist/human.gltf"
+    "dist/*"
   ],
   "dependencies": {
     "@mediapipe/pose": "^0.5.1635988162",

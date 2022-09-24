@@ -1,8 +1,3 @@
-// export default [
-    
-//     ["LowerLegR", "rightLeg"],
-//     ["LowerLegl", "leftLeg"]
-// ]:
 const bind:Array<bind> = [
     {
         target: "LowerLegR",
