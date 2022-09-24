@@ -1,7 +1,6 @@
-import App from "./index"
+import App, {Performance} from "./index"
 //@ts-ignore
 import animation from './static/animation/develop.json'
-import { Performance } from "./util"
 
 const model = './human.gltf'
 const app = new App(
