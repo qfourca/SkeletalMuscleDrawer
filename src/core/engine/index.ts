@@ -4,7 +4,6 @@ import { Controller } from "../../state";
 export default class Engine {
     private human: Human
     private animation: Animation
-    public maximumTime: number
     private controller: Controller
     constructor (
         human: Human,
@@ -14,7 +13,7 @@ export default class Engine {
         this.human = human
         this.animation = animation
         this.controller = controller
-        this.maximumTime = this.animation[this.animation.length - 1].time
+        controller.setMaximumTime(this.animation[this.animation.length - 1].time)
     }
     public update = () => {
         const current = this.animation.finder.getTimePosture(this.controller.getCurrentTime(), this.human.getBoneNames())

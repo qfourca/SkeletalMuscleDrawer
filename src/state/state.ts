@@ -1,6 +1,8 @@
 export default interface State {
     currentTime: number
-    option: Option
+    maximumTime: number
+    option: Option,
+    isPaused: boolean
 }
 
 export interface Option {

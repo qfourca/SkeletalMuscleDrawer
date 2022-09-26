@@ -8,5 +8,6 @@ export default class Renderer extends THREE.WebGLRenderer{
 		this.outputEncoding = THREE.sRGBEncoding
 		this.setSize(domElement.clientWidth, domElement.clientHeight)
 		domElement.appendChild(this.domElement);
+		this.domElement.style.position = "absolute"
 	}
 }
