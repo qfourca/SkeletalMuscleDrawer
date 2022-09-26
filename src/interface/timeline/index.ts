@@ -6,54 +6,59 @@ import Progress from './progress'
 
 import IconInfo, * as Icon from "../common/icon";
 import FunctionContainer from "./function";
+import { FullScreen } from "../../util";
 export default class TimeLine extends InterfaceNode {
     private readonly jump: number = 1000
     private icons:Array<IconInfo> =  [
         {
             src: Icon.replay,
-            color: "200, 0, 0",
+            color: "35, 60, 104",
             onClick: this.onReplay.bind(this)
         },
         {
             src: Icon.skip_previous,
-            color: "200, 100, 0",
+            color: "35, 60, 104",
             onClick: () => {}
         },
         {
             src: Icon.pause,
-            color: "200, 200, 0",
+            color: "35, 60, 104",
             onClick: this.onPause.bind(this)
         },
         {
             src: Icon.skip_next,
-            color: "100, 200, 0",
+            color: "35, 60, 104",
             onClick: () => {}
         },
         {
             src: Icon.foward,
-            color: "0, 100, 200",
+            color: "35, 60, 104",
             onClick: this.onForward.bind(this)
         },
         {
             src: Icon.setting,
-            color: "0, 0, 200",
+            color: "35, 60, 104",
             onClick: () => {}
         },
         {
             src: Icon.fullscreen,
-            color: "100, 0, 200",
-            onClick: () => {}
+            color: "35, 60, 104",
+            onClick: this.onFullScreen.bind(this)
         },
     ]
     private controller: Controller
+    private fullScreen: FullScreen
     constructor (
         parent: InterfaceNode,
-        controller: Controller
+        controller: Controller,
+        root: HTMLElement
     ) {
         super(parent, "div", S.TimeLine)
         this.controller = controller
+        this.fullScreen = new FullScreen(root)
         new Progress(this, controller)
         new FunctionContainer(this, this.icons)
+        new Time(this, controller)
         document.addEventListener('keydown', (e) => {
             switch(e.code) {
                 case "Space": this.onPause(); break;
@@ -65,8 +70,6 @@ export default class TimeLine extends InterfaceNode {
     private onPause() {
         const change: boolean = !this.controller.getPaused()
         this.controller.setPaused(change)
-        // this.icons[2].src = Icon.replay
-        // this.icons[2].reload = true
     }
     private onReplay() {
         this.controller.jump(-this.jump)
@@ -74,16 +77,39 @@ export default class TimeLine extends InterfaceNode {
     private onForward() {
         this.controller.jump(this.jump)
     }
+    private onFullScreen() {
+        if(this.fullScreen.isFullScreen) { 
+            this.icons[6].src = Icon.fullscreen
+            this.icons[6].reload = true
+            this.fullScreen.exit() 
+        }
+        else { 
+            this.icons[6].src = Icon.fullscreen_exit
+            this.icons[6].reload = true
+            this.fullScreen.full() 
+        }
+    }
 }
 
-class controllerWrapper {
+class Time extends InterfaceNode{
     private controller: Controller
-    constructor(controller: Controller) {
+    constructor (
+        parent: InterfaceNode,
+        controller: Controller
+    ) {
+        super(parent, 'div', S.TimeProgress)
+        this.me.innerText = "ASD"
         this.controller = controller
     }
-    public togglePause(): boolean {
-        const change: boolean = !this.controller.getPaused()
-        this.controller.setPaused(change)
-        return change
+    public onUpdate(): void {
+        this.me.innerText = `${Time.timeChange(this.controller.getCurrentTime())} / ${Time.timeChange(this.controller.getMaximumTime())}`
+    }
+    private static timeChange(ms: number): string {
+        const seconds = ms / 1000
+        let min:string = String(Math.round((seconds%3600) / 60))
+        min = (Number(min) < 10 ? "0" : "") + min
+        let sec:string = String(Math.round(seconds%60))
+        sec = (Number(sec) < 10 ? "0" : "") + sec
+        return `${min} : ${sec}`
     }
 }

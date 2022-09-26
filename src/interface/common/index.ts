@@ -4,10 +4,11 @@ import { Controller } from "../../state";
 export default class UserInterface extends InterfaceRoot {
     constructor (
         parent: HTMLElement,
-        controller: Controller
+        controller: Controller,
+        root: HTMLElement
     ) {
         super(parent)
-        new UIRoot(this, controller)
+        new UIRoot(this, controller, root)
         this.render()
     }
 }

@@ -25,7 +25,7 @@ export default class App extends Controller {
         this.three = new Three(parent)
         this.scene = this.three.getScene()
         this.core = new Core(human, animation, this.scene, this)
-        this.ui = new UI(parent, this)
+        this.ui = new UI(parent, this, parent)
         this.ui.render()
         this.update()
     }

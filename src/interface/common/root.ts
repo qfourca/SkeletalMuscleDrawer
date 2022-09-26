@@ -1,14 +1,15 @@
 import { InterfaceNode, InterfaceRoot } from "./types";
 //@ts-ignore
-import root from '../styles/index.scss'
+import S from '../styles/index.scss'
 import TimeLine from "../timeline";
 import { Controller } from "../../state";
 export default class UIRoot extends InterfaceNode {
     constructor (
         parent: InterfaceRoot,
-        controller: Controller
+        controller: Controller,
+        root: HTMLElement
     ) {
-        super(parent, 'div', root.ui_root)
-        new TimeLine(this, controller)
+        super(parent, 'div', S.ui_root)
+        new TimeLine(this, controller, root)
     }
 }
