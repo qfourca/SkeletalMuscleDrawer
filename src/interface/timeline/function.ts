@@ -26,17 +26,29 @@ class Functions extends InterfaceNode {
     }
 }
 class Function extends InterfaceNode {
+    private icon: IconInfo
     constructor (
         parent: InterfaceNode,
         icon: IconInfo
     ) {
         super(parent, 'div', S.Function)
-        this.me.style.backgroundImage = `url('${icon.src}')`
-        if(icon.color != undefined) {
-            this.me.style.backgroundColor = `rgba(${icon.color}, 0.7)`
+        this.icon = icon 
+        this.rendering()
+    }
+    public onUpdate(): void {
+        
+        if(this.icon.reload) {
+            this.rendering()
+            this.icon.reload = false
         }
-        if(icon.onClick != undefined) {
-            this.me.addEventListener('click', icon.onClick)
-        }        
+    }
+    private rendering() {
+        this.me.style.backgroundImage = `url('${this.icon.src}')`
+        if(this.icon.color != undefined) {
+            this.me.style.backgroundColor = `rgba(${this.icon.color}, 0.7)`
+        }
+        if(this.icon.onClick != undefined) {
+            this.me.addEventListener('click', this.icon.onClick)
+        }
     }
 }

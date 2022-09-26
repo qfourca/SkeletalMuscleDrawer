@@ -18,6 +18,7 @@ export default interface IconInfo {
     src: string,
     onClick?: (e: any) => void
     color?: string
+    reload?: boolean
 }
 export {
     foward as foward,
