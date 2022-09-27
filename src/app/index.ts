@@ -39,7 +39,7 @@ export default class App extends Controller {
         }
         this.three.update()
         this.core.update()
-        this.ui.update()
+        this.ui.update(interval)
         this.performance.end()
     }
 }

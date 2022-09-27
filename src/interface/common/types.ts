@@ -1,5 +1,5 @@
 export class InterfaceNode {
-    private parent: InterfaceNode | InterfaceRoot
+    protected parent: InterfaceNode | InterfaceRoot
     public me: HTMLElement
     protected children: Array<InterfaceNode> = new Array()
     constructor(
@@ -21,13 +21,13 @@ export class InterfaceNode {
     public append(child: InterfaceNode) {
         this.children.push(child)
     }
-    public onUpdate() {
+    public onUpdate(interval: number) {
         
     }
-    public update() {
-        this.onUpdate()
+    public update(interval: number) {
+        this.onUpdate(interval)
         this.children.forEach((child) => {
-            child.update()
+            child.update(interval)
         })
     }
 }
@@ -49,13 +49,13 @@ export class InterfaceRoot {
     public append(child: InterfaceNode) {
         this.children.push(child)
     }
-    public onUpdate() {
+    public onUpdate(interval: number) {
         
     }
-    public update() {
-        this.onUpdate()
+    public update(interval: number) {
+        this.onUpdate(interval)
         this.children.forEach((child) => {
-            child.update()
+            child.update(interval)
         })
     }
 }

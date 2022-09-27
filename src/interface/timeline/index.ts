@@ -48,6 +48,7 @@ export default class TimeLine extends InterfaceNode {
     ]
     private controller: Controller
     private fullScreen: FullScreen
+    private hide: number = 2000
     constructor (
         parent: InterfaceNode,
         controller: Controller,
@@ -66,6 +67,21 @@ export default class TimeLine extends InterfaceNode {
                 case "ArrowRight": this.onForward(); break;
             }
         })
+        root.addEventListener('mousemove', () => {
+            this.hide = 2000
+        })
+        document.addEventListener('keydown', () => {
+            this.hide = 2000
+        })
+    }
+    public onUpdate(interval: number): void {
+        if(this.hide < 0) {
+            this.me.classList.add(S.hide)
+        }
+        else {
+            this.me.classList.remove(S.hide)
+            this.hide -= interval
+        }
     }
     private onPause() {
         const change: boolean = !this.controller.getPaused()
