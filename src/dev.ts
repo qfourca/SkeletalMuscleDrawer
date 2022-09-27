@@ -1,10 +1,10 @@
 import App, {Performance} from "./index"
 //@ts-ignore
 import animation from './static/animation/develop.json'
-
-const model = './human.gltf'
+//@ts-ignore
+import human from './static/asset/man.glb'
 const app = new App(
     document.getElementById('app')!,
-    model,
+    human,
     animation
 )

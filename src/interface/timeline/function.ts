@@ -45,7 +45,7 @@ class Function extends InterfaceNode {
     private rendering() {
         this.me.style.backgroundImage = `url('${this.icon.src}')`
         if(this.icon.color != undefined) {
-            this.me.style.backgroundColor = `rgba(${this.icon.color}, 0.85)`
+            this.me.style.backgroundColor = `rgba(${this.icon.color}, 1)`
         }
         if(this.icon.onClick != undefined) {
             this.me.addEventListener('click', this.icon.onClick)

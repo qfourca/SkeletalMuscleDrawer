@@ -33,6 +33,5 @@ class ProgressBall extends InterfaceNode {
         parent: InterfaceNode
     ) {
         super(parent, 'div', S.ProgressBall)
-
     }
 }
