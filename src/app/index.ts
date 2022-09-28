@@ -20,6 +20,7 @@ export default class App extends Controller {
             currentTime: 0,
             maximumTime: 0,
             isPaused: false,
+            mode: "default",
             option: option === undefined ? {} : option
         })
         this.three = new Three(parent)

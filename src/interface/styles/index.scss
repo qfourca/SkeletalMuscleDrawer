@@ -58,9 +58,16 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            display: flex;
+            .TimeProgress {
+                bottom: 10px;
+                left: 10px;
+                margin-left: 10px;
+                font-size: 20px;
+                color: #eee;
+                width: 15%;
+            }
             .Functions {
-                width: 80%;
+                width: 60%;
                 height: 50px;
                 gap: 7px;
                 display: flex;
@@ -82,14 +89,18 @@
                     }
                 }
             }
-        }
-        .TimeProgress {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            margin-left: 10px;
-            font-size: 20px;
-            color: #eee;
+            .ModeButtonContainer {
+                width: 15%;
+                height: 35px;
+                .ModeButton {
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 60%;
+                    height: 100%;
+                    background-color: purple;
+                    float: right;
+                }
+            }
         }
     }
     .BonePicker {

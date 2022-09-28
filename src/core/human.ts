@@ -28,6 +28,7 @@ export default class Human {
         this.body = gltf.scene
         this.setBones(this.body.children[0].children.find((el:any) => el.type === 'Bone'))
         this.body.position.y -= 1
+        console.log(gltf)
         this.scene.add(this.body)
     }
     private onProgress (xhr:any) {

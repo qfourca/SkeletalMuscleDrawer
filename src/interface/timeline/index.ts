@@ -58,8 +58,8 @@ export default class TimeLine extends InterfaceNode {
         this.controller = controller
         this.fullScreen = new FullScreen(root)
         new Progress(this, controller)
-        new FunctionContainer(this, this.icons)
-        new Time(this, controller)
+        new FunctionContainer(this, controller, this.icons)
+        // new Time(this, controller)
         document.addEventListener('keydown', (e) => {
             switch(e.code) {
                 case "Space": this.onPause(); break;
@@ -104,28 +104,5 @@ export default class TimeLine extends InterfaceNode {
             this.icons[6].reload = true
             this.fullScreen.full() 
         }
-    }
-}
-
-class Time extends InterfaceNode{
-    private controller: Controller
-    constructor (
-        parent: InterfaceNode,
-        controller: Controller
-    ) {
-        super(parent, 'div', S.TimeProgress)
-        this.me.innerText = "ASD"
-        this.controller = controller
-    }
-    public onUpdate(): void {
-        this.me.innerText = `${Time.timeChange(this.controller.getCurrentTime())} / ${Time.timeChange(this.controller.getMaximumTime())}`
-    }
-    private static timeChange(ms: number): string {
-        const seconds = ms / 1000
-        let min:string = String(Math.round((seconds%3600) / 60))
-        min = (Number(min) < 10 ? "0" : "") + min
-        let sec:string = String(Math.round(seconds%60))
-        sec = (Number(sec) < 10 ? "0" : "") + sec
-        return `${min} : ${sec}`
     }
 }

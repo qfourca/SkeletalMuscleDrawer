@@ -14,6 +14,8 @@ export default class Controller {
     public setMaximumTime = (time: number) => { this.state.maximumTime = time }
     public setPaused = (pause: boolean) => { this.state.isPaused = pause }
     public jump = (time: number) => { this.setCurrentTime(this.getCurrentTime() + time) }
+    public getMode = () => this.state.mode
+    public setMode = (mode: string) => this.state.mode = mode 
     constructor (
         state: State
     ) {
