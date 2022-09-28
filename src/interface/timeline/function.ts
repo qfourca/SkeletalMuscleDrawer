@@ -67,16 +67,32 @@ class ModeButtonContainer extends InterfaceNode {
     }
 }
 class ModeButton extends InterfaceNode {
+    private readonly colorMap:Map<string, string> = new Map([
+        ["default", "#FCFFB2"],
+        ["analysis", "#C7F2A4"]
+    ])
+    private controller: Controller
     constructor (
         parent: InterfaceNode,
         controller: Controller
     ) {
         super(parent, 'div', S.ModeButton)
+        this.controller = controller
+        this.modeChange(controller.getMode())
+        this.controller.onModeChange(this.modeChange.bind(this))
         this.me.addEventListener('click', () => {
-            // controller.setMode()
-            console.log("SEX")
+            if(this.controller.getMode() == "analysis")
+                this.controller.setMode("default")
+            else if(this.controller.getMode() == "default")
+                this.controller.setMode("analysis")
         })
     }
+    private modeChange(mode: string) {
+        const color = this.colorMap.get(mode)
+        if(color != undefined) this.me.style.backgroundColor = color
+        this.me.innerText = mode
+    }
+    
 }
 
 class Time extends InterfaceNode{

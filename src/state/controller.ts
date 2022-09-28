@@ -15,7 +15,14 @@ export default class Controller {
     public setPaused = (pause: boolean) => { this.state.isPaused = pause }
     public jump = (time: number) => { this.setCurrentTime(this.getCurrentTime() + time) }
     public getMode = () => this.state.mode
-    public setMode = (mode: string) => this.state.mode = mode 
+    public setMode = (mode: string) =>  {
+        this.state.mode = mode 
+        this.modeChangeQueue.forEach((func: (mode: string) => void) => {
+            func(this.getMode())
+        })
+    }
+    public onModeChange = (func: (mode: string) => void) => { this.modeChangeQueue.push(func) }
+    private modeChangeQueue:Array<(mode: string) => void> = new Array()
     constructor (
         state: State
     ) {

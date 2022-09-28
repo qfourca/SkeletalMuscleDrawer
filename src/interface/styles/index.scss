@@ -95,10 +95,18 @@
                 .ModeButton {
                     border-radius: 5px;
                     cursor: pointer;
-                    width: 60%;
+                    width: 50%;
                     height: 100%;
-                    background-color: purple;
+                    opacity: 0.75;
                     float: right;
+                    background-color: red;
+                    text-align: center;
+                    line-height: 35px;
+                    transition: 200ms;
+                    color: #333;
+                    &:hover {
+                        opacity: 1;
+                    }
                 }
             }
         }
