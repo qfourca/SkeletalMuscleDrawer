@@ -5,11 +5,10 @@ import S from '../styles/index.scss'
 
 export default class ProgressContainer extends InterfaceNode {
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.ProgressBarContainer)
-        this.append(new ProgressBar(this, controller))
+        this.append(new ProgressBar(this))
         this.me.addEventListener('click', () => {
             console.log("SEX ")
         })
@@ -17,29 +16,23 @@ export default class ProgressContainer extends InterfaceNode {
 }
 
 class ProgressBar extends InterfaceNode {
-    private controller: Controller
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.ProgressBar)
-        this.controller = controller
-        new ProgressBall(this, controller)
+        new ProgressBall(this)
     }
     public onUpdate(): void {
-        this.me.style.width = (this.controller.getCurrentTime() / this.controller.getMaximumTime()) * 100 + "%"
+        this.me.style.width = (InterfaceNode.controller.getCurrentTime() / InterfaceNode.controller.getMaximumTime()) * 100 + "%"
     }
 }
 
 class ProgressBall extends InterfaceNode {
     private dragBuffer: number = 0
-    private controller: Controller
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.ProgressBall)
-        this.controller = controller
         this.me.addEventListener('mousedown', this.drag.bind(this))
     }
     private drag() {
@@ -47,18 +40,18 @@ class ProgressBall extends InterfaceNode {
             this.dragBuffer += e.movementX
         }
         const mouseUp = (e: Event) => {
-            this.controller.setPaused(false)
+            InterfaceNode.controller.setPaused(false)
             document.removeEventListener('mousemove', mouseMove)
             document.removeEventListener('mouseup', mouseUp)
         }
-        this.controller.setPaused(true)
+        InterfaceNode.controller.setPaused(true)
         document.addEventListener('mousemove', mouseMove)
         document.addEventListener('mouseup', mouseUp)
     }
     public onUpdate(): void {
         //@ts-ignore
         const maxWidth = +window.getComputedStyle(this.parent.parent.me!).width.replace('px', '')
-        this.controller.jump((this.dragBuffer / maxWidth) * this.controller.getMaximumTime() )
+        InterfaceNode.controller.jump((this.dragBuffer / maxWidth) * InterfaceNode.controller.getMaximumTime() )
         this.dragBuffer = 0
     } 
 }

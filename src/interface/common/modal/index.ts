@@ -14,13 +14,14 @@ export default class Modal {
     private setIgnore: boolean = false
     private poped: boolean = false
     constructor (
-        root: HTMLElement,
-        parent: InterfaceRoot
+        parent: InterfaceRoot,
+        getVal: (val: modalResult) => void
     ) {
         this.parent = parent
+        this.onSuccess = getVal
         this.me = document.createElement('div')
         this.me.className = S.modal
-        root.appendChild(this.me)
+        InterfaceNode.root.appendChild(this.me)
         this.me.innerHTML = `
             <div class=${S.container}>
                 <div class=${S.first}>
@@ -38,26 +39,20 @@ export default class Modal {
         this.sec = document.getElementsByClassName(S.second)[0]
         this.fir.addEventListener('click', this.firClick.bind(this))
         this.sec.addEventListener('click', this.secClick.bind(this))
-        this.realtime = new Realtime(this.fir, this.reset.bind(this))
+        this.realtime = new Realtime(this.fir, this.reset.bind(this), this.onSuccess.bind(this))
         this.video = new Video(this.sec, this.reset.bind(this))
     }
     public hide() {
         this.me.classList.add(S.hide)
     }
-    public expose(): InterfaceRoot {
+    public expose() {
         this.me.classList.remove(S.hide)
-        return this.parent
     }
     private onClick() {
-        if(this.isClick) {
-            this.isClick = false
-        }
+        if(this.isClick) { this.isClick = false }
         else {
             if (confirm("정말 취소하시겠습니까?") == true){
                 this.hide()
-            }
-            else{
-    
             }
         }
     }
@@ -89,4 +84,10 @@ export default class Modal {
         this.setIgnore = true
         this.poped = false
     }
+    private onSuccess: (value: modalResult) => void
+}
+
+export interface modalResult {
+    mode: string
+    value: number
 }

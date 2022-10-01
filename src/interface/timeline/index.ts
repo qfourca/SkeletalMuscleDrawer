@@ -46,19 +46,15 @@ export default class TimeLine extends InterfaceNode {
             onClick: this.onFullScreen.bind(this)
         },
     ]
-    private controller: Controller
     private fullScreen: FullScreen
     private hide: number = 2000
     constructor (
-        parent: InterfaceNode,
-        controller: Controller,
-        root: HTMLElement
+        parent: InterfaceNode
     ) {
         super(parent, "div", S.TimeLine)
-        this.controller = controller
-        this.fullScreen = new FullScreen(root)
-        new Progress(this, controller)
-        new FunctionContainer(this, controller, this.icons)
+        this.fullScreen = new FullScreen(InterfaceNode.root)
+        new Progress(this)
+        new FunctionContainer(this, this.icons)
         document.addEventListener('keydown', (e) => {
             switch(e.code) {
                 case "Space": this.onPause(); break;
@@ -66,7 +62,7 @@ export default class TimeLine extends InterfaceNode {
                 case "ArrowRight": this.onForward(); break;
             }
         })
-        root.addEventListener('mousemove', () => {
+        InterfaceNode.root.addEventListener('mousemove', () => {
             this.hide = 2000
         })
         document.addEventListener('keydown', () => {
@@ -86,14 +82,14 @@ export default class TimeLine extends InterfaceNode {
         }
     }
     private onPause() {
-        const change: boolean = !this.controller.getPaused()
-        this.controller.setPaused(change)
+        const change: boolean = !InterfaceNode.controller.getPaused()
+        InterfaceNode.controller.setPaused(change)
     }
     private onReplay() {
-        this.controller.jump(-this.jump)
+        InterfaceNode.controller.jump(-this.jump)
     }
     private onForward() {
-        this.controller.jump(this.jump)
+        InterfaceNode.controller.jump(this.jump)
     }
     private onFullScreen() {
         if(this.fullScreen.isFullScreen) { 

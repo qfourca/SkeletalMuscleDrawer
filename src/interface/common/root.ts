@@ -3,16 +3,20 @@ import { InterfaceNode, InterfaceRoot } from "./types";
 import S from '../styles/index.scss'
 import TimeLine from "../timeline";
 import { Controller } from "../../state";
-import Modal from "./modal";
+import Modal, { modalResult } from "./modal";
+import Realtime from "../realtime";
 export default class UIRoot extends InterfaceNode {
     constructor (
-        parent: InterfaceRoot,
-        controller: Controller,
-        root: HTMLElement
+        parent: InterfaceRoot
     ) {
         super(parent, 'div', S.ui_root)
-        const modal: Modal = new Modal(root, parent)
-        controller.onModeChange((mode: string) => {
+        const modeSetting = (res: modalResult) => {
+            modal.hide()
+            console.log(res)
+        }
+        const modal: Modal = new Modal(parent, modeSetting.bind(this))
+        const realTime: Realtime = new Realtime(this)
+        InterfaceNode.controller.onModeChange((mode: string) => {
             if(mode == "analysis") {
                 modal.expose()
             }
@@ -20,6 +24,6 @@ export default class UIRoot extends InterfaceNode {
                 console.log(mode)
             }
         })
-        new TimeLine(this, controller, root)
+        new TimeLine(this)
     }
 }

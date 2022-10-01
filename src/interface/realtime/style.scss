@@ -1,0 +1,17 @@
+.realtimeContainer {
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    .counter {
+        width: 100px;
+        left: 20px;
+        position: relative;
+        color: black;
+    }
+}
+.hashVideo {
+    margin: 0;
+}
+.hide {
+    display: none;
+}

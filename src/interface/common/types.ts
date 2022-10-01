@@ -1,4 +1,8 @@
+import { Controller } from "../../state"
+
 export class InterfaceNode {
+    public static controller: Controller
+    public static root: HTMLElement
     protected parent: InterfaceNode | InterfaceRoot
     public me: HTMLElement
     protected children: Array<InterfaceNode> = new Array()

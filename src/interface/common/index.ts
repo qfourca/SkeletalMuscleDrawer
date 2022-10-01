@@ -1,4 +1,4 @@
-import { InterfaceRoot } from "./types";
+import { InterfaceRoot, InterfaceNode } from "./types";
 import UIRoot from "./root";
 import { Controller } from "../../state";
 export default class UserInterface extends InterfaceRoot {
@@ -8,7 +8,9 @@ export default class UserInterface extends InterfaceRoot {
         root: HTMLElement
     ) {
         super(parent)
-        new UIRoot(this, controller, root)
+        InterfaceNode.controller = controller
+        InterfaceNode.root = root
+        const uiRoot = new UIRoot(this)
         this.render()
     }
 }

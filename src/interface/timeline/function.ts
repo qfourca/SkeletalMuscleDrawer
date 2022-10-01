@@ -8,13 +8,12 @@ import { Controller } from "../../state";
 export default class FunctionContainer extends InterfaceNode {
     constructor (
         parent: InterfaceNode,
-        controller: Controller,
         icons: Array<IconInfo>,
     ) {
         super(parent, 'div', S.FunctionContainer)
-        new Time(this, controller)
+        new Time(this)
         new Functions(this, icons)
-        new ModeButtonContainer(this, controller)
+        new ModeButtonContainer(this)
     }
 }
 
@@ -59,11 +58,10 @@ class Function extends InterfaceNode {
 
 class ModeButtonContainer extends InterfaceNode {
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.ModeButtonContainer)
-        new ModeButton(this, controller)
+        new ModeButton(this)
     }
 }
 class ModeButton extends InterfaceNode {
@@ -71,20 +69,17 @@ class ModeButton extends InterfaceNode {
         ["default", "#FCFFB2"],
         ["analysis", "#C7F2A4"]
     ])
-    private controller: Controller
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.ModeButton)
-        this.controller = controller
-        this.modeChange(controller.getMode())
-        this.controller.onModeChange(this.modeChange.bind(this))
+        this.modeChange(InterfaceNode.controller.getMode())
+        InterfaceNode.controller.onModeChange(this.modeChange.bind(this))
         this.me.addEventListener('click', () => {
-            if(this.controller.getMode() == "analysis")
-                this.controller.setMode("default")
-            else if(this.controller.getMode() == "default")
-                this.controller.setMode("analysis")
+            if(InterfaceNode.controller.getMode() == "analysis")
+                InterfaceNode.controller.setMode("default")
+            else if(InterfaceNode.controller.getMode() == "default")
+                InterfaceNode.controller.setMode("analysis")
         })
     }
     private modeChange(mode: string) {
@@ -96,17 +91,14 @@ class ModeButton extends InterfaceNode {
 }
 
 class Time extends InterfaceNode{
-    private controller: Controller
     constructor (
-        parent: InterfaceNode,
-        controller: Controller
+        parent: InterfaceNode
     ) {
         super(parent, 'div', S.TimeProgress)
         this.me.innerText = "ASD"
-        this.controller = controller
     }
     public onUpdate(): void {
-        this.me.innerText = `${Time.timeChange(this.controller.getCurrentTime())} / ${Time.timeChange(this.controller.getMaximumTime())}`
+        this.me.innerText = `${Time.timeChange(InterfaceNode.controller.getCurrentTime())} / ${Time.timeChange(InterfaceNode.controller.getMaximumTime())}`
     }
     private static timeChange(ms: number): string {
         const seconds = ms / 1000
