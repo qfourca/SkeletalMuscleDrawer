@@ -59,7 +59,6 @@ export default class TimeLine extends InterfaceNode {
         this.fullScreen = new FullScreen(root)
         new Progress(this, controller)
         new FunctionContainer(this, controller, this.icons)
-        // new Time(this, controller)
         document.addEventListener('keydown', (e) => {
             switch(e.code) {
                 case "Space": this.onPause(); break;
@@ -71,6 +70,9 @@ export default class TimeLine extends InterfaceNode {
             this.hide = 2000
         })
         document.addEventListener('keydown', () => {
+            this.hide = 2000
+        })
+        document.addEventListener('mousedown', () => {
             this.hide = 2000
         })
     }
