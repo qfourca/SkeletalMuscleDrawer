@@ -17,20 +17,20 @@ export default class Realtime extends InterfaceNode {
         this.hide()
         this.setCounter(0)
     }
-    private setCounter(value: number) {
+    public setCounter(value: number) {
         this.value = value
         this.counterElement.innerHTML = String(value)
     }
-    private getCounter(): number {
+    public getCounter(): number {
         return this.value
     }
-    private getVideo() {
+    public getVideo() {
         this.me.getElementsByClassName(S.hashVideo)
     }
-    private hide() {
+    public hide() {
         this.me.classList.add(S.hide)
     }
-    private display() {
-        this.me.classList.remove(S.remove)
+    public display() {
+        this.me.classList.remove(S.hide)
     }
 }

@@ -11,8 +11,10 @@ export default class UIRoot extends InterfaceNode {
     ) {
         super(parent, 'div', S.ui_root)
         const modeSetting = (res: modalResult) => {
+            if(res.mode === "realtime") {
+                realTime.display()
+            }
             modal.hide()
-            console.log(res)
         }
         const modal: Modal = new Modal(parent, modeSetting.bind(this))
         const realTime: Realtime = new Realtime(this)

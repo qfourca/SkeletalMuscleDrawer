@@ -1,6 +1,7 @@
 import { Scene } from "three"
 import Core from "../core"
 import UI from "../interface"
+import Motion from "../motion"
 import { Controller, State, Option } from "../state"
 import Three from "../three"
 import { Performance } from "../util"

@@ -10,7 +10,7 @@ export default class UserInterface extends InterfaceRoot {
         super(parent)
         InterfaceNode.controller = controller
         InterfaceNode.root = root
-        const uiRoot = new UIRoot(this)
+        new UIRoot(this)
         this.render()
     }
 }
