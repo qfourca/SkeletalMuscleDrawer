@@ -6,7 +6,7 @@ import { Controller, State, Option } from "../state"
 import Three from "../three"
 import { Performance } from "../util"
 export default class App extends Controller {
-    private scene: Scene
+    protected scene: Scene
     private three: Three
     private core: Core
     private ui: UI

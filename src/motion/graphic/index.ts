@@ -1,26 +1,20 @@
 import { Vector3 } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import * as Core from './core'
 import Point from './point'
 import { NormalizedLandmark, NormalizedLandmarkList } from '@mediapipe/pose'
 import Line from './line'
-import Axis from './axis'
 import link, { boneInfo } from './link'
 import { Scene } from '../../three'
 export default class Graphic {
-    private scene:Core.Scene
+    private scene: Scene
 
     private link: Array<boneInfo> = new Array()
-
     private points: Array<Point> = new Array()
     private lines: Array<Line> = new Array()
-    private axis: Axis
     constructor (
         scene: Scene
     ) {
         this.scene = scene
         this.link = link
-        this.scene = new Core.Scene()
         for(let i = 0; i < 33; i++) {
             this.points.push(new Point(new Vector3(0, 0, 0)))
             this.points[i].render(this.scene)
@@ -30,8 +24,6 @@ export default class Graphic {
             this.lines.push(line)
             line.render(this.scene)
         })
-        this.axis = new Axis(new Vector3(0, 0, 0))
-        this.axis.render(this.scene)
     }
     public set(positions: NormalizedLandmarkList) {
         this.setPoints(positions)

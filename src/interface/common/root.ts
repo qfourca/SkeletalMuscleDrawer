@@ -2,9 +2,12 @@ import { InterfaceNode, InterfaceRoot } from "./types";
 //@ts-ignore
 import S from '../styles/index.scss'
 import TimeLine from "../timeline";
-import { Controller } from "../../state";
+import { Webcam } from "../../util";
 import Modal, { modalResult } from "./modal";
 import Realtime from "../realtime";
+import Motion from "../../motion";
+//@ts-ignore
+import videoSrc from "../../static/video/oneStar.mp4"
 export default class UIRoot extends InterfaceNode {
     constructor (
         parent: InterfaceRoot
@@ -13,6 +16,9 @@ export default class UIRoot extends InterfaceNode {
         const modeSetting = (res: modalResult) => {
             if(res.mode === "realtime") {
                 realTime.display()
+                const video = realTime.getVideo()
+                new Webcam(video, videoSrc)
+                new Motion(video, InterfaceNode.controller.getScene())
             }
             modal.hide()
         }

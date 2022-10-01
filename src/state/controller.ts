@@ -1,7 +1,10 @@
+import { Scene } from "../three";
 import State from "./state";
 
 export default class Controller {
     private state: State
+    protected scene?: Scene
+    public getScene: () => Scene = () => this.scene!
     public getCurrentTime = () => this.state.currentTime
     public getMaximumTime = () => this.state.maximumTime
     public getPaused = () => this.state.isPaused

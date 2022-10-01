@@ -91,4 +91,5 @@ export default class Modal {
 export interface modalResult {
     mode: string
     value: number
+    video?: HTMLVideoElement
 }

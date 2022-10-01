@@ -3,7 +3,7 @@ import { InterfaceNode, InterfaceRoot } from "../common/types";
 import S from './style.scss'
 export default class Realtime extends InterfaceNode {
     private static readonly html = `
-        <video class"${S.hashVideo}"></video>
+        <video class="${S.hashVideo}"></video>
         <div class="${S.counter}">0</div>
     `
     private value: number = 0
@@ -24,8 +24,9 @@ export default class Realtime extends InterfaceNode {
     public getCounter(): number {
         return this.value
     }
-    public getVideo() {
-        this.me.getElementsByClassName(S.hashVideo)
+    public getVideo():HTMLVideoElement {
+        //@ts-ignore
+        return this.me.getElementsByClassName(S.hashVideo)[0]
     }
     public hide() {
         this.me.classList.add(S.hide)

@@ -8,7 +8,7 @@ import { Scene } from '../three';
 export default class Motion {
     private core: Core
     private graphic: Graphic
-    private delta: number = -100
+    private delta: number = -1
     constructor(
         video: HTMLVideoElement,
         scene: Scene
@@ -27,7 +27,7 @@ export default class Motion {
     private onResult(results: Results) {
         if(results.poseWorldLandmarks != undefined) {
             results.poseWorldLandmarks.forEach((element, idx) => {
-                results.poseWorldLandmarks[idx].x *= this.delta
+                results.poseWorldLandmarks[idx].x = results.poseWorldLandmarks[idx].x * this.delta + 1
                 results.poseWorldLandmarks[idx].y *= this.delta
                 results.poseWorldLandmarks[idx].z *= this.delta
             })
