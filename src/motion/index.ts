@@ -11,7 +11,8 @@ export default class Motion {
     private delta: number = -1
     constructor(
         video: HTMLVideoElement,
-        scene: Scene
+        scene: Scene,
+        onResult: (poseInfo: PoseInfo) => void
     ) {
         this.core = new Core(
             video,
@@ -20,6 +21,7 @@ export default class Motion {
         this.graphic = new Graphic(
             scene
         )
+        this.out = onResult
     }
     private out: (poseInfo: PoseInfo) => void = () => {
 

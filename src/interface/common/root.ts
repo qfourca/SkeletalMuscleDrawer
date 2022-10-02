@@ -5,7 +5,7 @@ import TimeLine from "../timeline";
 import { Webcam } from "../../util";
 import Modal, { modalResult } from "./modal";
 import Realtime from "../realtime";
-import Motion from "../../motion";
+import Motion, { PoseInfo } from "../../motion";
 //@ts-ignore
 import videoSrc from "../../static/video/oneStar.mp4"
 export default class UIRoot extends InterfaceNode {
@@ -13,17 +13,17 @@ export default class UIRoot extends InterfaceNode {
         parent: InterfaceRoot
     ) {
         super(parent, 'div', S.ui_root)
+        const realTime: Realtime = new Realtime(this)
         const modeSetting = (res: modalResult) => {
             if(res.mode === "realtime") {
                 realTime.display()
                 const video = realTime.getVideo()
                 new Webcam(video, videoSrc)
-                new Motion(video, InterfaceNode.controller.getScene())
+                new Motion(video, InterfaceNode.controller.getScene(), this.onResult.bind(this))
             }
             modal.hide()
         }
         const modal: Modal = new Modal(parent, modeSetting.bind(this))
-        const realTime: Realtime = new Realtime(this)
         InterfaceNode.controller.onModeChange((mode: string) => {
             if(mode == "analysis") {
                 modal.expose()
@@ -33,5 +33,9 @@ export default class UIRoot extends InterfaceNode {
             }
         })
         new TimeLine(this)
+    }
+    private onResult(pose: PoseInfo) {
+        const { boneRotations } = pose
+        console.log(boneRotations)
     }
 }

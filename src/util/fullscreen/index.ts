@@ -10,7 +10,7 @@ export default class FullScreen {
         this.isFullScreen = true
         if (this.target.requestFullscreen) this.target.requestFullscreen()
         //@ts-expect-error
-        else if (element.webkitRequestFullscreen) return element.webkitRequestFullscreen()
+        else if (this.target.webkitRequestFullscreen) this.target.webkitRequestFullscreen()
         //@ts-expect-error
         else if (this.target.mozRequestFullScreen) this.target.mozRequestFullScreen()
         //@ts-expect-error

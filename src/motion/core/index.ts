@@ -8,10 +8,10 @@ export default class Core {
         onResult:(results: Results) => void | Promise<void>
     ) {
         this.pose = new Pose({locateFile: (file) => {
-            return `http://localhost:8080/mediapipe/${file}`;
+            return `/mediapipe/${file}`;
         }});
         this.pose.setOptions({
-            modelComplexity: 1,
+            modelComplexity: 0,
             smoothLandmarks: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,
