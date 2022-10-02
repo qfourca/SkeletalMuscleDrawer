@@ -93,3 +93,7 @@ export interface modalResult {
     value: number
     video?: HTMLVideoElement
 }
+export interface exerciseResult {
+    score: number
+    count: string
+}

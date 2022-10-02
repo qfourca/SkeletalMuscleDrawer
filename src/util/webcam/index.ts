@@ -9,18 +9,22 @@ export default class Webcam {
         video.controls = true
         video.style.width = "360px";
         if(src == undefined) {
-            navigator.mediaDevices.getUserMedia({
-                video: { 
-                    width: { ideal: 1920 }, 
-                    height: { ideal: 1080 }
-                }, 
-                audio: false,
-            }).then((stream) => {
-                video.srcObject = stream;
-            }).catch((error) => {
+            if(navigator.mediaDevices == undefined) {
                 alert("Can't use Webcam")
-                console.log(error)
-            })
+            }
+            else {
+                navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        width: { ideal: 1080 }, 
+                        height: { ideal: 1920 }
+                    }, 
+                    audio: false,
+                }).then((stream) => {
+                    video.srcObject = stream;
+                }).catch((err) => {
+                    alert("No Webcam permission")
+                })
+            }
         }
         else {
             video.src = src

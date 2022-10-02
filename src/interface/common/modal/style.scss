@@ -17,7 +17,7 @@
     .container {
         position: absolute;
         z-index: 999;
-        width: 49%;
+        width: 50%;
         height: 40%;
         display: flex;
         justify-content: space-between;
@@ -39,7 +39,7 @@
                 color: #222;
             }
             &:hover {
-                transform: scale(1.1);
+                width: 60%;
             }
         }
         @mixin container-theme {
@@ -78,17 +78,21 @@
                 @include container-theme();
             }
         }
-
         .max {
             width: 100%;
             cursor: default;
             border-radius: $radius;
             &:hover {
-                transform: scale(1);
+                width: 100%;
             }
         }
         .min {
             width: 0%;
+        }
+        .result {
+            width: 100%;
+            height: 100%;
+            background-color: #7AA1D2;
         }
     }
 }

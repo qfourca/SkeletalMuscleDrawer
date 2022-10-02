@@ -9,11 +9,14 @@ import Motion, { JointList, PoseInfo } from "../../motion";
 //@ts-ignore
 import videoSrc from "../../static/video/oneStar.mp4"
 import SquartAnalysis from "../../analysis/squart";
+import Result from "./result";
 export default class UIRoot extends InterfaceNode {
+    private result: Result
     constructor (
         parent: InterfaceRoot
     ) {
         super(parent, 'div', S.ui_root)
+        this.result = new Result(parent)
         const realTime: Realtime = new Realtime(this)
         let score: number = 0
         const modeSetting = (res: modalResult) => {
@@ -24,7 +27,7 @@ export default class UIRoot extends InterfaceNode {
                     realTime.setCounter(realTime.getCounter() + res.count)
                     score += res.score
                     if(realTime.getCounter() >= realTime.getMax()) {
-                        console.log(Math.round(score / realTime.getMax() * 10) / 10 )
+                        alert(String(Math.round(score / realTime.getMax() * 10) / 10))
                     }
                 })
                 new Webcam(video, videoSrc)
