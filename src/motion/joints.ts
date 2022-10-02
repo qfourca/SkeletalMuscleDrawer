@@ -1,5 +1,5 @@
 interface joint {
-
+    
 }
 const joints: Map<string, Array<number>> = new Map([
     ["leftArm", [11, 13, 15]],

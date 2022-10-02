@@ -5,25 +5,34 @@ import TimeLine from "../timeline";
 import { Webcam } from "../../util";
 import Modal, { modalResult } from "./modal";
 import Realtime from "../realtime";
-import Motion, { PoseInfo } from "../../motion";
+import Motion, { JointList, PoseInfo } from "../../motion";
 //@ts-ignore
 import videoSrc from "../../static/video/oneStar.mp4"
+import SquartAnalysis from "../../analysis/squart";
 export default class UIRoot extends InterfaceNode {
     constructor (
         parent: InterfaceRoot
     ) {
         super(parent, 'div', S.ui_root)
         const realTime: Realtime = new Realtime(this)
+        let score: number = 0
         const modeSetting = (res: modalResult) => {
             if(res.mode === "realtime") {
-                realTime.display()
+                realTime.display(res.value)
                 const video = realTime.getVideo()
+                const squart = new SquartAnalysis((res) => {
+                    realTime.setCounter(realTime.getCounter() + res.count)
+                    score += res.score
+                    if(realTime.getCounter() >= realTime.getMax()) {
+                        console.log(Math.round(score / realTime.getMax() * 10) / 10 )
+                    }
+                })
                 new Webcam(video, videoSrc)
-                new Motion(video, InterfaceNode.controller.getScene(), this.onResult.bind(this))
+                new Motion(video, InterfaceNode.controller.getScene(), (arg) => {squart.input(arg.boneRotations)})
             }
             modal.hide()
         }
-        const modal: Modal = new Modal(parent, modeSetting.bind(this))
+        const modal: Modal = new Modal(parent, modeSetting)
         InterfaceNode.controller.onModeChange((mode: string) => {
             if(mode == "analysis") {
                 modal.expose()

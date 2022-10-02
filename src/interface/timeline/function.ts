@@ -1,9 +1,7 @@
 import { InterfaceNode } from "../common/types";
 //@ts-ignore
 import S from '../styles/index.scss'
-
 import IconInfo, * as Icon from "../common/icon";
-import { Controller } from "../../state";
 
 export default class FunctionContainer extends InterfaceNode {
     constructor (

@@ -7,6 +7,7 @@ export default class Realtime extends InterfaceNode {
         <div class="${S.counter}">0</div>
     `
     private value: number = 0
+    private maxVal: number = 0
     private counterElement: Element
     constructor(
         parent: InterfaceNode | InterfaceRoot
@@ -19,10 +20,13 @@ export default class Realtime extends InterfaceNode {
     }
     public setCounter(value: number) {
         this.value = value
-        this.counterElement.innerHTML = String(value)
+        this.counterElement.innerHTML = `${this.value} / ${this.maxVal}`
     }
     public getCounter(): number {
         return this.value
+    }
+    public getMax(): number {
+        return this.maxVal
     }
     public getVideo():HTMLVideoElement {
         //@ts-ignore
@@ -31,7 +35,9 @@ export default class Realtime extends InterfaceNode {
     public hide() {
         this.me.classList.add(S.hide)
     }
-    public display() {
+    public display(arg?: number) {
+        if(arg != undefined) this.maxVal = arg
         this.me.classList.remove(S.hide)
+        this.counterElement.innerHTML = `${this.value} / ${this.maxVal}`
     }
 }
