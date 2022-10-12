@@ -1,0 +1,313 @@
+@mixin ThreeButton ($color, $shadow, $width: 70px) {
+    appearance: button;
+    background-color: $shadow;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #222;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round,sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 16px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 10px 12px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: $width;
+    &::after {
+        background-clip: padding-box;
+        background-color: $color;
+        border: solid transparent;
+        border-radius: 16px;
+        border-width: 0 0 4px;
+        bottom: -4px;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+    }
+    &:focus {
+        user-select: auto;
+    }
+    &:hover:not(:disabled) {
+        filter: brightness(1.1);
+        -webkit-filter: brightness(1.1);
+    }
+    &:disabled {
+        cursor: auto;
+    }
+}
+
+.modal {
+    position:relative;
+    width:100%;
+    height:100%;
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    z-index:1;
+    .mapLoadingContainer {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: greenyellow;
+        border-radius: 50%;
+        justify-content: center;
+        gap: 30px;
+        .PrgressContainer {
+            width: 50%;
+            height: 30px;
+            border-radius: 30px;
+            position: relative;
+            background-color: #777;
+            .Progress {
+                width: 50%;
+                height: 100%;
+                background-color: red;
+                border-radius: 30px;
+                position: absolute;
+            }
+        }
+        .Percent {
+            font-weight: 600;
+            margin: 0;
+            font-size: 2em;
+        }
+        h4 {
+            font-weight: 500;
+            font-size: 1em;
+            margin: 0;
+        }
+    }
+    .analysisContainer {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        width: 550px;
+        height: 250px;
+        display: flex;
+        justify-content: space-between;
+        // background-color: greenyellow;
+        @mixin Option ($color) {
+            width: 50%;
+            height: 100%;
+            transition: 200ms;
+            background-color: $color;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 10;
+            gap: 20px;
+            img {
+                width: 150px;
+                height: 150px;
+            }
+            &:hover {
+                width: 65%;
+                background-color: lighten($color, 10);
+            }
+            .back {
+                @include ThreeButton($color: #f3e677, $shadow: #e8eebd);
+                position: absolute;
+                left: 10px;
+                top: 10px;
+            }
+        }
+        $radius: 20px;
+        .leftOption {
+            @include Option($color: #98A8F8);
+            border-top-left-radius: $radius;
+            border-bottom-left-radius: $radius;
+            $primary: #CDFCF6;
+            .fir_number {
+                color: #333;
+                font-size: 14px;
+                margin: 0 auto;
+                padding: 0.8rem 0.5rem 0.5rem 0.5rem;
+                border-radius: 0.3em;
+                background-color: rgb(255, 255, 255);
+                border: none;
+                width: calc(200px - 0.0rem);
+                display: block;
+                border-bottom: 0.3rem solid transparent;
+                transition: all 0.3s;
+                background-color: $primary;
+                &:-webkit-inner-spin-button {
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                }
+                &:focus {
+                    outline: 0;
+                }
+            }
+            .fir_range {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                &:focus {
+                  outline: none;
+                }
+                &::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                }
+                &::-moz-range-thumb {
+                  border: none;
+                }
+                width: 200px;
+                height: 24px;
+                padding: 10px;
+                background: $primary;
+                border-radius: 0.3em;
+                @mixin track-style {
+                    display: flex;
+                    align-items: center;
+                    height: 20px;
+                    border-radius: 10px;
+                    box-shadow: inset -2px -2px 8px rgb(177, 235, 241), inset 2px 2px 8px rgba(black, 0.5);
+                }
+
+                @mixin thumb-style {
+                    position: relative;
+                    top: -50%;
+                    width: 20px;
+                    height: 20px;
+                    background-color: black;
+                    background-image: linear-gradient(-45deg, rgba(white, 0.8), transparent);
+                    border-radius: 50%;
+                    box-shadow: -1px -1px 2px white, 1px 1px 2px rgba(black, 0.3);
+                }
+                &::-webkit-slider-runnable-track {
+                    @include track-style;
+                }
+                &::-webkit-slider-thumb {
+                    @include thumb-style;
+                }
+                &::-moz-range-track {
+                    @include track-style;
+                }
+                &::-moz-range-thumb {
+                    @include thumb-style;
+                }
+            }
+            .fir_submit {
+                @include ThreeButton($color: #CDFCF6, $shadow: #9ceeee, $width: 100px);
+            }
+        }
+        .rightOption {
+            @include Option($color: #98A8F8);
+            border-top-right-radius: $radius;
+            border-bottom-right-radius: $radius;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .videoInput {
+                .uploadName {
+                    display: inline-block;
+                    height: 60px;
+                    padding: 0 10px;
+                    vertical-align: middle;
+                    border: 1px solid #dddddd;
+                    color: #999999;
+                }
+                label {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    color: #fff;
+                    vertical-align: middle;
+                    background-color: #999999;
+                    cursor: pointer;
+                    height: 40px;
+                }
+                input[type="file"] {
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    border: 0;
+                }                
+            }
+            .sec_submit {
+                @include ThreeButton($color: #CDFCF6, $shadow: #9ceeee, $width: 100px);
+            }
+        }
+        .maxmize {
+            width: 100%;
+            border-radius: $radius;
+            &:hover {
+                width: 100%;
+            }
+        }
+        .minmize {
+            width: 0%;
+        }
+    }
+    .resultContainer {
+        width: 300px;
+        height: 400px;
+        background-color: #98A8F8;
+        border-radius: 20px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        .title {
+            font-size: 32px;
+            width: 100%;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #222;
+            background-color: #FAF7F0;
+        }
+        .score {
+            font-size: 64px;
+            color: #222;
+            width: 256px;
+            height: 128px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: radial-gradient( #FAF7F0, #98A8F8 );
+        }
+        .result {
+            font-size: 24px;
+            color: #222;
+        }
+    }
+}
+.modal_hide {
+    display: none;
+}

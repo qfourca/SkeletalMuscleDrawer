@@ -1,0 +1,54 @@
+{
+    "name": "pushup",
+    "animations": [
+        {
+            "name": "pushup",
+            "src": "./animation/pushup/pushup.json"
+        },
+        {
+            "name": "pushup_ready",
+            "src": "./animation/pushup/pushup_ready.json"
+        },
+        {
+            "name": "pushup_end",
+            "src": "./animation/pushup/pushup_end.json"
+        }
+    ],
+    "timeline": [
+        "pushup_ready",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup",
+        "pushup"
+    ],
+    "subtitle": [
+        {
+            "start": 0,
+            "end": 3000,
+            "content": "1"
+        },
+        {
+            "start": 3000,
+            "end": 6000,
+            "content": "2"
+        },
+        {
+            "start": 6000,
+            "end": 9000,
+            "content": "3"
+        },
+        {
+            "start": 9000,
+            "end": 12000,
+            "content": "4"
+        }
+    ]
+}

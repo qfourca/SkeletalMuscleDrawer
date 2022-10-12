@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./dist/",
+        "resolveJsonModule": true,
+        "strict": true,
+        "removeComments": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules"]
+}
