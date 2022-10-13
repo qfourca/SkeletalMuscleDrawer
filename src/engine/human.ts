@@ -15,12 +15,10 @@ export default class Human extends Model implements UpdateAble {
                 this.setBones(this.body)
                 this.body.scale.set(0.6, 0.6, 0.6)
                 //@ts-ignore
-                this.mixer = new AnimationMixer( this.gltf?.scene.children[0] );
-                // console.log(this.gltf?.animations[1])
-                // downloadFile(this.gltf?.animations[1], "pushup_end")
-                // const anime = this.mixer.clipAction(this.gltf?.animations[1]!)
-                // this.mixer.clipAction(this.gltf?.animations[0]!)
-                // this.mixer.clipAction(this.gltf?.animations[0]!)
+                // this.mixer = new AnimationMixer( this.gltf?.scene.children[0] );
+                // console.log(this.gltf?.animations[3])
+                // downloadFile(this.gltf?.animations[3], "pointing")
+                // const anime = this.mixer.clipAction(this.gltf?.animations[3]!)
                 // this.mixer.clipAction(this.gltf?.animations[0]!)
                 // anime.play()
             }

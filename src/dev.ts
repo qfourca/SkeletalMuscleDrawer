@@ -11,5 +11,5 @@ const app = new App (
     human,
     //@ts-ignore
     animation,
-    gym
+    human
 )

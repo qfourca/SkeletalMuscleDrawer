@@ -2,6 +2,18 @@
     "name": "pushup",
     "animations": [
         {
+            "name": "hello",
+            "src": "./animation/default/hello.json"
+        },
+        {
+            "name": "pointing",
+            "src": "./animation/default/pointing.json"
+        },
+        {
+            "name": "idle",
+            "src": "./animation/default/idle.json"
+        },
+        {
             "name": "pushup",
             "src": "./animation/pushup/pushup.json"
         },
@@ -15,6 +27,13 @@
         }
     ],
     "timeline": [
+        "hello",
+        "hello",
+        "hello",
+        "hello",
+        "pointing",
+        "idle",
+        "idle",
         "pushup_ready",
         "pushup",
         "pushup",
@@ -33,22 +52,22 @@
         {
             "start": 0,
             "end": 3000,
-            "content": "1"
+            "content": "자막 실험 중입니다"
         },
         {
             "start": 3000,
             "end": 6000,
-            "content": "2"
+            "content": "자막 실험 중입니다2"
         },
         {
             "start": 6000,
             "end": 9000,
-            "content": "3"
+            "content": "자막 실험 중입니다3"
         },
         {
             "start": 9000,
             "end": 12000,
-            "content": "4"
+            "content": "자막 실험 중입니다4"
         }
     ]
 }
