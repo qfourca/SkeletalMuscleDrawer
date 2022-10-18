@@ -55,7 +55,7 @@ export default class Analysis extends ModalMember {
         <div class="${S.videoInput}">
             <input class="${S.uploadName}" value="첨부파일" placeholder="첨부파일">
             <label for="file">파일찾기</label> 
-            <input type="file" id="file" accept="video/*">
+            <input class="sex" type="file" id="file" accept="video/*">
         </div>
         <button class="${S.sec_submit}">sumbit</button>
     `
@@ -70,6 +70,12 @@ export default class Analysis extends ModalMember {
         this.leftELement.addEventListener('click', this.onLeftClick.bind(this))
         this.rightElement.addEventListener('click', this.onRightClick.bind(this))
         this.clicked.hang(this.hangClicked.bind(this))
+    }
+    private videoFile?: File
+    private onFileInput(e: any) {
+        //@ts-ignore
+        this.getAsClassName(S.uploadName).value = e.target.files[0].name
+        this.videoFile = e.target.files[0]
     }
     private onLeftClick() {
         if(!this.ignore) {
@@ -137,6 +143,27 @@ export default class Analysis extends ModalMember {
             this.rightElement.classList.add(S.maxmize)
             this.rightElement.innerHTML = this.rightMax
             this.getAsClassName(S.back).addEventListener('click', () => { this.clicked.set(0); this.ignore = true })
+            this.getAsClassName("sex").addEventListener('change', this.onFileInput.bind(this))
+            this.getAsClassName(S.sec_submit).addEventListener('click', () => { 
+                this.ignore = true
+                //@ts-ignore
+                if(this.videoFile === undefined) {
+                    alert("파일이 존재하지 않습니다")
+                }
+                else {
+                    Core.core.analysis.set({
+                        mode: "analysis",
+                        data: {
+                            video: this.videoFile,
+                            //@ts-ignore
+                            goal: Infinity,
+                            count: 0,
+                            points: 0
+                        }
+                    })
+                    this.modal.hide()
+                }
+            })
         }
     }
 }

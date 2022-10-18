@@ -10,7 +10,7 @@ export default class Core {
     public isRunning: Hook<boolean> = new Hook(false)
     public mapLoading: Hook<number> = new Hook(0)
     public subtitle: Hook<string> = new Hook("")
-    public analysis: Hook<{mode: string, data: any}> = new Hook({mode: "default", data: {}})
+    public analysis: Hook<{mode: string, data: any}> = new Hook({mode: "default", data: "$no"})
 
     private updater: Updater = new Updater()
     constructor (

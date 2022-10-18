@@ -8,6 +8,7 @@ export default abstract class Analysis {
     protected onResult: (info: exerciseInfo) => void
     protected abstract readonly needInfo: Array<string>
     protected abstract onInput:(arg: Map<string, number>) => void
+    
     protected pick(arg: Map<string, number>):Map<string, number> | undefined {
         const result:Map<string, number> = new Map()
         for(let i = 0; i < this.needInfo.length; i++) {

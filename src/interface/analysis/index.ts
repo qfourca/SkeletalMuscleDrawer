@@ -18,7 +18,7 @@ export default class AnalysisUI extends Component {
         this.render()
     }
     public setValue(current: number, goal: number) {
-        this.getAsClassName(S.result).innerHTML = `${current} / ${goal}`
+        this.getAsClassName(S.result).innerHTML = goal === Infinity ? String(current) : `${current} / ${goal}`
     }
     public getVideo(): HTMLVideoElement {
         //@ts-ignore
