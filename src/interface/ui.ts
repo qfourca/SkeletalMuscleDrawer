@@ -1,5 +1,5 @@
 import App from "../app/app";
-import S from './ui.style.scss'
+import S from './style.scss'
 import Component from "./package/component";
 import Timeline from "./timeline/timeline";
 

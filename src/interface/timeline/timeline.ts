@@ -1,6 +1,8 @@
 import App from "../../app/app";
 import Component from "../package/component";
+import Analysis from "./analysis";
 import Bar from "./bar";
+import Bottom from "./bottom";
 import S from './style.scss'
 
 export default class Timeline extends Component {
@@ -16,5 +18,6 @@ export default class Timeline extends Component {
         this.render()
         const container = this.getAsClassName(S.timelineContainer)
         new Bar(app, container)
+        new Bottom(app, container)
     }
 }
