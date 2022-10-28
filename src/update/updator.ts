@@ -14,7 +14,12 @@ export default class Updator extends Member {
     }
     private timeUpdate(updatedTime: number) {
         if(!this.app.isPaused.get()) {
-            this.app.currentTime.set(this.app.currentTime.get() + updatedTime)
+            const maximumTime = this.app.animation.get().duration
+            const delta = this.app.currentTime.get() + updatedTime
+            this.app.currentTime.set(
+                delta < 0 ? 0 :
+                delta > maximumTime ? maximumTime : delta
+            )
         }
     }
     private update() {
