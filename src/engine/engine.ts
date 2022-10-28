@@ -35,7 +35,7 @@ export default class Engine extends Member {
             const {
                 clip,
                 time
-            } = this.app.animation.get().timeToAnimationClip(currentTime)
+            } = this.app.animation.get().getAnimationClip(currentTime)
             this.human.animate(clip, time)
         }
     }

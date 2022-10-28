@@ -5,8 +5,9 @@ import RawAnimation from "./raw";
 
 export default class Animation {
     public name: string
-    public animations: Map<string, AnimationClip> = new Map()
-    public timeline: Array<string>
+    private animations: Map<string, AnimationClip> = new Map()
+    private subtitles: Array<Subtitle> = new Array()
+    private timeline: Array<string>
     public isLoading: Hook<boolean> = new Hook(true)
     public duration: number = 0
     constructor (
@@ -14,6 +15,13 @@ export default class Animation {
     ) {
         this.name = raw.name
         this.timeline = raw.timeline
+        this.subtitles = raw.subtitles
+        this.subtitles.sort((a: Subtitle, b: Subtitle) => a.start - b.start)
+        this.subtitles.forEach((element: Subtitle, idx: number) => {
+            if(element.end === undefined) {
+                this.subtitles[idx].end = this.subtitles[idx + 1].start
+            }
+        })
         this.getAnimations(raw.animations).then(this.onAnimationLoaded.bind(this))
     }
     private getAnimations(animations: Array<{name: string, src: string}>):Promise<any> {
@@ -38,7 +46,7 @@ export default class Animation {
         })
         this.isLoading.set(false)
     }
-    public timeToAnimationClip(time: number): { clip: AnimationClip, time: number } {
+    public getAnimationClip(time: number): { clip: AnimationClip, time: number } {
         let temp = 0
         let clip: string = this.timeline[0]
         this.timeline.forEach((moment: string) => {
@@ -53,21 +61,19 @@ export default class Animation {
             time: time - temp
         }
     }
-    // public test(time: number): { clipName: string, time: number } {
-    //     let temp = 0
-    //     let clip: string = this.timeline[0]
-    //     this.timeline.forEach((moment: string) => {
-    //         const get = this.animations.get(moment)!
-    //         console.log(get.duration * 1000)
-    //         if(temp < time) {
-    //             console.log(moment)
-    //             temp += get.duration * 1000
-    //             clip = moment
-    //         }
-    //     })
-    //     return {
-    //         clipName: clip,
-    //         time: temp - time
-    //     }
-    // }
+    public getSubtitle(time: number): string {
+        let result = ""
+        this.subtitles.forEach((element) => {
+            if(time >= element.start && time < element.end!) {
+                result = element.content
+            }
+        })
+        return result
+    }
+}
+
+export interface Subtitle {
+    start: number,
+    end?: number,
+    content: string
 }

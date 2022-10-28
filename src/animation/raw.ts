@@ -7,7 +7,7 @@ export default interface RawAnimation {
     timeline: Array<string>
     subtitles: Array<{
         start: number,
-        end: number,
+        end?: number,
         content: string
     }>
 }

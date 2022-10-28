@@ -5,6 +5,7 @@ import Animation, { RawAnimation } from "../animation"
 import axios, { AxiosResponse } from "axios"
 import Engine from "../engine/engine"
 import UI from "../interface/ui"
+import Subtitle from "../subtitle/subtitle"
 
 export default class App {
     public currentTime: Hook<number>
@@ -12,6 +13,7 @@ export default class App {
     public rootElement: Hook<HTMLElement>
     public isPaused: Hook<boolean>
     public animation: Hook<Animation>
+    public subtitle: Hook<string>
     public human: Hook<string>
     public world: Hook<string>
 
@@ -26,10 +28,12 @@ export default class App {
         this.rootElement = new Hook(root)
         this.isPaused = new Hook(false)
         this.animation = new Hook(new Animation(dummyAnimation))
+        this.subtitle = new Hook("")
         this.human = new Hook(human)
         this.world = new Hook(world)
 
         this.members.push(new Engine(this))  
+        this.members.push(new Subtitle(this))
         this.members.push(new UI(this))
         this.members.push(new Updator(this))      
     }

@@ -1,14 +1,12 @@
 import App from "../../app/app";
 import Component from "../package/component";
-import Analysis from "./analysis";
 import Bar from "./bar";
 import Bottom from "./bottom";
 import S from './style.scss'
-import Subtitle from "./subtitle";
 
-export default class Timeline extends Component {
+export default class Subtitle extends Component {
     protected html: string = `
-        <div class="${S.timelineContainer}">
+        <div class="${S.subtitleContainer}">
         </div>
     `
     constructor (
@@ -17,9 +15,9 @@ export default class Timeline extends Component {
     ) {
         super(app, parent)
         this.render()
-        const container = this.getAsClassName(S.timelineContainer)
-        new Subtitle(app, container)
-        new Bar(app, container)
-        new Bottom(app, container)
+        this.app.subtitle.hang(this.onSubtitleChange.bind(this))
+    }
+    private onSubtitleChange(subtitle: string) {
+        this.getAsClassName(S.subtitleContainer).innerText = subtitle
     }
 }

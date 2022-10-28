@@ -16,7 +16,7 @@ export default class Functions extends Component {
         {
             icon: new Hook(Icons.replay),
             onClick: this.jumpBackward.bind(this),
-            keybind: []
+            keybind: ["ArrowLeft"]
         },
         {
             icon: new Hook(Icons.skip_previous),
@@ -36,7 +36,7 @@ export default class Functions extends Component {
         {
             icon: new Hook(Icons.foward),
             onClick: this.jumpForward.bind(this),
-            keybind: []
+            keybind: ["ArrowRight"]
         },
         {
             icon: new Hook(Icons.setting),
