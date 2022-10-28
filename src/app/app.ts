@@ -2,27 +2,55 @@ import Hook from "../hook"
 import { Member } from "./"
 
 import { Updator } from "../update"
+import Animation, { RawAnimation } from "../animation"
+import axios, { AxiosResponse } from "axios"
+import { Human, World } from "../engine/model"
+import Engine from "../engine/engine"
 
 export default class App {
     public currentTime: Hook<number>
     public updateClock: Hook<number>
-    public rootElement: Hook<Element>
+    public rootElement: Hook<HTMLElement>
     public isPaused: Hook<boolean>
+    public animation: Hook<Animation>
+    public human: Hook<Human>
+    public world: Hook<World>
 
     private members: Array<Member> = new Array()
     constructor (
-        root: Element
+        root: HTMLElement,
+        human: string,
+        world: string
     ) {
         this.currentTime = new Hook(0)
         this.updateClock = new Hook(0)
         this.rootElement = new Hook(root)
         this.isPaused = new Hook(false)
+        this.animation = new Hook(new Animation(dummyAnimation))
+        this.human = new Hook(new Human(human))
+        this.world = new Hook(new World(world))
 
-        this.members.push(new Updator(this))        
+        this.members.push(new Engine(this))  
+        this.members.push(new Updator(this))      
     }
-    public animate(
-        animation: string | object
+    public animate (
+        animation: string | RawAnimation
     ) {
-
+        if(typeof animation === "string") {
+            axios.get(animation)
+            .then((result: AxiosResponse) => {
+                this.animation.set(result.data)
+            })
+        }
+        else if(typeof animation === "object") {
+            this.animation.set(new Animation(dummyAnimation))
+        }
     }
+}
+
+const dummyAnimation: RawAnimation = {
+    name: "dummy",
+    animations: [],
+    timeline: [],
+    subtitles: []
 }

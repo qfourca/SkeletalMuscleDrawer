@@ -10,7 +10,8 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "esModuleInterop": true,
-        "plugins": [{ "name": "typescript-plugin-css-modules" }]
+        "plugins": [{ "name": "typescript-plugin-css-modules" }],
+        "typeRoots": ["src/@types", "node_modules/@types"]
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules"]

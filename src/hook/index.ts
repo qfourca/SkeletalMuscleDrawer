@@ -30,4 +30,12 @@ export default class Hook<T> implements Hookable<T> {
           }
         return remove
     }
+    public static hookAll(
+        hooks: Array<Hook<any>>, 
+        func: (arg: any) => void
+    ) {
+        hooks.forEach((hook: Hook<any>) => {
+            hook.hang(func)
+        })
+    }
 }
