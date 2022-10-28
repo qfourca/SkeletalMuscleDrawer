@@ -7,7 +7,7 @@ export default class Animation {
     public name: string
     public animations: Map<string, AnimationClip> = new Map()
     public timeline: Array<string>
-    public isLoaded: Hook<boolean> = new Hook(false)
+    public isLoading: Hook<boolean> = new Hook(true)
     public duration: number = 0
     constructor (
         raw: RawAnimation
@@ -36,9 +36,10 @@ export default class Animation {
         this.timeline.forEach((moment: string) => {
             this.duration += this.animations.get(moment)?.duration! * 1000
         })
-        this.isLoaded.set(true)
+        this.isLoading.set(false)
+        console.log(this)
     }
-    public timeToAnimationClip(time: number): { clipName: string, time: number } {
+    public timeToAnimationClip(time: number): { clip: AnimationClip, time: number } {
         let temp = 0
         let clip: string = this.timeline[0]
         this.timeline.forEach((moment: string) => {
@@ -49,7 +50,7 @@ export default class Animation {
             }
         })
         return {
-            clipName: clip,
+            clip: this.animations.get(clip)!,
             time: time - temp
         }
     }

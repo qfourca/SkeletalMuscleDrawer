@@ -13,8 +13,8 @@ export default class App {
     public rootElement: Hook<HTMLElement>
     public isPaused: Hook<boolean>
     public animation: Hook<Animation>
-    public human: Hook<Human>
-    public world: Hook<World>
+    public human: Hook<string>
+    public world: Hook<string>
 
     private members: Array<Member> = new Array()
     constructor (
@@ -27,8 +27,8 @@ export default class App {
         this.rootElement = new Hook(root)
         this.isPaused = new Hook(false)
         this.animation = new Hook(new Animation(dummyAnimation))
-        this.human = new Hook(new Human(human))
-        this.world = new Hook(new World(world))
+        this.human = new Hook(human)
+        this.world = new Hook(world)
 
         this.members.push(new Engine(this))  
         this.members.push(new Updator(this))      
@@ -43,7 +43,7 @@ export default class App {
             })
         }
         else if(typeof animation === "object") {
-            this.animation.set(new Animation(dummyAnimation))
+            this.animation.set(new Animation(animation))
         }
     }
 }
