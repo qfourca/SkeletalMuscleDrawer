@@ -111,6 +111,39 @@ $prgoress-bar-margin-top: 16px;
             display: flex;
             justify-content: right;
             align-items: center;
+            .analysis {
+                width: 5em;
+                height: 80%;
+                background-color: white;
+                position: relative;
+                border-radius: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                right: 1em;
+                &:hover {
+                    img {
+                        transform: scale(1.3);
+                    }
+                }
+                img {
+                    transition: 200ms;
+                    width: 40%;
+                }
+                @keyframes pingPong{
+                    from {
+                        transform: translateX(-1.5em);
+                    }
+                    to {
+                        transform: translateX(1.5em);
+                    }
+                }
+                .doPingPong {
+                    animation: 500ms infinite alternate ease-in-out pingPong;
+                }
+
+            }
         }
     }
     .subtitleContainer {

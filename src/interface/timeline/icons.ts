@@ -7,6 +7,8 @@ import fullscreen from '../../../static/image/icons/fullscreen.svg'
 import fullscreen_exit from '../../../static/image/icons/fullscreen_exit.svg'
 import pause from '../../../static/image/icons/pause.svg'
 import play from '../../../static/image/icons/play.svg'
+import analysis from '../../../static/image/icons/analysis.svg'
+import search from '../../../static/image/icons/search.svg'
 
 export {
     foward as foward,
@@ -17,5 +19,7 @@ export {
     fullscreen as fullscreen,
     fullscreen_exit as fullscreen_exit,
     pause as pause,
-    play as play
+    play as play,
+    analysis as analysis,
+    search as search
 }

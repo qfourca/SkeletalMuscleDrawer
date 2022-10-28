@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios"
 import Engine from "../engine/engine"
 import UI from "../interface/ui"
 import Subtitle from "../subtitle/subtitle"
+import { AnalysisInfo } from "../analysis"
 
 export default class App {
     public currentTime: Hook<number>
@@ -14,6 +15,7 @@ export default class App {
     public isPaused: Hook<boolean>
     public animation: Hook<Animation>
     public subtitle: Hook<string>
+    public analysis: Hook<AnalysisInfo>
     public human: Hook<string>
     public world: Hook<string>
 
@@ -29,6 +31,7 @@ export default class App {
         this.isPaused = new Hook(false)
         this.animation = new Hook(new Animation(dummyAnimation))
         this.subtitle = new Hook("")
+        this.analysis = new Hook(dummyAnalysisInfo)
         this.human = new Hook(human)
         this.world = new Hook(world)
 
@@ -57,4 +60,7 @@ const dummyAnimation: RawAnimation = {
     animations: [],
     timeline: [],
     subtitles: []
+}
+const dummyAnalysisInfo: AnalysisInfo = {
+    isWorking: false
 }

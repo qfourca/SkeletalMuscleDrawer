@@ -1,7 +1,7 @@
 import App from "../../app/app";
 import Component from "../package/component";
 import S from './style.scss'
-import * as Icons from './functions.icons'
+import * as Icons from './icons'
 import Hook from "../../hook";
 import { FullScreen } from "../../util";
 
