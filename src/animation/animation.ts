@@ -37,7 +37,6 @@ export default class Animation {
             this.duration += this.animations.get(moment)?.duration! * 1000
         })
         this.isLoading.set(false)
-        console.log(this)
     }
     public timeToAnimationClip(time: number): { clip: AnimationClip, time: number } {
         let temp = 0

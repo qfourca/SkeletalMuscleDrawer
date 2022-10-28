@@ -1,11 +1,10 @@
 import Hook from "../hook"
 import { Member } from "./"
-
 import { Updator } from "../update"
 import Animation, { RawAnimation } from "../animation"
 import axios, { AxiosResponse } from "axios"
-import { Human, World } from "../engine/model"
 import Engine from "../engine/engine"
+import UI from "../interface/ui"
 
 export default class App {
     public currentTime: Hook<number>
@@ -31,6 +30,7 @@ export default class App {
         this.world = new Hook(world)
 
         this.members.push(new Engine(this))  
+        this.members.push(new UI(this))
         this.members.push(new Updator(this))      
     }
     public animate (

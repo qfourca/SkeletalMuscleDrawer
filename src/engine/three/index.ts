@@ -18,7 +18,7 @@ export default class Three {
         this.scene = new Scene()
         this.camera = new Camera(70, this.parent.clientWidth / this.parent.clientHeight)
         this.renderer = new Renderer(this.parent)
-        this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        this.control = new OrbitControls(this.camera, parent)
         this.light = new Light()
         this.light.addLight(this.scene)
         window.addEventListener('resize', this.resize.bind(this), false)

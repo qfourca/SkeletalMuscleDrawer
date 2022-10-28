@@ -1,0 +1,58 @@
+$progress-color: red;
+$progress-ball-radius: 16px;
+.timelineContainer {
+    width: 100%;
+    height: 10%;
+    max-height: 100px;
+    min-height: 50px;
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .barMouseContainer {
+        width: 98%;
+        height: 10%;
+        margin-top: 10px;
+        position: absolute;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        &:hover {
+            .barContainer {
+                height: 100%;
+                .bar {
+                    .ball {
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+        .barContainer {
+            width: 100%;
+            height: 50%;
+            background-color: white;
+            transition: 200ms;
+            .bar {
+                height: 100%;
+                background-color: $progress-color;
+                width: 50%;
+                position: relative;
+                display: flex;
+                align-items: center;
+                .ball {
+                    right: calc(-#{$progress-ball-radius} / 2);
+                    position: absolute;
+                    height: $progress-ball-radius;
+                    width: $progress-ball-radius;
+                    border-radius: 50%;
+                    background-color: $progress-color;
+                    transition: 200ms;
+                    transform: scale(0);
+                }
+            }
+        }
+    }
+}
