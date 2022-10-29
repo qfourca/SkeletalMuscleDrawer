@@ -7,6 +7,7 @@ import Engine from "../engine/engine"
 import UI from "../interface/ui"
 import Subtitle from "../subtitle/subtitle"
 import { AnalysisInfo } from "../analysis"
+import ModalChild from "../interface/modal/modalChild"
 
 export default class App {
     public currentTime: Hook<number>
@@ -16,6 +17,7 @@ export default class App {
     public animation: Hook<Animation>
     public subtitle: Hook<string>
     public analysis: Hook<AnalysisInfo>
+    public modal: Hook<ModalChild>
     public human: Hook<string>
     public world: Hook<string>
 
@@ -32,6 +34,7 @@ export default class App {
         this.animation = new Hook(new Animation(dummyAnimation))
         this.subtitle = new Hook("")
         this.analysis = new Hook(dummyAnalysisInfo)
+        this.modal = new Hook(dummyModal)
         this.human = new Hook(human)
         this.world = new Hook(world)
 
@@ -62,5 +65,15 @@ const dummyAnimation: RawAnimation = {
     subtitles: []
 }
 const dummyAnalysisInfo: AnalysisInfo = {
-    isWorking: false
+    isWorking: false,
+    videoSrc: "",
+    videoElement: document.createElement('video'),
+    data: {
+        goal: 0,
+        history: new Array()
+    }
+}
+const dummyModal: ModalChild = {
+    component: undefined,
+    modalElement: document.createElement('div')
 }

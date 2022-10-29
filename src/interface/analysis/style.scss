@@ -1,0 +1,29 @@
+.analysisContainer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 16%;
+    background-color: rebeccapurple;
+    min-height: 100px;
+    max-height: 200px;
+    .infoContainer {
+        width: 260px;
+        height: 500px;
+        padding: 10px;
+        position: absolute;
+        background-color: red;
+        overflow: hidden;
+        .bufferContainer {
+            width: 100%;
+            height: 260px;
+            background-color: beige;
+            display: flex;
+        }
+        .videoClass {
+            width: 100%;
+        }
+    }
+}
+.containerHide {
+    display: none;
+}

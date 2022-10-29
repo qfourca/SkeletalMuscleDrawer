@@ -3,6 +3,7 @@ import Component from "../package/component";
 import S from './style.scss'
 import { analysis, search } from './icons'
 import { AnalysisInfo } from "../../analysis";
+import analysisMode from "../modal/analysisMode";
 export default class Analysis extends Component {
     protected html: string = `
         <div class="${S.analysisContainer}">
@@ -30,6 +31,9 @@ export default class Analysis extends Component {
             }
             else {
                 toggle()
+                const temp = { ...this.app.modal.get() }
+                temp.component = new analysisMode(app)
+                this.app.modal.set(temp)
             }
         })
         this.app.analysis.hang(this.onAnalysisChange.bind(this))

@@ -7,7 +7,6 @@ export default class Webcam {
         video.muted = true
         video.playsInline = true
         video.controls = true
-        video.style.width = "360px";
         if(src == undefined) {
             if(navigator.mediaDevices == undefined) {
                 alert("Can't use Webcam")

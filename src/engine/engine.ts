@@ -21,6 +21,7 @@ export default class Engine extends Member {
 
         app.updateClock.hang(this.three.update.bind(this.three))
         app.currentTime.hang(this.onTimeChange.bind(this))
+        app.modal.hang(this.onModalChange.bind(this))
     }
     private render(model: Model) {
         if(!model.isLoading.get()) {
@@ -38,5 +39,8 @@ export default class Engine extends Member {
             } = this.app.animation.get().getAnimationClip(currentTime)
             this.human.animate(clip, time)
         }
+    }
+    private onModalChange() {
+        this.three.orbitcontrolEnable(this.app.modal.get().component == undefined)
     }
 }

@@ -1,0 +1,90 @@
+.modalRoot {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .analysisModeContainer {
+        width: 50%;
+        height: 30%;
+        max-width: 600px;
+        max-height: 400px;
+        min-width: 300px;
+        min-height: 200px;
+        position: relative;
+        display: flex;
+        $select-box-border-radius: 10px;
+        @mixin selectBox {
+            height: 100%;
+            background-color: rgb(228, 236, 242);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 300ms;
+            gap: 1em;
+            img {
+                height: 60%;
+            }
+            h2 {
+                margin: 0;
+            }
+            .maxContainer {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .back {
+                    position: absolute;
+                    left: 5px;
+                    top: 5px;
+                }
+            }
+            .submit {
+                width: 48px;
+                height: 24px;
+            }
+        }
+        .ready {
+            width: 50%;
+            cursor: pointer;
+            &:hover {
+                width: 65%;
+                background-color: rgb(164, 198, 225);
+            }
+        }
+        .max {
+            width: 100%;
+            border-radius: $select-box-border-radius;
+        }
+        .min {
+            width: 0%;
+        }
+        .leftSelectBox {
+            @include selectBox();
+            border-bottom-left-radius: $select-box-border-radius;
+            border-top-left-radius: $select-box-border-radius;
+            .range {
+                width: 40%;
+            }
+            .value {
+                width: 40%;
+            }
+        }
+        .rightSelectBox {
+            @include selectBox();
+            border-bottom-right-radius: $select-box-border-radius;
+            border-top-right-radius: $select-box-border-radius;
+            
+        }
+    }
+}
+.modalHide {
+    display: none;
+}

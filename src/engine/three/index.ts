@@ -22,6 +22,7 @@ export default class Three {
         this.light = new Light()
         this.light.addLight(this.scene)
         window.addEventListener('resize', this.resize.bind(this), false)
+        
     }
     public update = () => {
         this.control.update()
@@ -36,8 +37,10 @@ export default class Three {
         this.renderer.setSize(this.parent.clientWidth, this.parent.clientHeight)
         this.render()
     }
-    public getScene = () => {
-        return this.scene
+    public getScene = () => this.scene
+    public getCamera = () => this.camera
+    public orbitcontrolEnable = (enable: boolean) => {
+        this.control.enabled = enable
     }
 }
 
