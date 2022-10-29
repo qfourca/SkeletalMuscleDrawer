@@ -3,7 +3,7 @@
     top: 0;
     width: 100%;
     height: 16%;
-    background-color: rebeccapurple;
+    // background-color: rgb(221, 242, 234);
     min-height: 100px;
     max-height: 200px;
     .infoContainer {
@@ -12,6 +12,7 @@
         position: absolute;
         background-color: red;
         overflow: hidden;
+        gap: 10em;
         .bufferContainer {
             width: calc(100% - 2em);
             background-color: beige;
@@ -27,6 +28,50 @@
         }
         .videoClass {
             width: 100%;
+        }
+    }
+    .momentContainer {
+        position: absolute;
+        right: 10px;
+        top: 5%;
+        height: 90%;
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 10px;
+        padding-right: 20px;
+        .moment {
+            height: 100%;
+            width: 70px;
+            transition: 1000ms;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            perspective: 500px;
+            canvas {
+                transform: rotateY(-50deg);
+                opacity: 0.5;
+                width: 150px;
+                height: 150px;
+                transition: 250ms;
+                cursor: pointer;
+            }
+            .dataContainer {
+                transition: 250ms;
+                transform: rotateY(-50deg);
+                opacity: 0.5;
+            }
+        }
+        .enter {
+            transition: 200ms;
+            width: 100px;
+            canvas {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+            .dataContainer {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
         }
     }
 }

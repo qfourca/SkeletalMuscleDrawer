@@ -4,6 +4,7 @@ import Member from "../app/member";
 import App from "../app/app";
 import Motion from './motion/motion'
 import { Vector3 } from "three";
+import {Posture, exerciseResult, SquartPosture} from "./analysis/index";
 export default class Analysis extends Member {
     public static Joints = new Map([
         ["leftArm", [11, 13, 15]],
@@ -30,11 +31,13 @@ export default class Analysis extends Member {
         return Math.PI - Math.acos(res)
     }
     private motion?: Motion
+    private posture: Posture
     constructor (
         app: App
     ) {
         super(app)
         this.app.analysisSetting.hang(this.onAnalysisChange.bind(this))
+        this.posture = new SquartPosture()
     }
     private onAnalysisChange(info: AnalysisSetting) {
         if(this.motion == undefined) {
@@ -77,6 +80,13 @@ export default class Analysis extends Member {
             poseWorldLandmarks: result.poseWorldLandmarks,
             poseAngles: angles,
             image: result.image
+        }
+        const exercise = this.posture.input(angles)
+        if(exercise != undefined) {
+            temp.history.push({
+                motion: temp.buffer,
+                exercise: exercise
+            })
         }
         this.app.analysisData.set(temp)
     }
