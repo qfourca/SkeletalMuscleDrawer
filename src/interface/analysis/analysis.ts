@@ -1,7 +1,7 @@
 import App from "../../app/app";
 import S from './style.scss'
 import Component from "../package/component";
-import { AnalysisSetting } from "../../analysis";
+import { AnalysisSetting, AnalysisData } from "../../analysis";
 import { Webcam } from "../../util";
 import tempVideo from '../../../static/video/oneStar.mp4'
 
@@ -23,6 +23,7 @@ export default class AnalysisUI extends Component {
         this.setVideoElement()
         
         this.app.analysisSetting.hang(this.onAnalysisChange.bind(this))
+        this.app.analysisData.hang(this.onAnalysisDataChange.bind(this))
     }
     private onAnalysisChange(info: AnalysisSetting) {
         if(info.isWorking) { 
@@ -37,10 +38,16 @@ export default class AnalysisUI extends Component {
         
         }
         else { this.getAsClassName(S.analysisContainer).classList.add(S.containerHide) }
-        console.log(info)
     }
-    private onAnalysisDataChange() {
-
+    private onAnalysisDataChange(data: AnalysisData) {
+        let innerHTML = ""
+        data.buffer.poseAngles.forEach((value) => {
+            innerHTML += `<h6>${value.name} : ${AnalysisUI.RadinToDegree(value.value)}</h6>`
+        })
+        this.getAsClassName(S.bufferContainer).innerHTML = innerHTML
+    }
+    private static RadinToDegree(radian: number): number {
+        return Math.round((radian * 180 / Math.PI) * 10) / 10
     }
     private setVideoElement() {
         const temp = {...this.app.analysisSetting.get()}

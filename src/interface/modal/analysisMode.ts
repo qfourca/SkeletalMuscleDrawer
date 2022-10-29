@@ -101,12 +101,14 @@ export default class analysisMode extends ModalMember {
         this.getAsClassName(S.value).value = value
     }
     private onLeftSubmit() {
-        //@ts-ignore
-        const value = this.getAsClassName(S.value).value
         const temp = { ...this.app.analysisSetting.get() }
         temp.isWorking = true
         temp.videoSrc = "$webcam"
         this.app.analysisSetting.set(temp)
+        const tempValue = { ...this.app.analysisData.get() }
+        //@ts-ignore
+        tempValue.goal = +this.getAsClassName(S.value).value
+        this.app.analysisData.set(tempValue)
         const modal = { ...this.app.modal.get() }
         modal.component = undefined
         this.destructor()

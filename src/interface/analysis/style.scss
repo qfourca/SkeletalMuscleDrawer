@@ -8,16 +8,22 @@
     max-height: 200px;
     .infoContainer {
         width: 260px;
-        height: 500px;
         padding: 10px;
         position: absolute;
         background-color: red;
         overflow: hidden;
         .bufferContainer {
-            width: 100%;
-            height: 260px;
+            width: calc(100% - 2em);
             background-color: beige;
             display: flex;
+            flex-direction: column;
+            gap: 0.2em;
+            padding: 1em;
+            h6 {
+                margin: 0;
+                font-weight: 500;
+                font-size: 1em;
+            }
         }
         .videoClass {
             width: 100%;

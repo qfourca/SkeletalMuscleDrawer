@@ -48,7 +48,6 @@ export default class Analysis extends Member {
         }
     }
     private onMotionResult(result: Results) {
-        // console.log(result)
         const angles = new Map()
         Analysis.Joints.forEach((points: Array<number>, name: string) => {
             if(result.poseWorldLandmarks != undefined) {
@@ -73,14 +72,13 @@ export default class Analysis extends Member {
                 )
             }
         })
-        // console.log(angles)
-        // const temp = { ...this.app.analysisSetting.get() }
-        // temp.data.buffer = {
-        //     poseWorldLandmarks: result.poseWorldLandmarks,
-        //     poseAngles: angles,
-        //     image: result.image
-        // }
-        // this.app.analysisSetting.set(temp)
+        const temp = { ...this.app.analysisData.get() }
+        temp.buffer = {
+            poseWorldLandmarks: result.poseWorldLandmarks,
+            poseAngles: angles,
+            image: result.image
+        }
+        this.app.analysisData.set(temp)
     }
 }
 

@@ -12,7 +12,7 @@ export default class Motion {
             return `/mediapipe/${file}`;
         }});
         this.pose.setOptions({
-            modelComplexity: 0,
+            modelComplexity: 1,
             smoothLandmarks: true,
             smoothSegmentation: true,
             minDetectionConfidence: 0.5,
