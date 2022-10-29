@@ -103,14 +103,10 @@ export default class analysisMode extends ModalMember {
     private onLeftSubmit() {
         //@ts-ignore
         const value = this.getAsClassName(S.value).value
-        const temp = { ...this.app.analysis.get() }
+        const temp = { ...this.app.analysisSetting.get() }
         temp.isWorking = true
         temp.videoSrc = "$webcam"
-        temp.data = {
-            goal: value,
-            history: new Array()
-        }
-        this.app.analysis.set(temp)
+        this.app.analysisSetting.set(temp)
         const modal = { ...this.app.modal.get() }
         modal.component = undefined
         this.destructor()
@@ -151,9 +147,9 @@ export default class analysisMode extends ModalMember {
         }
         const response = confirm("종료하시겠습니까?")
         if(response) {
-            const temp = { ...this.app.analysis.get() }
+            const temp = { ...this.app.analysisSetting.get() }
             temp.isWorking = false
-            this.app.analysis.set(temp)
+            this.app.analysisSetting.set(temp)
         }
         return response
     }

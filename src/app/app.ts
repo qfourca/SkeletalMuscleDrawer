@@ -6,8 +6,9 @@ import axios, { AxiosResponse } from "axios"
 import Engine from "../engine/engine"
 import UI from "../interface/ui"
 import Subtitle from "../subtitle/subtitle"
-import { AnalysisInfo } from "../analysis"
+import { AnalysisData, AnalysisSetting } from "../analysis"
 import ModalChild from "../interface/modal/modalChild"
+import Analysis from "../analysis/analysis"
 
 export default class App {
     public currentTime: Hook<number>
@@ -16,7 +17,8 @@ export default class App {
     public isPaused: Hook<boolean>
     public animation: Hook<Animation>
     public subtitle: Hook<string>
-    public analysis: Hook<AnalysisInfo>
+    public analysisSetting: Hook<AnalysisSetting>
+    public analysisData: Hook<AnalysisData>
     public modal: Hook<ModalChild>
     public human: Hook<string>
     public world: Hook<string>
@@ -33,7 +35,8 @@ export default class App {
         this.isPaused = new Hook(false)
         this.animation = new Hook(new Animation(dummyAnimation))
         this.subtitle = new Hook("")
-        this.analysis = new Hook(dummyAnalysisInfo)
+        this.analysisSetting = new Hook(dummyAnalysisInfo)
+        this.analysisData = new Hook(dummyAnalysisData)
         this.modal = new Hook(dummyModal)
         this.human = new Hook(human)
         this.world = new Hook(world)
@@ -41,6 +44,7 @@ export default class App {
         this.members.push(new Engine(this))  
         this.members.push(new Subtitle(this))
         this.members.push(new UI(this))
+        this.members.push(new Analysis(this))
         this.members.push(new Updator(this))      
     }
     public animate (
@@ -64,14 +68,19 @@ const dummyAnimation: RawAnimation = {
     timeline: [],
     subtitles: []
 }
-const dummyAnalysisInfo: AnalysisInfo = {
+const dummyAnalysisInfo: AnalysisSetting = {
     isWorking: false,
     videoSrc: "",
-    videoElement: document.createElement('video'),
-    data: {
-        goal: 0,
-        history: new Array()
-    }
+    videoElement: document.createElement('video')
+}
+const dummyAnalysisData: AnalysisData = {
+    buffer: {
+        poseWorldLandmarks: new Array(),
+        poseAngles: new Map(),
+        image: document.createElement('canvas') 
+    },
+    goal: 0,
+    history: new Array()
 }
 const dummyModal: ModalChild = {
     component: undefined,

@@ -1,7 +1,7 @@
 import App from "../../app/app";
 import S from './style.scss'
 import Component from "../package/component";
-import { AnalysisInfo } from "../../analysis";
+import { AnalysisSetting } from "../../analysis";
 import { Webcam } from "../../util";
 import tempVideo from '../../../static/video/oneStar.mp4'
 
@@ -22,9 +22,9 @@ export default class AnalysisUI extends Component {
         this.render()
         this.setVideoElement()
         
-        this.app.analysis.hang(this.onAnalysisChange.bind(this))
+        this.app.analysisSetting.hang(this.onAnalysisChange.bind(this))
     }
-    private onAnalysisChange(info: AnalysisInfo) {
+    private onAnalysisChange(info: AnalysisSetting) {
         if(info.isWorking) { 
             this.getAsClassName(S.analysisContainer).classList.remove(S.containerHide) 
             if(info.videoSrc === "") {}
@@ -39,10 +39,13 @@ export default class AnalysisUI extends Component {
         else { this.getAsClassName(S.analysisContainer).classList.add(S.containerHide) }
         console.log(info)
     }
+    private onAnalysisDataChange() {
+
+    }
     private setVideoElement() {
-        const temp = {...this.app.analysis.get()}
+        const temp = {...this.app.analysisSetting.get()}
         temp.videoElement = this.getVideoElement()
-        this.app.analysis.set(temp)
+        this.app.analysisSetting.set(temp)
     }
     private getVideoElement(): HTMLVideoElement {
         //@ts-ignore

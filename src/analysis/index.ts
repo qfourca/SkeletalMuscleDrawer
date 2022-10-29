@@ -1,2 +1,3 @@
 export { default as default } from './analysis'
-export { default as AnalysisInfo } from './info'
+export { Info as AnalysisData } from './info'
+export { Setting as AnalysisSetting } from './info'

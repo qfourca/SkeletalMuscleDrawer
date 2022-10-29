@@ -2,7 +2,7 @@ import App from "../../app/app";
 import Component from "../package/component";
 import S from './style.scss'
 import { analysis, search } from './icons'
-import { AnalysisInfo } from "../../analysis";
+import { AnalysisSetting } from "../../analysis";
 import analysisMode from "../modal/analysisMode";
 export default class Analysis extends Component {
     protected html: string = `
@@ -20,11 +20,11 @@ export default class Analysis extends Component {
         this.render()
         this.getAsClassName(S.analysis).addEventListener('click', () => {
             const toggle = () => {
-                const temp = { ...this.app.analysis.get() }
+                const temp = { ...this.app.analysisSetting.get() }
                 temp.isWorking = !temp.isWorking
-                this.app.analysis.set(temp)
+                this.app.analysisSetting.set(temp)
             }
-            if(this.app.analysis.get().isWorking) {
+            if(this.app.analysisSetting.get().isWorking) {
                 if(confirm("분석을 종료하시겠습니까?")) {
                     toggle()
                 }
@@ -36,9 +36,9 @@ export default class Analysis extends Component {
                 this.app.modal.set(temp)
             }
         })
-        this.app.analysis.hang(this.onAnalysisChange.bind(this))
+        this.app.analysisSetting.hang(this.onAnalysisChange.bind(this))
     }
-    private onAnalysisChange(info: AnalysisInfo) {
+    private onAnalysisChange(info: AnalysisSetting) {
         if(info.isWorking) {
             this.getImageELement().src = search
             this.getImageELement().className = S.doPingPong
