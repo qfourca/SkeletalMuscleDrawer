@@ -40,15 +40,15 @@
         gap: 10px;
         padding-right: 20px;
         .moment {
-            height: 100%;
-            width: 70px;
+            height: fit-content;
+            width: 60px;
             transition: 1000ms;
             display: flex;
             flex-direction: column-reverse;
             align-items: center;
-            perspective: 500px;
+            perspective: 1000px;
             canvas {
-                transform: rotateY(-50deg);
+                transform: rotateY(-55deg);
                 opacity: 0.5;
                 width: 150px;
                 height: 150px;
@@ -56,14 +56,22 @@
                 cursor: pointer;
             }
             .dataContainer {
-                transition: 250ms;
-                transform: rotateY(-50deg);
+                transition: 600ms;
+                transform: rotateY(-55deg);
                 opacity: 0.5;
+                width: calc(150px - 0.4em);
+                text-align: center;
+                background-color: royalblue;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                padding: 0.2em;
+                height: 1em;
             }
         }
         .enter {
-            transition: 200ms;
+            transition: 600ms;
             width: 100px;
+            z-index: 10;
             canvas {
                 transform: rotateY(0deg);
                 opacity: 1;
@@ -71,6 +79,12 @@
             .dataContainer {
                 transform: rotateY(0deg);
                 opacity: 1;
+                height: 20em;
+                padding: 1em;
+                position: relative;
+                width: 200px;
+                right: 40px;
+                border-top-left-radius: 5px;
             }
         }
     }

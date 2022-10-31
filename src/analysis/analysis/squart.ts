@@ -16,7 +16,7 @@ export default class SquartPosture extends Posture {
     ]
     public onInput = (arg: Map<string, number>) => {
         const before = this.currentMode
-        this.currentMode = Posture.RadianToDegree(arg.get(JointList.leftLeg)!) < 130 && Posture.RadianToDegree(arg.get(JointList.rightLeg)!) < 130
+        this.currentMode = Posture.RadianToDegree(arg.get(JointList.leftLeg)!) < 120 && Posture.RadianToDegree(arg.get(JointList.rightLeg)!) < 120
         if(before == true && this.currentMode == false) {
             const temp = this.sit
             this.stand = new Array()

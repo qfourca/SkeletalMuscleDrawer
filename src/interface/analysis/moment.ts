@@ -2,14 +2,14 @@ import App from "../../app/app";
 import S from './style.scss'
 import Component from "../package/component";
 import { AnalysisSetting, AnalysisData } from "../../analysis";
-import { Webcam } from "../../util";
-import tempVideo from '../../../static/video/oneStar.mp4'
 import { exerciseResult } from "../../analysis/analysis/index";
 import { AnalysisResult } from "../../analysis/analysis";
+import Hook from "../../hook";
 
 export default class Moment extends Component {
     private index: number
     private canvas: HTMLCanvasElement
+    private isMouseEnter: Hook<boolean> = new Hook(false)
     constructor (
         app: App,
         parent: HTMLElement,
@@ -31,20 +31,26 @@ export default class Moment extends Component {
         this.canvas = document.createElement('canvas')
         const ctx = this.canvas.getContext('2d')
         ctx!.drawImage(data.motion.image, 0, 0, 300, 150)
-        this.getAsClassName(this.myClassName()).appendChild(this.canvas)
-        this.getAsClassName(this.myClassName()).style.transform = `translateX(${-2000}%)`
-        this.canvas.addEventListener('mouseenter', this.onMouseEnter.bind(this))
-        this.canvas.addEventListener('mouseleave', this.onMouseLeave.bind(this))
+
+        const me = this.getAsClassName(this.myClassName())
+        me.appendChild(this.canvas)
+        me.style.transform = `translateX(${-2000}%)`
+        this.canvas.addEventListener('mouseenter', () => this.isMouseEnter.set(true))
+        this.canvas.addEventListener('mouseleave', () => this.isMouseEnter.set(false))
+        me.getElementsByClassName(S.dataContainer)[0].addEventListener('mouseenter', () => this.isMouseEnter.set(true))
+        me.getElementsByClassName(S.dataContainer)[0].addEventListener('mouseleave', () => this.isMouseEnter.set(false))
+        this.isMouseEnter.hang(this.onMouseChange.bind(this))
+
         setTimeout(() => {
-            this.getAsClassName(this.myClassName()).style.transform = ""
-            setTimeout(() => this.getAsClassName(this.myClassName()).style.transition = "200ms", 1000) 
+            me.style.transform = ""
+            setTimeout(() => me.style.transition = "200ms", 1000) 
         }, 10)
     }
-    private onMouseEnter() {
-        this.getAsClassName(this.myClassName()).classList.add(S.enter)
-    }
-    private onMouseLeave() {
-        this.getAsClassName(this.myClassName()).classList.remove(S.enter)
+    private onMouseChange(isEnter: boolean) {
+        if(isEnter)
+            this.getAsClassName(this.myClassName()).classList.add(S.enter)
+        else
+            this.getAsClassName(this.myClassName()).classList.remove(S.enter)
     }
     private myClassName(): string {
         return `${S.moment} ${this.index}`
