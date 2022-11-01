@@ -1,20 +1,20 @@
 import Hook from "../hook"
 import { Member } from "./"
-import { Updator } from "../update"
 import Animation, { RawAnimation } from "../animation"
 import axios, { AxiosResponse } from "axios"
 import Engine from "../engine/engine"
 import UI from "../interface/ui"
-import Subtitle from "../subtitle/subtitle"
 import { AnalysisData, AnalysisSetting } from "../analysis"
 import ModalChild from "../interface/modal/modalChild"
 import Analysis from "../analysis/analysis"
+import Controller from "../controller"
 
 export default class App {
     public currentTime: Hook<number>
     public updateClock: Hook<number>
     public rootElement: Hook<HTMLElement>
     public isPaused: Hook<boolean>
+    public isLoading: Hook<boolean>
     public animation: Hook<Animation>
     public subtitle: Hook<string>
     public analysisSetting: Hook<AnalysisSetting>
@@ -33,6 +33,7 @@ export default class App {
         this.updateClock = new Hook(0)
         this.rootElement = new Hook(root)
         this.isPaused = new Hook(false)
+        this.isLoading = new Hook(true)
         this.animation = new Hook(new Animation(dummyAnimation))
         this.subtitle = new Hook("")
         this.analysisSetting = new Hook(dummyAnalysisInfo)
@@ -42,10 +43,9 @@ export default class App {
         this.world = new Hook(world)
 
         this.members.push(new Engine(this))  
-        this.members.push(new Subtitle(this))
         this.members.push(new UI(this))
         this.members.push(new Analysis(this))
-        this.members.push(new Updator(this))      
+        this.members.push(new Controller(this))  
     }
     public animate (
         animation: string | RawAnimation

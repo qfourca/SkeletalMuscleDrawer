@@ -2,7 +2,7 @@ import App from "../app";
 import Member from "../app/member";
 import { Performance } from "../util";
 
-export default class Updator extends Member {
+export default class Timer extends Member {
     private performance: Performance
     constructor (
         app: App
@@ -13,7 +13,7 @@ export default class Updator extends Member {
         this.update()
     }
     private timeUpdate(updatedTime: number) {
-        if(!this.app.isPaused.get()) {
+        if(!this.app.isPaused.get() && !this.app.isLoading.get()) {
             const maximumTime = this.app.animation.get().duration
             const delta = this.app.currentTime.get() + updatedTime
             this.app.currentTime.set(

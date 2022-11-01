@@ -1,0 +1,50 @@
+{
+    "name": "pushup",
+    "animations": [
+        {
+            "name": "squart",
+            "src": "./animation/squart/squart.json"
+        },
+        {
+            "name": "idle",
+            "src": "./animation/default/idle.json"
+        }
+    ],
+    "timeline": [
+        "squart",
+        "squart",
+        "squart",
+        "squart",
+        "squart",
+        "idle",
+        "idle",
+        "idle",
+        "idle",
+        "idle",
+        "idle",
+        "idle",
+        "idle"
+    ],
+    "subtitles": [
+        {
+            "start": 0,
+            "end": 3000,
+            "content": "자막 실험 중입니다"
+        },
+        {
+            "start": 3000,
+            "end": 6000,
+            "content": "자막 실험 중입니다2"
+        },
+        {
+            "start": 6000,
+            "end": 9000,
+            "content": "자막 실험 중입니다3"
+        },
+        {
+            "start": 9000,
+            "end": 12000,
+            "content": "자막 실험 중입니다4"
+        }
+    ]
+}

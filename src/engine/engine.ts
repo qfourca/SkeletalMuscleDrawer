@@ -27,6 +27,7 @@ export default class Engine extends Member {
         if(!model.isLoading.get()) {
             this.three.getScene().add(model.body!.scene)
         }
+        this.app.isLoading.set(this.world.isLoading.get() || this.human.isLoading.get())
     }
     private onTimeChange(currentTime: number) {
         if(

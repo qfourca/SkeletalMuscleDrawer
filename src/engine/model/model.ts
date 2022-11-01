@@ -19,8 +19,8 @@ export default class Model {
         this.body = model;
         this.isLoading.set(false)
     }
-    protected onProgress(progress:any) {
-        
+    protected onProgress(progress:ProgressEvent) {
+        // console.log(progress.)
     }
     protected onError(error:any) {
         console.log(error)
