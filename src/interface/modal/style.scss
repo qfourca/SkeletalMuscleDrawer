@@ -42,13 +42,92 @@
                 align-items: center;
                 .back {
                     position: absolute;
-                    left: 5px;
-                    top: 5px;
+                    left: 8px;
+                    top: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 48px;
+
+                    height: 36px;
+                    font-weight: 600;
+                    text-align: center;
+                    line-height: 50px;
+                    color: #FFF;
+                    border-radius: 5px;
+                    transition: all 0.2s;
+                    background: #5DC8CD;
+                    border: none;
+                    cursor: pointer;
+                    &:hover {
+                        background: #01939A;
+                    }
+                }
+                .filebox {
+                    margin: 40px;
+                    input[type="file"] {
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        padding: 0;
+                        margin: -1px;
+                        overflow: hidden;
+                        clip:rect(0,0,0,0);
+                        border: 0;
+                       
+                    }
+                    label {
+                        display: inline-block;
+                        padding: .5em .75em;
+                        color: #999;
+                        font-size: inherit;
+                        line-height: normal;
+                        vertical-align: middle;
+                        background-color: #fdfdfd;
+                        cursor: pointer;
+                        border: 1px solid #ebebeb;
+                        border-bottom-color: #e2e2e2;
+                        border-radius: .25em;
+                    }
+                    .uploadName {
+                        display: inline-block;
+                        padding: .5em .75em;  /* label의 패딩값과 일치 */
+                        font-size: inherit;
+                        font-family: inherit;
+                        line-height: normal;
+                        vertical-align: middle;
+                        background-color: #f5f5f5;
+                        border: 1px solid #ebebeb;
+                        border-bottom-color: #e2e2e2;
+                        border-radius: .25em;
+                        -webkit-appearance: none; /* 네이티브 외형 감추기 */
+                        -moz-appearance: none;
+                        appearance: none;
+                    }
+                    .fileCore {
+                        width: auto;
+                    }
                 }
             }
+
+                
             .submit {
-                width: 48px;
-                height: 24px;
+                display: block;
+                position: relative;
+                float: left;
+                width: 120px;
+                font-weight: 600;
+                text-align: center;
+                line-height: 50px;
+                color: #FFF;
+                border-radius: 5px;
+                transition: all 0.2s;
+                background: #5DC8CD;
+                border: none;
+                cursor: pointer;
+                &:hover {
+                    background: #01939A;
+                }
             }
         }
         .ready {
@@ -74,7 +153,7 @@
                 width: 40%;
             }
             .value {
-                width: 40%;
+                width: 20%;
             }
         }
         .rightSelectBox {
@@ -84,7 +163,116 @@
             
         }
     }
+    $gray: gray;
+    $white: white;
+    $secondary: #3071A9;
+    $primary: #8ba5bc;
+    $gradation: linear-gradient(to right, $primary,$secondary);
+    input[type=range] {
+        height: 38px;
+        background-color: rgba(0,0,0,0);
+        margin: 10px 0;
+        -webkit-appearance: none;
+        width: 100%;
+    }
+    input[type=range]:focus {
+        outline: none;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px #333;
+        background: $gradation;
+        border-radius: 0px;
+        border: 1px solid #333;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #333;
+        border: 1px solid #333;
+        height: 30px;
+        width: 15px;
+        border-radius: 0px;
+        background: #FFFFFF;
+        -webkit-appearance: none;
+        cursor: pointer;
+        margin-top: -11px;
+    }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: $gradation;
+    }
+    input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px #333;
+        background: $gradation;
+        border-radius: 0px;
+        border: 1px solid #333;
+    }
+    input[type=range]::-moz-range-thumb {
+        box-shadow: 1px 1px 1px #333;
+        border: 1px solid #333;
+        height: 30px;
+        width: 15px;
+        border-radius: 0px;
+        background: #FFFFFF;
+        cursor: pointer;
+    }
+
+    input[type=number] {
+        font-family: inherit;
+        width: 50%;
+        border: 0;
+        border-bottom: 2px solid $gray;
+        outline: 0;
+        font-size: 3rem;
+        color: #222;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    
+        &::placeholder {
+            color: transparent;
+        }
+    
+        &:placeholder-shown ~ .form__label {
+        font-size: 3rem;
+        cursor: text;
+        top: 20px;
+        }
+        &:focus {
+            ~ .form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: $primary;
+            font-weight:700;    
+            }
+            padding-bottom: 6px;  
+            font-weight: 700;
+            border-width: 3px;
+            border-image: linear-gradient(to right, $primary,$secondary);
+            border-image-slice: 1;
+        }
+        &:required,&:invalid { box-shadow:none; }
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        -moz-appearance: none;
+    }
 }
+
+  
 .modalHide {
     display: none;
 }

@@ -10,16 +10,23 @@
         width: 260px;
         padding: 10px;
         position: absolute;
-        background-color: red;
+        background-color: rgb(199, 219, 227);
         overflow: hidden;
         gap: 10em;
+        border-bottom-right-radius: 10px;
         .bufferContainer {
-            width: calc(100% - 2em);
-            background-color: beige;
+            width: calc(100% - 1em);
+            background-color: rgb(255, 255, 255);
             display: flex;
             flex-direction: column;
-            gap: 0.2em;
-            padding: 1em;
+            padding: 0.5em;
+            .table {
+                width: 100%;
+                border-spacing: 0px;
+                td {
+                    padding: 0.2em;
+                }
+            }
             h6 {
                 margin: 0;
                 font-weight: 500;
@@ -38,14 +45,15 @@
         display: flex;
         flex-direction: row-reverse;
         gap: 10px;
-        padding-right: 20px;
+        padding-right: 80px;
         .moment {
             height: fit-content;
-            width: 60px;
+            position: relative;
+            width: 90px;
             transition: 1000ms;
             display: flex;
             flex-direction: column-reverse;
-            align-items: center;
+            align-items: right;
             perspective: 1000px;
             canvas {
                 transform: rotateY(-55deg);
@@ -60,12 +68,31 @@
                 transform: rotateY(-55deg);
                 opacity: 0.5;
                 width: calc(150px - 0.4em);
+                position: relative;
+                left: 0px;
                 text-align: center;
-                background-color: royalblue;
+                background-color: white;
                 border-bottom-left-radius: 5px;
                 border-bottom-right-radius: 5px;
                 padding: 0.2em;
                 height: 1em;
+                top: 0px;
+                .sizeMaker {
+                    height: 0px;
+                }
+                .score {
+                    font-size: 14px;
+                    font-weight: 500;
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+                .additionalContainer {
+                    position: absolute;
+                    width: calc(100% - 0.4em);
+                    height: calc(150px - 0.4em);
+                    display: none;
+                }
             }
         }
         .enter {
@@ -75,16 +102,57 @@
             canvas {
                 transform: rotateY(0deg);
                 opacity: 1;
+                border-top-right-radius: 5px;
             }
             .dataContainer {
                 transform: rotateY(0deg);
                 opacity: 1;
-                height: 20em;
+                // height: 20em;
                 padding: 1em;
-                position: relative;
-                width: 200px;
-                right: 40px;
-                border-top-left-radius: 5px;
+                width: 300px;
+                left: calc(-182px);
+                top: -150px;
+                border-radius: 5px;
+                height: fit-content;
+                min-height: calc(150px - 2em);
+                .sizeMaker {
+                    height: 200px;
+                }
+                .score {
+                    font-size: 4.5em;
+                    font-weight: 600;
+                    left: 0.3em;
+                    transform: none;
+                }
+                .additionalContainer {
+                    display: block;
+                    
+                    h5 {
+                        position: absolute;
+                        left: 0.5em;
+                        font-size: 2em;
+                        top: 2.5em;
+                        margin: 0;
+                    }
+                    .feedBackContainer {
+                        width: calc(300px + 2em);
+                        background-color: white;
+                        position: absolute;
+                        left: -1em;
+                        top: 8em;
+                        display: flex;
+                        justify-content: left;
+                        align-items: flex-start;
+                        h6 {
+                            margin: 20px;
+                            font-size: 20px;
+                            font-weight: 500;
+                            padding: 0;
+                            // margin: 0;
+                            left: 4em;
+                        }
+                    }
+                }
             }
         }
     }

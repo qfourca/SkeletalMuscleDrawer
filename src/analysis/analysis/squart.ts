@@ -2,7 +2,7 @@ import JointList from "./jointList";
 import Posture from "./analysis";
 
 export default class SquartPosture extends Posture {
-    protected accuracy: number = 0.7
+    protected accuracy: number = 0.9
     private stand:Array<Map<string, number>> = new Array()
     private sit:Array<Map<string, number>> = new Array()
     private currentMode: boolean = false

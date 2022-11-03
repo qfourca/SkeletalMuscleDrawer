@@ -13,9 +13,13 @@ export default class AnalysisUI extends Component {
         <div class="${S.analysisContainer} ${S.containerHide}">
             <div class="${S.infoContainer}">
                 <video class="${S.videoClass}"></video>
-                <div class="${S.bufferContainer}"></div>
+                <div class="${S.bufferContainer}">
+                    <table class="${S.table}">
+
+                    </table>
+                </div>
             </div>
-            <div class="${S.momentContainer}">
+                <div class="${S.momentContainer}">
             </div>
         </div>
     `
@@ -33,6 +37,11 @@ export default class AnalysisUI extends Component {
     private onAnalysisChange(info: AnalysisSetting) {
         if(info.isWorking) { 
             this.getAsClassName(S.analysisContainer).classList.remove(S.containerHide) 
+            const video = this.getVideoElement()
+            video.autoplay = true
+            video.muted = true
+            video.playsInline = true
+            video.controls = true
             if(info.videoSrc === "") {}
             else if(info.videoSrc === "$webcam") {
                 const webcam = new Webcam(info.videoElement, tempVideo)
@@ -45,11 +54,7 @@ export default class AnalysisUI extends Component {
         else { this.getAsClassName(S.analysisContainer).classList.add(S.containerHide) }
     }
     private onAnalysisDataChange(data: AnalysisData) {
-        let innerHTML = ""
-        data.buffer.poseAngles.forEach((value) => {
-            innerHTML += `<h6>${value.name} : ${AnalysisUI.RadinToDegree(value.value)}</h6>`
-        })
-        this.getAsClassName(S.bufferContainer).innerHTML = innerHTML
+        this.getAsClassName(S.table).innerHTML = data.buffer.poseAngles.toTable()
         if(data.history.length > this.moments.length) {
             this.moments.push(
                 new Moment(
@@ -58,9 +63,6 @@ export default class AnalysisUI extends Component {
                     data.history.at(data.history.length - 1)!,
                     data.history.length - 1))
         }
-    }
-    private static RadinToDegree(radian: number): number {
-        return Math.round((radian * 180 / Math.PI) * 10) / 10
     }
     private setVideoElement() {
         const temp = {...this.app.analysisSetting.get()}

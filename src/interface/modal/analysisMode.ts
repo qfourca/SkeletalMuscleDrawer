@@ -9,6 +9,7 @@ export default class analysisMode extends ModalMember {
     private ignore: boolean = false
     private currentState: Hook<number> = new Hook(0)
     private isSelected: boolean = false
+    private videoFile?: File
     protected html: string = `
         <div class="${S.analysisModeContainer}">
             <div class="${S.leftSelectBox}">
@@ -37,8 +38,8 @@ export default class analysisMode extends ModalMember {
             <button class="${S.back}">
                 back
             </button>
-            <input class="${S.range}" type="range" min="1" max ="64" step="1" value="4"></input>
             <input class="${S.value}" type="number" value="4"></input>
+            <input class="${S.range}" type="range" min="1" max ="64" step="1" value="4"></input>
             <button class="${S.submit}">
                 시작
             </button>
@@ -46,7 +47,17 @@ export default class analysisMode extends ModalMember {
     `
     private rightMaxHtml = `
         <div class="${S.maxContainer}">
-
+            <button class="${S.back}">
+                back
+            </button>
+            <div class="${S.filebox}">
+                <input class="${S.uploadName}" value="파일선택" disabled="disabled">
+                <label for="ex_filename">업로드</label> 
+                <input type="file" id="ex_filename" class="${S.fileCore}"> 
+            </div>
+            <button class="${S.submit}">
+                시작
+            </button>
         </div>
     `
     constructor (
@@ -87,7 +98,10 @@ export default class analysisMode extends ModalMember {
         }
         else if(state === 1) {
             this.leftSelectBox.innerHTML = ""
-            this.rightSelectBox.innerHTML = this.rightReadyHtml
+            this.rightSelectBox.innerHTML = this.rightMaxHtml
+            this.getAsClassName(S.back).addEventListener('click', this.onBackClick.bind(this))
+            this.getAsClassName(S.fileCore).addEventListener('input', this.onRightInput.bind(this))
+            this.getAsClassName(S.submit).addEventListener('click', this.onRightSubmit.bind(this))
             this.leftRemoveAndAdd(S.min)
             this.rightRemoveAndAdd(S.max)
         }
@@ -141,6 +155,26 @@ export default class analysisMode extends ModalMember {
     private onBackClick() {
         this.currentState.set(0)
         setTimeout(() => this.isSelected = false, 10)
+    }
+    private onRightInput(e: any) {
+        //@ts-ignore
+        this.getAsClassName(S.uploadName).value = e.target.files[0].name
+        this.videoFile = e.target.files[0]
+        // console.log(this.videoFile)
+    }
+    private onRightSubmit(e: any) {
+        if(this.videoFile === undefined) {
+            alert("파일이 존재하지 않습니다")
+        }
+        else {
+            const temp = {...this.app.analysisSetting.get()}
+            temp.videoSrc = URL.createObjectURL(this.videoFile)
+            this.app.analysisSetting.set(temp)
+            const modal = { ...this.app.modal.get() }
+            modal.component = undefined
+            this.destructor()
+            this.app.modal.set(modal)
+        }
     }
     public beforeDestroy(): boolean {
         if(this.ignore) { 

@@ -6,13 +6,14 @@ import Engine from "../engine/engine"
 import UI from "../interface/ui"
 import { AnalysisData, AnalysisSetting } from "../analysis"
 import ModalChild from "../interface/modal/modalChild"
-import Analysis from "../analysis/analysis"
+import Analysis, { PoseAngles } from "../analysis/analysis"
 import Controller from "../controller"
 
 export default class App {
     public currentTime: Hook<number>
     public updateClock: Hook<number>
     public rootElement: Hook<HTMLElement>
+    public controllerElement: Hook<HTMLElement>
     public isPaused: Hook<boolean>
     public isLoading: Hook<boolean>
     public animation: Hook<Animation>
@@ -32,6 +33,7 @@ export default class App {
         this.currentTime = new Hook(0)
         this.updateClock = new Hook(0)
         this.rootElement = new Hook(root)
+        this.controllerElement = new Hook(root)
         this.isPaused = new Hook(false)
         this.isLoading = new Hook(true)
         this.animation = new Hook(new Animation(dummyAnimation))
@@ -76,7 +78,7 @@ const dummyAnalysisInfo: AnalysisSetting = {
 const dummyAnalysisData: AnalysisData = {
     buffer: {
         poseWorldLandmarks: new Array(),
-        poseAngles: new Map(),
+        poseAngles: new PoseAngles(),
         image: document.createElement('canvas') 
     },
     goal: 0,

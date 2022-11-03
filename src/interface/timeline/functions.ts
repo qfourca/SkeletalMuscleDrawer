@@ -46,7 +46,7 @@ export default class Functions extends Component {
         {
             icon: new Hook(Icons.fullscreen),
             onClick: this.toggleFullScreen.bind(this),
-            keybind: []
+            keybind: ["KeyM"]
         },
     ]
     private keyBind: Map<string, () => void> = new Map()

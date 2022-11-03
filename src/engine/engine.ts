@@ -12,7 +12,7 @@ export default class Engine extends Member {
         app: App
     ) {
         super(app)
-        this.three = new Three(app.rootElement.get())
+        this.three = new Three(this.app)
         this.human = new Human(this.app.human.get())
         this.world = new World(this.app.world.get())
 

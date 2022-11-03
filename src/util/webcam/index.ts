@@ -3,10 +3,7 @@ export default class Webcam {
         video: HTMLVideoElement,
         src?: string
     ) {
-        video.autoplay = true
-        video.muted = true
-        video.playsInline = true
-        video.controls = true
+
         if(src == undefined) {
             if(navigator.mediaDevices == undefined) {
                 alert("Can't use Webcam")
@@ -14,8 +11,8 @@ export default class Webcam {
             else {
                 navigator.mediaDevices.getUserMedia({
                     video: { 
-                        width: { ideal: 1080 }, 
-                        height: { ideal: 1920 }
+                        width: { ideal: 1920 }, 
+                        height: { ideal: 1080 }
                     }, 
                     audio: false,
                 }).then((stream) => {

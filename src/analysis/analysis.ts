@@ -7,18 +7,18 @@ import { Vector3 } from "three";
 import {Posture, exerciseResult, SquartPosture} from "./analysis/index";
 export default class Analysis extends Member {
     public static Joints = new Map([
-        ["leftArm", [11, 13, 15]],
-        ["rightArm", [12, 14, 16]],
+        // ["leftArm", [11, 13, 15]],
+        // ["rightArm", [12, 14, 16]],
         ["leftLeg", [23, 25, 27]],
         ["rightLeg", [24, 26, 28]],
         ["leftHipY", [25, 23, 24]],
         ["rightHipY", [26, 24, 23]],
         ["leftHipX", [11, 23, 25]],
         ["rightHipX", [12, 24, 26]],
-        ["leftShoulderX", [13, 11, 23]],
-        ["rightShoulderX", [14, 12, 24]],
-        ["leftShoulderY", [13, 11, 12]],
-        ["rightShoulderY", [14, 12, 11]],
+        // ["leftShoulderX", [13, 11, 23]],
+        // ["rightShoulderX", [14, 12, 24]],
+        // ["leftShoulderY", [13, 11, 12]],
+        // ["rightShoulderY", [14, 12, 11]],
     ])
     public static ThreeDegree(a: Vector3, b: Vector3, c: Vector3) {
         const ab = [b.x - a.x, b.y - a.y, b.z - a.z]
@@ -51,7 +51,7 @@ export default class Analysis extends Member {
         }
     }
     private onMotionResult(result: Results) {
-        const angles = new Map()
+        const angles = new PoseAngles()
         Analysis.Joints.forEach((points: Array<number>, name: string) => {
             if(result.poseWorldLandmarks != undefined) {
                 const fir = result.poseWorldLandmarks[points[0]]
@@ -95,10 +95,35 @@ export default class Analysis extends Member {
 
 export interface AnalysisResult {
     poseWorldLandmarks: LandmarkList;
-    poseAngles: Map<string, {
-        name: string,
-        accuracy: number,
-        value: number
-    }>;
+    poseAngles: PoseAngles
     image: GpuBuffer;
+}
+
+export class PoseAngles extends Map {
+    public toHTML(element: string, classname: string): string {
+        let innerHTML = ""
+        this.forEach((value) => {
+            innerHTML += `<${element} class="${classname}">${value.name} : ${PoseAngles.RadinToDegree(value.value)}</${element}>`
+        })
+        return innerHTML
+    }
+    public toTable(): string {
+        let table = ""
+        
+        this.forEach((value) => {
+            const degree = PoseAngles.RadinToDegree(value.value)
+            const color = PoseAngles.DegreeToColor(degree)
+            table += `<tr>
+                <td>${value.name}</td>
+                <td style="background-color: ${color}">${degree}</td>
+            </tr>`
+        })
+        return table
+    }
+    private static DegreeToColor(degree: number): string {
+        return `rgba(${degree * -1.1 + 255}, ${degree * -1.1 + 255}, ${200})`
+    }
+    private static RadinToDegree(radian: number): number {
+        return Math.round((radian * 180 / Math.PI) * 10) / 10
+    }
 }

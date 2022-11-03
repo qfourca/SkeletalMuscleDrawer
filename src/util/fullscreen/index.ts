@@ -4,7 +4,7 @@ export default class FullScreen {
     constructor(
         target: HTMLElement
     ) {
-        this.target = target
+        this.target = target 
     }
     public full() {
         this.isFullScreen = true
