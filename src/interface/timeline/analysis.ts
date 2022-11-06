@@ -22,7 +22,12 @@ export default class Analysis extends Component {
             const toggle = () => {
                 const temp = { ...this.app.analysisSetting.get() }
                 temp.isWorking = !temp.isWorking
+                temp.videoSrc = ""
                 this.app.analysisSetting.set(temp)
+                const temp2 = {...this.app.analysisData.get()}
+                temp2.goal = 0
+                temp2.history = []
+                this.app.analysisData.set(temp2)
             }
             if(this.app.analysisSetting.get().isWorking) {
                 if(confirm("분석을 종료하시겠습니까?")) {

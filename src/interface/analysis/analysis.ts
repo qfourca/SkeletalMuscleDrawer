@@ -42,20 +42,28 @@ export default class AnalysisUI extends Component {
             video.muted = true
             video.playsInline = true
             video.controls = true
-            if(info.videoSrc === "") {}
+            if(info.videoSrc === "") {
+                video.srcObject = null
+                video.src = ""
+            }
             else if(info.videoSrc === "$webcam") {
-                const webcam = new Webcam(info.videoElement, tempVideo)
+                const webcam = new Webcam(info.videoElement)
             }
             else {
-                this.getVideoElement().src = info.videoSrc
+                video.src = info.videoSrc
             }
-        
         }
         else { this.getAsClassName(S.analysisContainer).classList.add(S.containerHide) }
     }
     private onAnalysisDataChange(data: AnalysisData) {
         this.getAsClassName(S.table).innerHTML = data.buffer.poseAngles.toTable()
-        if(data.history.length > this.moments.length) {
+        if(data.history.length === 0) {
+            this.moments.forEach((element) => {
+                element.destructor()
+            })
+            this.moments = new Array()
+        }
+        else if(data.history.length > this.moments.length) {
             this.moments.push(
                 new Moment(
                     this.app, 

@@ -3,7 +3,6 @@ export default class Webcam {
         video: HTMLVideoElement,
         src?: string
     ) {
-
         if(src == undefined) {
             if(navigator.mediaDevices == undefined) {
                 alert("Can't use Webcam")
